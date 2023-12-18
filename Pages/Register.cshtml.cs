@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace GenericCourses.Pages;
 
-public class LoginModel : PageModel
+public class RegisterModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
 
-    public LoginModel(ILogger<IndexModel> logger)
+    public RegisterModel(ILogger<IndexModel> logger)
     {
         _logger = logger;
     }

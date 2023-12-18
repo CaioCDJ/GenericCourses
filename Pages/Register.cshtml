@@ -1,0 +1,54 @@
+@page
+@model LoginModel
+@{
+Layout = "./Shared/_LoginLayout.cshtml";
+ViewData["Title"] = "Register";
+}
+<form class="lg:w-2/5 w-full flex flex-col py-12 h-full px-14 justify-center">
+  <a href="index" class="font-semibold text-sky-500 text-2xl">Generic Courses</a>
+  <h1 class="text-white text-5xl font-black">Seja bem vindo</h1>
+  <p class="text-gray-300 mt-5">
+    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint.
+  </p>
+  <div class="flex flex-col gap-3 mt-10">
+
+    <div>
+      <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome:</label>
+      <input type="text"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        required>
+    </div>
+
+    <div>
+      <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email:</label>
+      <input type="email" id="first_name"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="example@email.com" required>
+    </div>
+    <div>
+      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Numero de Celular:</label>
+      <input type="number"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        required>
+    </div>
+
+    <div>
+      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Senha:</label>
+      <input type="password"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        required>
+    </div>
+    <div>
+      <label for="Senha:" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirmar Senha:</label>
+      <input type="password"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        required>
+    </div>
+
+  </div>
+  <button type="button"
+    class="text-white mt-7 text-lg w-full bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-semibold rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Confirmar</button>
+  <div class="text-gray-300 mt-5">
+    Já tem uma conta? <a href="Login" class="text-sky-500 font-bold italic">Login</a>
+  </div>
+</form>

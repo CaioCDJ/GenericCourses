@@ -1,0 +1,24 @@
+@page "{id}"
+@model PostModel
+@{
+ViewData["Title"] = "Artigo";
+}
+
+<main class="flex flex-col center gap-5">
+  <div class="w-full bg-cover h-full flex flex-col items-center "
+    style="background-image: url('@PostModel.article.thumb');">
+
+    <div class="h-[45vh] flex flex-col px-14 w-full gap-4 justify-center">
+      <span class="text-sky-500 text-lg font-semibold ">Nome do Autor</span>
+      <h1 class="text-white font-bold text-4xl relative">@PostModel.article.title</h1>
+      <span class="text-gray-200"> <strong>Publicado :</strong> 2023-12-18</span>
+    </div>
+
+    <div class="bg-gray-900 rounded-lg w-full py-5">
+      <article class="markdown-body ">
+        @Html.Raw(PostModel.article.text)
+      </article>
+    </div>
+
+  </div>
+</main>
