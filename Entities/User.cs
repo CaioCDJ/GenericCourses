@@ -1,6 +1,5 @@
 namespace GenericCourses.Entities;
 
-
 public class User
 {
     public Guid id { get; set; }
@@ -9,4 +8,8 @@ public class User
     public int cpf { get; set; }
     public int phoneNumber { get; set; }
     public bool isAdmim { get; set; } = false;
+    public bool isTeacher { get; set; } = false;
+    public UserRole roles { get; set; } = UserRole.client;
+    public string socialNetwork { get; set; }
+    public string github { get; set; }
 }

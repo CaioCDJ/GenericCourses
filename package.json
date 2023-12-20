@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "css:build":"npx tailwind build -i ./wwwroot/css/styles.css -o ./wwwroot/css/output.css --minify"
+    "css:build": "npx tailwind build -i ./wwwroot/css/styles.css -o ./wwwroot/css/output.css --minify"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "flowbite": "^2.2.1",
     "tailwindcss": "^3.3.6"
   }
 }

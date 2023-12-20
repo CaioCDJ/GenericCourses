@@ -9,4 +9,5 @@ public class Course
     public bool isFree { get; set; } = false;
     public string duration { get; set; }
     public List<Category> categories { get; set; }
+    public string instrutor { get; set; }
 }

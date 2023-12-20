@@ -6,6 +6,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  @apply text-gray-300
+}
+
 .center {
   @apply justify-center items-center
 }
