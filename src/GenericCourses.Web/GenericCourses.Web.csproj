@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Markdig" Version="0.34.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\GenericCourses.Domain\GenericCourses.Domain.csproj" />
+    <ProjectReference Include="..\GenericCourses.Infra\GenericCourses.Infra.csproj" />
+  </ItemGroup>
+
+    <Target Name="Tailwind" BeforeTargets="build">
+        <Exec Command="npm run css:build" />
+    </Target>
+</Project>
