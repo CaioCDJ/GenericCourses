@@ -12,5 +12,9 @@
   "devDependencies": {
     "flowbite": "^2.2.1",
     "tailwindcss": "^3.3.6"
+  },
+  "dependencies": {
+    "editor.md": "^1.5.0",
+    "jquery": "^3.7.1"
   }
 }

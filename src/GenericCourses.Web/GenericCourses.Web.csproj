@@ -17,6 +17,7 @@
     <ProjectReference Include="..\GenericCourses.Infra\GenericCourses.Infra.csproj" />
   </ItemGroup>
 
+    <!-- mid -->
     <Target Name="Tailwind" BeforeTargets="build">
         <Exec Command="npm run css:build" />
     </Target>

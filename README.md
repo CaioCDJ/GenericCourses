@@ -37,14 +37,14 @@ Install dependencies
 Start the server
 
 ```bash
-  dotnet run
+  dotnet run --prject ./src/GenericCourses.Web/
 ```
 
 
 ## Acknowledgements
 
  - [flowrift](https://flowrift.com/)
- - [Github Markdown css](https://github.com/matiassingers/awesome-readmehttps://github.com/sindresorhus/github-markdown-css)
+ - [Github Markdown css](https://github.com/matiassingers/awesome-readme)
 
 
 

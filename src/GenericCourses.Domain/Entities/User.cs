@@ -10,6 +10,7 @@ public class User
     public bool isAdmim { get; set; } = false;
     public bool isTeacher { get; set; } = false;
     public UserRole roles { get; set; } = UserRole.client;
-    public string socialNetwork { get; set; }
-    public string github { get; set; }
+    public string? socialNetwork { get; set; }
+    public string? github { get; set; } // why not?
+    public bool is_active { get; set; }
 }
