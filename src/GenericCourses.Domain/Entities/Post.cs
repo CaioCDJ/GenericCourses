@@ -7,6 +7,6 @@ public class Post
     public string? text { get; set; }
     public string? userId { get; set; }
     public string? thumb { get; set; }
-    public DateTime created_at { get; set; }
+    public DateTime created_at { get; set; } = DateTime.Now;
     public List<Category>? categories { get; set; }
 }

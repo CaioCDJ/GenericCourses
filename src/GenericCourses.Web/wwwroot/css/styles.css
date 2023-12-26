@@ -6,10 +6,6 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  @apply text-gray-300
-}
-
 ::selection {
   background-color: #2af !important;
 }

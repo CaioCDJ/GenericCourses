@@ -47,7 +47,6 @@ Start the server
  - [Github Markdown css](https://github.com/matiassingers/awesome-readme)
 
 
-
 ## Tech Stack
 
 - [.Net 8]()

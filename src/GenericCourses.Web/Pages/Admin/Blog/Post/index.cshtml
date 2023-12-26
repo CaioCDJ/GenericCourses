@@ -5,76 +5,209 @@ Layout = "./../../../Shared/_AdminLayout.cshtml";
 ViewData["Title"] = "Index";
 }
 
-<main class="p-4 md:ml-64 h-auto pt-20">
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-    <div class="border-2 border-dashed border-gray-300 rounded-lg dark:border-gray-600 h-32 md:h-64"></div>
-    <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64"></div>
-    <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64"></div>
-    <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64"></div>
+<!---
+- Titulo x 
+- Texto  x
+- Categorias
+- Thumb 
+-->
+
+<form method="post" class="p-4 md:ml-64 h-auto pt-20 max-w-[1400px]"
+  x-data="{select:false, selectedOptions:[],editor:'true'}">
+  <div class="flex justify-between">
+    <h1 class="text-gray-300 font-bold text-2xl" ">
+    Novo Artigo</h1>
+    <button type=" submit"
+      class="text-white bg-gradient-to-r from-emerald-400 via-emerald-500 w-32 to-emerald-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+      Enviar
+      </button>
   </div>
-  <div class=" h-[80vh] mb-4">
+  <div class=" grid grid-cols-1 sm:grid-cols-2 mt-5 lg:grid-cols-4 gap-4 mb-4 py-2">
+    <div class=" flex justify-center flex-col gap-8 px-4  col-span-2 rounded-lg  h-auto py-8">
+      <div class="w-full">
+        <label for="Titulo:" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Titulo:</label>
+        <input type="text"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          required>
+      </div>
+
+      <div class="w-full">
+        <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Markdown</h3>
+        <ul
+          class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+          <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+            <div class="flex items-center ps-3">
+              <input id="horizontal-list-radio-license" type="radio" value="true" x-model="editor" name="list-radio"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+              <label for="horizontal-list-radio-license"
+                class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Editor Online</label>
+            </div>
+          </li>
+          <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+            <div class="flex items-center ps-3">
+              <input id="horizontal-list-radio-id" type="radio" value="false" x-model="editor" name="list-radio"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+              <label for="horizontal-list-radio-id"
+                class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Enviar Arquivo</label>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-2 gap-2 w-full ">
+        <div class="">
+          <button id="dropdownSearchButton" data-dropdown-toggle="dropdownSearch"
+            class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-sky-600 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            type="button">Categorias <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 4 4 4-4" />
+            </svg></button>
+
+          <!-- Dropdown menu -->
+          <div id="dropdownSearch"
+            class=" hidden bg-white rounded-lg shadow w-60 dark:bg-gray-700 z-50 h-64 overflow-y-auto">
+            <template x-for='option in @Json.Serialize(AdminPostIndexModel.categories)' :key="option">
+              <label :for="option" class="block p-3 hover:bg-sky-600">
+                <input type="checkbox" x-model="selectedOptions" :value="option" :id="option" class="mr-2">
+                <span x-text="option" class="text-gray-300"></span>
+              </label>
+            </template>
+          </div>
+
+        </div>
+
+        <div class="flex gap-2 flex-wrap ">
+          <template x-for="item in selectedOptions">
+            <span
+              class="bg-blue-100 max-h-6 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300"
+              x-text="item"></span>
+          </template>
+        </div>
+      </div>
+    </div>
+
+    <div x-data="{img:'false'}" class="flex justify-center flex-col gap-8 px-4  col-span-2 rounded-lg  h-auto py-8">
+      <div class="w-full">
+        <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Thumb</h3>
+        <ul
+          class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+          <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+            <div class="flex items-center ps-3">
+              <input id="horizontal-list-radio-img" type="radio" value="true" x-model="img" name="list-radio-img"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+              <label for="horizontal-list-radio-img"
+                class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Url da Imagem</label>
+            </div>
+          </li>
+          <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+            <div class="flex items-center ps-3">
+              <input id="horizontal-list-radio-img" type="radio" value="false" x-model="img" name="list-radio-img"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+              <label for="horizontal-list-radio-img"
+                class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Upload do
+                arquivo</label>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="flex center w-full hidden" :class="{'hidden': (img=='true')}">
+        <label for="dropzone-file"
+          class="flex flex-col center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+          <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+            </svg>
+            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to
+                upload</span>
+              or
+              drag and drop</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+          </div>
+          <input id="dropzone-file" type="file" class="hidden" />
+        </label>
+      </div>
+      <div class="w-full hidden" :class="{'hidden':(img=='false')}">
+        <label for="Titulo:" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Titulo:</label>
+        <input type="text"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          required>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div id="txtEditor" class="h-[80vh] mb-4 z-0" :class="(editor=='true')?'':'hidden'">
     <div id="editor">
       <textarea style="display:none;">### Hello Editor.md !</textarea>
     </div>
-    <div id="test-markdown-view">
-      <!-- Server-side output Markdown text -->
-      <textarea style="display:none;">### Hello world!</textarea>
-    </div>
   </div>
 
-  <!-- <div class="grid grid-cols-2 gap-4 mb-4"> -->
+  <div class="flex center w-full hidden" :class="{'hidden': (editor=='true')}">
+    <label for="dropzone-file"
+      class="flex flex-col center  w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+      <div class="flex flex-col items-center justify-center pt-5 pb-6">
+        <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+          fill="none" viewBox="0 0 20 16">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+        </svg>
+        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or
+          drag and drop</p>
+        <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+      </div>
+      <input id="dropzone-file" type="file" class="hidden" />
+    </label>
+  </div>
 
-  <!--   <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div> -->
-  <!--   <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div> -->
-  <!--   <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div> -->
-  <!--   <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div> -->
-  <!-- </div> -->
-  <!-- <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-96 mb-4"></div> -->
-  <!-- <div class="grid grid-cols-2 gap-4"> -->
-  <!--   <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div> -->
-  <!--   <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div> -->
-  <!--   <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div> -->
-  <!--   <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div> -->
-  <!-- </div> -->
-
-</main>
+</form>
 
 @section Styles{
 <style>
-  #editor>* {
-    border-style: none;
-  }
-
-
-  .editormd-toolbar {
-    border: 0;
-    background: #1f2937 !important;
-  }
-
-  .cm-s-xq-dark.CodeMirror {
-    background-color: #111827 !important;
-  }
-
-  /* .cm-s-xq-dark, */
-  .CodeMirror-activeline-background {
-    background: #374151 !important;
-  }
-
-  .CodeMirror pre {
-    background: #111827 !important;
-  }
-
-  .CodeMirror-activeline-background {
-    background: #0e1a2f !important;
-  }
-
-  .editormd-preview-theme-dark {
-    background: #111827 !important;
-  }
-
-  .editormd-preview-theme-dark .editormd-preview-container {
-    background-color: transparent !important;
-  }
+  /* #editor>* { */
+  /*   border-style: none; */
+  /* } */
+  /**/
+  /**/
+  /* .editormd-toolbar { */
+  /*   border: 0; */
+  /*   background: #1f2937 !important; */
+  /* } */
+  /**/
+  /* .cm-s-xq-dark.CodeMirror { */
+  /*   background-color: #94979c !important; */
+  /* } */
+  /**/
+  /* /* .cm-s-xq-dark, */
+  */
+  /* .CodeMirror-activeline-background { */
+  /*   background: #94979c !important; */
+  /* } */
+  /**/
+  /* .CodeMirror pre { */
+  /*   background: #94979c !important; */
+  /**/
+  /* } */
+  /**/
+  /* .CodeMirror-gutter-wrapper pre>span>span { */
+  /*   color: #222 !important; */
+  /* } */
+  /**/
+  /* .CodeMirror-activeline-background { */
+  /*   background: #0e1a2f !important; */
+  /* } */
+  /**/
+  /* .editormd-preview-theme-dark { */
+  /*   background: #111827 !important; */
+  /* } */
+  /**/
+  /* .editormd-preview-theme-dark .editormd-preview-container { */
+  /*   background-color: transparent !important; */
+  /* } */
 </style>
 
 }
@@ -85,16 +218,111 @@ ViewData["Title"] = "Index";
 <script src="~/node_modules/editor.md/lib/marked.min.js"></script>
 <script src="~/node_modules/editor.md/lib/prettify.min.js"></script>
 
-<script>
+<script type="text/javascript">
+
+  let editor
   $(function () {
     var editor = editormd("editor", {
       // width: "100%",
       // height: "100%",
       // markdown: "xxxx",     // dynamic set Markdown text
-      theme: "dark",
-      previewTheme: "dark",
-      editorTheme: 'xq-dark',
-      path: location.origin + "/node_modules/editor.md/lib/"  // Autoload modules mode, codemirror, marked... dependents libs path
+      editorTheme: 'elegant',
+      path: location.origin + "/node_modules/editor.md/lib/",  // Autoload modules mode, codemirror, marked... dependents libs path
+      lang: {
+        name: "en",
+        description: "Open source online Markdown editor.",
+        tocTitle: "Table of Contents",
+        toolbar: {
+          undo: "Undo(Ctrl+Z)",
+          redo: "Redo(Ctrl+Y)",
+          bold: "Bold",
+          del: "Strikethrough",
+          italic: "Italic",
+          quote: "Block quote",
+          ucwords: "Words first letter convert to uppercase",
+          uppercase: "Selection text convert to uppercase",
+          lowercase: "Selection text convert to lowercase",
+          h1: "Heading 1",
+          h2: "Heading 2",
+          h3: "Heading 3",
+          h4: "Heading 4",
+          h5: "Heading 5",
+          h6: "Heading 6",
+          "list-ul": "Unordered list",
+          "list-ol": "Ordered list",
+          hr: "Horizontal rule",
+          link: "Link",
+          "reference-link": "Reference link",
+          image: "Image",
+          code: "Code inline",
+          "preformatted-text": "Preformatted text / Code block (Tab indent)",
+          "code-block": "Code block (Multi-languages)",
+          table: "Tables",
+          datetime: "Datetime",
+          emoji: "Emoji",
+          "html-entities": "HTML Entities",
+          pagebreak: "Page break",
+          watch: "Unwatch",
+          unwatch: "Watch",
+          preview: "HTML Preview (Press Shift + ESC exit)",
+          fullscreen: "Fullscreen (Press ESC exit)",
+          clear: "Clear",
+          search: "Search",
+          help: "Help",
+          // info: "About " + exports.title
+        },
+        buttons: {
+          enter: "Enter",
+          cancel: "Cancel",
+          close: "Close"
+        },
+        dialog: {
+          link: {
+            title: "Link",
+            url: "Address",
+            urlTitle: "Title",
+            urlEmpty: "Error: Please fill in the link address."
+          },
+          referenceLink: {
+            title: "Reference link",
+            name: "Name",
+            url: "Address",
+            urlId: "ID",
+            urlTitle: "Title",
+            nameEmpty: "Error: Reference name can't be empty.",
+            idEmpty: "Error: Please fill in reference link id.",
+            urlEmpty: "Error: Please fill in reference link url address."
+          },
+          image: {
+            title: "Image",
+            url: "Address",
+            link: "Link",
+            alt: "Title",
+            uploadButton: "Upload",
+            imageURLEmpty: "Error: picture url address can't be empty.",
+            uploadFileEmpty: "Error: upload pictures cannot be empty!",
+            formatNotAllowed: "Error: only allows to upload pictures file, upload allowed image file format:"
+          },
+          preformattedText: {
+            title: "Preformatted text / Codes",
+            emptyAlert: "Error: Please fill in the Preformatted text or content of the codes."
+          },
+          codeBlock: {
+            title: "Code block",
+            selectLabel: "Languages: ",
+            selectDefaultText: "select a code language...",
+            otherLanguage: "Other languages",
+            unselectedLanguageAlert: "Error: Please select the code language.",
+            codeEmptyAlert: "Error: Please fill in the code content."
+          },
+          htmlEntities: {
+            title: "HTML Entities"
+          },
+          help: {
+            title: "Help"
+          }
+        }
+      }
     });
   });
 </script>

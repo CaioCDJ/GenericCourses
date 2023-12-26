@@ -25,6 +25,8 @@ app.UseStaticFiles(
     }
 );
 
+app.UseStaticFiles();
+
 app.UseHttpsRedirection();
 
 app.UseRouting();
