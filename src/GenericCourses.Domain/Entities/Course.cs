@@ -10,4 +10,5 @@ public class Course
     public string? duration { get; set; }
     public List<Category>? categories { get; set; }
     public string? instrutor { get; set; }
+    public bool active { get; set; }
 }

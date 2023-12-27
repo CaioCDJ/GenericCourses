@@ -2,16 +2,16 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace GenericCourses.Web.Pages.Admin.Courses;
 
-public class AdminCoursesNewModel : PageModel
+public class AdminNewCoursesIndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
 
-    public AdminCoursesNewModel(ILogger<IndexModel> logger)
+    public AdminNewCoursesIndexModel(ILogger<IndexModel> logger)
     {
         _logger = logger;
     }
 
     public void OnGet()
     {
-   }
+    }
 }

@@ -25,6 +25,9 @@ app.UseStaticFiles(
     }
 );
 
+///- [] make an error page
+
+
 app.UseStaticFiles();
 
 app.UseHttpsRedirection();
