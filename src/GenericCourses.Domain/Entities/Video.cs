@@ -10,4 +10,3 @@ public class Video
     public int chapter { get; set; }
     public Guid moduleId{ get; set; }
 }
-

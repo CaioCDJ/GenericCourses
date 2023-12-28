@@ -1,4 +1,4 @@
-namespace GenericCourses.Entities;
+namespace GenericCourses.Domain.Entities;
 
 public class Subscriptionplan{
 

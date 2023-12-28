@@ -130,15 +130,13 @@ ViewData["Title"] = "Cursos";
     <div id="txtEditor" class="h-[45vh] w-full mb-4 z-40 col-span-2" :class="(editor=='true')?'':'hidden'">
       <label for="Titulo:" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descrição: </label>
       <div id="editor">
-        <textarea style="display:none;"># Curso</textarea>
+        <textarea id="markdownTxt" style="display:none;"># Curso</textarea>
       </div>
     </div>
 
     </div>
   </form>
 </main>
-
-
 
 @section Scripts{
 
