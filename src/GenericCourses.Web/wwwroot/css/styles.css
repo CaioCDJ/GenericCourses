@@ -25,3 +25,8 @@ section {
   background: -webkit-linear-gradient(180deg, rgba(30, 111, 240, 1) 0%, rgba(31, 41, 55, 1) 64%);
   background: linear-gradient(180deg, rgba(30, 111, 240, 1) 0%, rgba(31, 41, 55, 1) 64%);
 }
+
+
+.markdown-body {
+  color: #d2d2d2 !important
+}
