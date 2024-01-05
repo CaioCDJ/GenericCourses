@@ -98,6 +98,9 @@ ViewData["Title"] = "Modulos";
             <thead class="text-xs uppercase bg-gray-700 text-gray-400">
               <tr>
                 <th scope="col" class="px-6 py-3">
+                  Ordem
+                </th>
+                <th scope="col" class="px-6 py-3">
                   Nome do Modulo
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -113,9 +116,12 @@ ViewData["Title"] = "Modulos";
             </thead>
             <tbody>
               @for(int i=1;i<=6;i++){ <tr class="border-b bg-gray-800 border-gray-700 hover:bg-gray-600">
-                <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
+                <td scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
+                  @i
+                </td>
+                <td scope="row" class="px-6 py-4 font-medium whitespace-nowrap ">
                   Modulo @i
-                </th>
+                </td>
                 <td class="px-6 py-4">
                   9
                 </td>
@@ -129,9 +135,10 @@ ViewData["Title"] = "Modulos";
                       class="bi bi-pencil-square h-5"></i>
                     Edit</button>
 
-                  <button class="flex gap-2 px-5 py-2 rounded-md bg-cyan-600 text-gray-100 font-semibold"> <i
+                  <a href="./939393/Videos"
+                    class="flex gap-2 px-5 py-2 rounded-md bg-cyan-600 text-gray-100 font-semibold"> <i
                       class="bi bi-camera-video h-5"></i>
-                    Videos</button>
+                    Videos</a>
 
                   <button class="flex gap-2 px-5 py-2 rounded-md bg-yellow-600 text-gray-100 font-semibold"> <i
                       class="bi bi-archive h-5"></i>

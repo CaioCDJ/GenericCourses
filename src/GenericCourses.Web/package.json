@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "css:build": "npx tailwind build -i ./wwwroot/css/styles.css -o ./wwwroot/css/output.css --minify"
+    "css:build": "npx tailwind build -i ./wwwroot/css/styles.css -o ./wwwroot/css/output.css --minify --watch"
   },
   "keywords": [],
   "author": "",
