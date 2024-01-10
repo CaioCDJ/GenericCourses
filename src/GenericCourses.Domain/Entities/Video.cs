@@ -8,6 +8,6 @@ public class Video
     public string? videoUrl { get; set; }
     public string? duration { get; set; }
     public int order { get; set; }
-    public DateTime created_at { get; set; }
+    public DateTime createdAt { get; set; }
     public Guid moduleId{ get; set; }
 }

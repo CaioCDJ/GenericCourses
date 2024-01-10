@@ -1,10 +1,12 @@
 using Microsoft.Extensions.FileProviders;
-using System.IO;
+using Microsoft.EntityFrameworkCore;
+using GenericCourses.Infra;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.addInfra(builder.Configuration);
 
 var app = builder.Build();
 
@@ -26,7 +28,6 @@ app.UseStaticFiles(
 );
 
 ///- [] make an error page
-
 
 app.UseStaticFiles();
 

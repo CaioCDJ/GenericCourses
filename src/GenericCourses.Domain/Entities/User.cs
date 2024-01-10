@@ -11,5 +11,7 @@ public class User
     public string? socialNetwork { get; set; }
     public string? github { get; set; } // why not?
     public bool is_active { get; set; }
-    public DateTime created_at { get; set; }
+    public DateTime createdAt { get; set; }
+    public Subscriptionplan subscriptionplan { get; set; }
+    public Guid subscriptionplanId { get; set; }
 }

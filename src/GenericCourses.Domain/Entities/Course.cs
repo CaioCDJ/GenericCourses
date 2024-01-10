@@ -11,6 +11,6 @@ public class Course
     public List<Category>? categories { get; set; }
     public string? instrutor { get; set; }
     public bool active { get; set; }
-    public DateTime created_at { get; set; }
-    public DateTime last_update { get; set; }
+    public DateTime createdAt { get; set; }
+    public DateTime lastupdate { get; set; }
 }
