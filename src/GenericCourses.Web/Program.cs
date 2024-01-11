@@ -1,12 +1,24 @@
+global using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.EntityFrameworkCore;
 using GenericCourses.Infra;
+using GenericCourses.Infra.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
 builder.Services.addInfra(builder.Configuration);
+
+builder.Services.AddIdentity<LoginUser, IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>() 
+    .AddDefaultTokenProviders();
+
+
+builder.Services.AddRazorPages(options=>{
+    options.Conventions.AuthorizeFolder("/Admin");
+});
+builder.Services.AddAuthentication().AddCookie(options=>{
+    options.LoginPath = "/Login";
+});
 
 var app = builder.Build();
 
@@ -36,6 +48,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapRazorPages();
 

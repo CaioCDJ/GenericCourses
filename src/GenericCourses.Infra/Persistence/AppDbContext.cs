@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using GenericCourses.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace GenericCourses.Infra.Persistence;
 
-public class AppDbContext : DbContext{
+public class AppDbContext : IdentityDbContext<LoginUser,IdentityRole,string>{
 
   public DbSet<Category> categories{ get; set; }
   public DbSet<Certificate> certificates{ get; set; }
@@ -18,4 +20,10 @@ public class AppDbContext : DbContext{
   public DbSet<VideoProgress>VideoProgresses  { get; set; }
 
   public AppDbContext(DbContextOptions<AppDbContext> options):base(options){}
+}
+
+
+public class LoginUser : IdentityUser{
+  public Guid id { get; set; }
+  public User user { get; set; }
 }
