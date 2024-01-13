@@ -21,9 +21,3 @@ public class AppDbContext : IdentityDbContext<LoginUser,IdentityRole,string>{
 
   public AppDbContext(DbContextOptions<AppDbContext> options):base(options){}
 }
-
-
-public class LoginUser : IdentityUser{
-  public Guid id { get; set; }
-  public User user { get; set; }
-}

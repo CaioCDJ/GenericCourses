@@ -26,7 +26,7 @@ public class LoginModel : PageModel
                     LoginReq.password,
                     false,
                     lockoutOnFailure: false);
-            
+           
             return RedirectToPage("/Index");
         }
         else

@@ -1,8 +1,7 @@
 namespace GenericCourses.Infra.Security;
-
 using BCrypt.Net;
 
-class Hasing {
+public class Hasing {
 
     public static string hash(string password)
       => BCrypt.HashPassword(password);

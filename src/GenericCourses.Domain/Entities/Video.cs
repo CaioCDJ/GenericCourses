@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace GenericCourses.Domain.Entities;
 
 public class Video
@@ -8,6 +10,7 @@ public class Video
     public string? videoUrl { get; set; }
     public string? duration { get; set; }
     public int order { get; set; }
+    [Column(TypeName="Date")]
     public DateTime createdAt { get; set; } = DateTime.Now;
     public Guid moduleId{ get; set; }
 }

@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace GenericCourses.Domain.Entities;
 
 public class Course
@@ -11,6 +13,8 @@ public class Course
     public List<Category>? categories { get; set; }
     public string? instrutor { get; set; }
     public bool active { get; set; }
+    [Column(TypeName="Date")]
     public DateTime createdAt { get; set; } = DateTime.Now;
+    [Column(TypeName="Date")]
     public DateTime lastupdate { get; set; } = DateTime.Now;
 }

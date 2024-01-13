@@ -3,6 +3,7 @@ using System;
 using GenericCourses.Infra.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GenericCourses.Infra.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240113000946_UsersUpdate")]
+    partial class UsersUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,7 +83,7 @@ namespace GenericCourses.Infra.Persistence.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("emited_at")
-                        .HasColumnType("Date");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("id");
 
@@ -97,7 +100,7 @@ namespace GenericCourses.Infra.Persistence.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<DateTime>("createdAt")
-                        .HasColumnType("Date");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("description")
                         .HasColumnType("text");
@@ -112,7 +115,7 @@ namespace GenericCourses.Infra.Persistence.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<DateTime>("lastupdate")
-                        .HasColumnType("Date");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("thumb")
                         .HasColumnType("text");
@@ -161,7 +164,7 @@ namespace GenericCourses.Infra.Persistence.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("created_at")
-                        .HasColumnType("Date");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("text")
                         .HasColumnType("text");
@@ -187,7 +190,7 @@ namespace GenericCourses.Infra.Persistence.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("createdAt")
-                        .HasColumnType("Date");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("months")
                         .HasColumnType("integer");
@@ -210,7 +213,7 @@ namespace GenericCourses.Infra.Persistence.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("createdAt")
-                        .HasColumnType("Date");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("github")
                         .HasColumnType("text");
@@ -227,7 +230,7 @@ namespace GenericCourses.Infra.Persistence.Migrations
                     b.Property<string>("socialNetwork")
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("subscriptionplanId")
+                    b.Property<Guid>("subscriptionplanId")
                         .HasColumnType("uuid");
 
                     b.HasKey("id");
@@ -244,7 +247,7 @@ namespace GenericCourses.Infra.Persistence.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("createdAt")
-                        .HasColumnType("Date");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("description")
                         .HasColumnType("text");
@@ -554,7 +557,9 @@ namespace GenericCourses.Infra.Persistence.Migrations
                 {
                     b.HasOne("GenericCourses.Domain.Entities.Subscriptionplan", "subscriptionplan")
                         .WithMany("users")
-                        .HasForeignKey("subscriptionplanId");
+                        .HasForeignKey("subscriptionplanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("subscriptionplan");
                 });

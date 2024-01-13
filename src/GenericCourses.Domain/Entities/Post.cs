@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace GenericCourses.Domain.Entities;
 
 public class Post
@@ -8,6 +10,7 @@ public class Post
     public string? userId { get; set; }
     public string? thumb { get; set; }
     public int acesses { get; set; } = 0;
+    [Column(TypeName="Date")]
     public DateTime created_at { get; set; } = DateTime.Now;
     public List<Category>? categories { get; set; }
 }
