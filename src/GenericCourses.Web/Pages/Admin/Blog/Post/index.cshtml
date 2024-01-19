@@ -25,14 +25,14 @@ ViewData["Title"] = "Index";
   <div class=" grid grid-cols-1 sm:grid-cols-2 mt-5 lg:grid-cols-4 gap-4 mb-4 py-2">
     <div class=" flex justify-center flex-col gap-8 px-4  col-span-2 rounded-lg  h-auto py-8">
       <div class="w-full">
-        <label for="Titulo:" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Titulo:</label>
-        <input type="text"
+        <label for="Titulo:" class="block mb-2 text-sm font-medium text-white">Titulo:</label>
+        <input type="text" asp-for="newPostDTO.title "
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           required>
       </div>
 
       <div class="w-full">
-        <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Markdown</h3>
+        <h3 class="mb-4 font-semibold text-white">Markdown</h3>
         <ul
           class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
           <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
@@ -40,15 +40,15 @@ ViewData["Title"] = "Index";
               <input id="horizontal-list-radio-license" type="radio" value="true" x-model="editor" name="list-radio"
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
               <label for="horizontal-list-radio-license"
-                class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Editor Online</label>
+                class="w-full py-3 ms-2 text-sm font-medium text-gray-300">Editor Online</label>
             </div>
           </li>
           <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
             <div class="flex items-center ps-3">
               <input id="horizontal-list-radio-id" type="radio" value="false" x-model="editor" name="list-radio"
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-              <label for="horizontal-list-radio-id"
-                class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Enviar Arquivo</label>
+              <label for="horizontal-list-radio-id" class="w-full py-3 ms-2 text-sm font-medium text-gray-300">Enviar
+                Arquivo</label>
             </div>
           </li>
         </ul>
@@ -69,7 +69,8 @@ ViewData["Title"] = "Index";
             class=" hidden bg-white rounded-lg shadow w-60 dark:bg-gray-700 z-50 h-64 overflow-y-auto">
             <template x-for='option in @Json.Serialize(AdminPostIndexModel.categories)' :key="option">
               <label :for="option" class="block p-3 hover:bg-sky-600">
-                <input type="checkbox" x-model="selectedOptions" :value="option" :id="option" class="mr-2">
+                <input type="checkbox" x-model="selectedOptions" :value="option" :id="option" class="mr-2"
+                  name="checkboxes">
                 <span x-text="option" class="text-gray-300"></span>
               </label>
             </template>
@@ -89,23 +90,23 @@ ViewData["Title"] = "Index";
 
     <div x-data="{img:'false'}" class="flex justify-center flex-col gap-8 px-4  col-span-2 rounded-lg  h-auto py-8">
       <div class="w-full">
-        <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Thumb</h3>
+        <h3 class="mb-4 font-semibold text-white">Thumb</h3>
         <ul
           class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
           <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
             <div class="flex items-center ps-3">
               <input id="horizontal-list-radio-img" type="radio" value="true" x-model="img" name="list-radio-img"
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-              <label for="horizontal-list-radio-img"
-                class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Url da Imagem</label>
+              <label for="horizontal-list-radio-img" class="w-full py-3 ms-2 text-sm font-medium text-gray-300">Url da
+                Imagem</label>
             </div>
           </li>
           <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
             <div class="flex items-center ps-3">
               <input id="horizontal-list-radio-img" type="radio" value="false" x-model="img" name="list-radio-img"
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-              <label for="horizontal-list-radio-img"
-                class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Upload do
+              <label for="horizontal-list-radio-img" class="w-full py-3 ms-2 text-sm font-medium text-gray-300">Upload
+                do
                 arquivo</label>
             </div>
           </li>
@@ -131,8 +132,8 @@ ViewData["Title"] = "Index";
         </label>
       </div>
       <div class="w-full hidden" :class="{'hidden':(img=='false')}">
-        <label for="Titulo:" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Titulo:</label>
-        <input type="text"
+        <label for="Titulo:" class="block mb-2 text-sm font-medium text-white">Url da Imagem:</label>
+        <input type="text" asp-for="newPostDTO.thumb"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           required>
       </div>
@@ -141,7 +142,7 @@ ViewData["Title"] = "Index";
 
   <div id="txtEditor" class="h-[80vh] mb-4 z-0" :class="(editor=='true')?'':'hidden'">
     <div id="editor">
-      <textarea style="display:none;">### Hello Editor.md !</textarea>
+      <textarea style="display:none;" asp-for="newPostDTO.text">### Hello Editor.md !</textarea>
     </div>
   </div>
 

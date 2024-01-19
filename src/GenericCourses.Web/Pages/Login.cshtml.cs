@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using GenericCourses.Infra.Persistence;
+using GenericCourses.Domain.Dtos.Forms;
 
 namespace GenericCourses.Web.Pages;
 
@@ -10,7 +10,7 @@ public class LoginModel : PageModel
     private readonly ILogger<IndexModel> _logger;
 
     [BindProperty]
-    public loginReq LoginReq { get; set; }
+    public LoginDTO LoginReq { get; set; }
 
     public LoginModel(ILogger<IndexModel> logger)
     {
@@ -26,7 +26,7 @@ public class LoginModel : PageModel
                     LoginReq.password,
                     false,
                     lockoutOnFailure: false);
-           
+
             return RedirectToPage("/Index");
         }
         else
@@ -38,13 +38,3 @@ public class LoginModel : PageModel
     }
 }
 
-public class loginReq
-{
-
-    [Required]
-    [EmailAddress]
-    public string email { get; set; }
-    [Required]
-    [DataType(DataType.Password)]
-    public string password { get; set; }
-}

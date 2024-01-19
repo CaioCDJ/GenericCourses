@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace GenericCourses.Infra.Persistence;
 
-public class AppDbContext : IdentityDbContext<LoginUser,IdentityRole,string>{
+public class AppDbContext : IdentityDbContext<LoginUser>{
 
   public DbSet<Category> categories{ get; set; }
   public DbSet<Certificate> certificates{ get; set; }

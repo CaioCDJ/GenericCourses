@@ -1,4 +1,5 @@
 global using Microsoft.AspNetCore.Identity;
+global using GenericCourses.Domain.Entities;
 using Microsoft.Extensions.FileProviders;
 using GenericCourses.Infra;
 using GenericCourses.Infra.Persistence;
@@ -14,7 +15,7 @@ builder.Services.AddIdentity<LoginUser, IdentityRole>()
 
 
 builder.Services.AddRazorPages(options=>{
-    options.Conventions.AuthorizeFolder("/Admin");
+    // options.Conventions.AuthorizeFolder("/Admin");
 });
 builder.Services.AddAuthentication().AddCookie(options=>{
     options.LoginPath = "/Login";

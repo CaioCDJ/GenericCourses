@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
 using GenericCourses.Infra.Persistence;
 using GenericCourses.Domain.Entities;
+using GenericCourses.Domain.Dtos.Forms;
 using GenericCourses.Infra.Security;
 
 namespace GenericCourses.Web.Pages;
@@ -10,7 +10,7 @@ namespace GenericCourses.Web.Pages;
 public class RegisterModel : PageModel
 {
     [BindProperty]
-    public register dto { get; set; }
+    public RegisterDTO dto { get; set; }
     
     private readonly ILogger<IndexModel> _logger;
 
@@ -39,25 +39,4 @@ public class RegisterModel : PageModel
             return Page();
         }
     }
-}
-
-// provisorio
-// nunca fiz nada no razor kek
-
-public class register
-{
-    [Required]
-    public string name { get; set; }
-    [Required]
-    [EmailAddress]
-    public string email { get; set; }
-    public int phoneNumber { get; set; }
-    [Required]
-    public int cpf { get; set; }
-     [Required]
-    [DataType(DataType.Password)]
-    public string password { get; set; }
-    [Required]
-    [DataType(DataType.Password)]
-    public string confirmPassword { get; set; }
 }
