@@ -103,11 +103,10 @@ ViewData["Title"] = "Admin - Blog";
               </tr>
             </thead>
             <tbody>
-              @foreach(var item in IndexModel.posts){
               <tr class="border-b dark:border-gray-700">
-                <td class="px-4 py-3">@item.title</td>
-                <td class="px-4 py-3">@item.author</td>
-                <td class="px-4 py-3">@item.created_at</td>
+                <td class="px-4 py-3">item.title</td>
+                <td class="px-4 py-3">item.author</td>
+                <td class="px-4 py-3">item.created_at</td>
                 <td class="px-4 py-3 flex gap-3 center">
                   <button class="flex gap-2 px-5 py-2 rounded-md bg-sky-600 text-gray-100 font-semibold"> <i
                       class="bi bi-pencil-square h-5"></i>
@@ -117,7 +116,6 @@ ViewData["Title"] = "Admin - Blog";
                     Archive</button>
                 </td>
               </tr>
-              }
             </tbody>
           </table>
         </div>

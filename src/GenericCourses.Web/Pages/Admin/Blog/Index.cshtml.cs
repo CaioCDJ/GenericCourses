@@ -1,23 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Bogus;
-using Bogus.Extensions.Brazil;
+using GenericCourses.Infra.Reposiitories;
 
 namespace GenericCourses.Web.Pages.Admin.Blog;
 
 public class IndexModel : PageModel
 {
-    public static List<test> posts { get; set; }
+    public static List<GenericCourses.Domain.Entities.Post> posts { get; set; }
 
-    public void OnGet()
+    private readonly PostRepository postRepository;
+
+    public IndexModel([FromServices] PostRepository postRepository)
     {
-        posts = new List<test>();
-        posts = new Faker<test>("pt_BR")
-            .RuleFor(x => x.title, f => f.Company.Bs())
-            .RuleFor(x => x.author, f => f.Name.FirstName(Bogus.DataSets.Name.Gender.Female))
-            .RuleFor(x => x.qt_comments, f => f.PickRandomParam<int>([1, 2, 3, 4, 5]))
-            .RuleFor(x => x.created_at, f => f.Date.Recent().ToString("dd/MM/yyyy")
-                    ).Generate(10);
+        this.postRepository = postRepository;
+    }
+
+    public async void OnGetAsync()
+    {
+        posts = await postRepository.paginate(0);
+        //     posts = new List<test>();
+        //     posts = new Faker<test>("pt_BR")
+        //         .RuleFor(x => x.title, f => f.Company.Bs())
+        //         .RuleFor(x => x.author, f => f.Name.FirstName(Bogus.DataSets.Name.Gender.Female))
+        //         .RuleFor(x => x.qt_comments, f => f.PickRandomParam<int>([1, 2, 3, 4, 5]))
+        //         .RuleFor(x => x.created_at, f => f.Date.Recent().ToString("dd/MM/yyyy")
+        //                 ).Generate(10);
     }
 }
 

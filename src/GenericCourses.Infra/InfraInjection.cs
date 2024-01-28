@@ -1,10 +1,8 @@
-using Microsoft.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using GenericCourses.Infra.Persistence;
 using GenericCourses.Infra.Reposiitories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 
 
 namespace GenericCourses.Infra;

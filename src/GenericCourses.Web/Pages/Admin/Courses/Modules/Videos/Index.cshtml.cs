@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Bogus;
-using Bogus.Extensions.Brazil;
 
 namespace GenericCourses.Web.Pages.Admin.Courses.Modules.Videos;
 
@@ -18,14 +16,15 @@ public class AdminModulesVideosIndexModel : PageModel
 
     public void OnGet()
     {
-        reqs = new Faker<test>("pt_BR")
+        reqs = new List<test>();
+        /*reqs = new Faker<test>("pt_BR")
           .RuleFor(x => x.title, f => f.Rant.Review())
           .RuleFor(x=>x.created_at,f=>f.Date.Recent().ToString("dd/MM/yyyy"))
           .Generate(10);
 
         for(int i=0;i<reqs.Count();i++)
           reqs[i].order = i + 1;
-
+*/
     }
 }
 

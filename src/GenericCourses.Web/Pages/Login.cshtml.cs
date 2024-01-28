@@ -17,17 +17,11 @@ public class LoginModel : PageModel
         _logger = logger;
     }
 
-    public async Task<IActionResult> OnPostAsync([FromServices] SignInManager<LoginUser> signInManager)
+    public async Task<IActionResult> OnPostAsync()
     {
         if (ModelState.IsValid)
         {
-            var result = await signInManager.PasswordSignInAsync(
-                    LoginReq.email,
-                    LoginReq.password,
-                    false,
-                    lockoutOnFailure: false);
-
-            return RedirectToPage("/Index");
+                return RedirectToPage("/Index");
         }
         else
         {

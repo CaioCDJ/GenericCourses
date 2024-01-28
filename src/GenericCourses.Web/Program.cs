@@ -1,4 +1,3 @@
-global using Microsoft.AspNetCore.Identity;
 global using GenericCourses.Domain.Entities;
 using Microsoft.Extensions.FileProviders;
 using GenericCourses.Infra;
@@ -8,11 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.addInfra(builder.Configuration);
-
-builder.Services.AddIdentity<LoginUser, IdentityRole>()
-    .AddEntityFrameworkStores<AppDbContext>() 
-    .AddDefaultTokenProviders();
-
 
 builder.Services.AddRazorPages(options=>{
     // options.Conventions.AuthorizeFolder("/Admin");

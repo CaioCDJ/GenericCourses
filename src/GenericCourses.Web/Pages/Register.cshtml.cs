@@ -20,20 +20,10 @@ public class RegisterModel : PageModel
         _logger = logger;
     }
 
-    public async Task<IActionResult> OnPostAsync([FromServices]UserManager<LoginUser> userManager)
+    public async Task<IActionResult> OnPostAsync()
     {
         if(ModelState.IsValid && (dto.password == dto.confirmPassword)){ 
-            var newlog = new LoginUser(){
-                NormalizedEmail = dto.email,
-                PasswordHash = Hasing.hash(dto.password),
-                UserName = dto.name,
-                user = new User(){
-                    phoneNumber = dto.phoneNumber,
-                    cpf = dto.cpf,
-                }
-            };
-            await userManager.CreateAsync(newlog);
-            return RedirectToPage("/Index");
+                     return RedirectToPage("/Index");
 
         }else{
             return Page();

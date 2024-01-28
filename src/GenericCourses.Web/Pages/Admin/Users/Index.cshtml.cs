@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using GenericCourses.Domain.Entities;
-using Bogus;
-using Bogus.Extensions.Brazil;
 
 namespace GenericCourses.Web.Pages.Admin.Users;
 
@@ -19,13 +17,13 @@ public class AdminUsersIndexModel : PageModel
     public void OnGet()
     {
         reqs = new List<Request>();
-        var faker = new Faker<Request>("pt_BR")
-            .RuleFor(x=> x.name, f => f.Name.FirstName(Bogus.DataSets.Name.Gender.Male))
-            .RuleFor(x=>x.email, f => f.Internet.Email(f.Person.FirstName.ToLower()))
-            .RuleFor(x=>x.cpf, f=> f.Person.Cpf())
-            .RuleFor(x=>x.active,f=> f.PickRandomParam(new bool[]{true,false}));
-
-        reqs = faker.Generate(10);
+        // var faker = new Faker<Request>("pt_BR")
+        //     .RuleFor(x=> x.name, f => f.Name.FirstName(Bogus.DataSets.Name.Gender.Male))
+        //     .RuleFor(x=>x.email, f => f.Internet.Email(f.Person.FirstName.ToLower()))
+        //     .RuleFor(x=>x.cpf, f=> f.Person.Cpf())
+        //     .RuleFor(x=>x.active,f=> f.PickRandomParam(new bool[]{true,false}));
+        //
+        // reqs = faker.Generate(10);
     }
 }
 
