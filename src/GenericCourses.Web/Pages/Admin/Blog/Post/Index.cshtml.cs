@@ -52,7 +52,7 @@ public class AdminPostIndexModel : PageModel
                 {newPostDTO.text}\n\n     
                 ");
 
-        var post = await postRepository.store(new GenericCourses.Domain.Entities.Post()
+        var post = await postRepository.store(new BlogPost()
         {
             title = newPostDTO.title,
             text = newPostDTO.text,

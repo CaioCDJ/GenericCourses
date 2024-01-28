@@ -16,7 +16,6 @@
 
   </ItemGroup>
 
-
   <ItemGroup>
 
     <ProjectReference Include="..\GenericCourses.Domain\GenericCourses.Domain.csproj" />

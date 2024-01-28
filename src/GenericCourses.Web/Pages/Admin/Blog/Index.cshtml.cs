@@ -1,12 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using GenericCourses.Infra.Reposiitories;
+using GenericCourses.Infra.Paginators;
+using GenericCourses.Infra.Persistence;
 
 namespace GenericCourses.Web.Pages.Admin.Blog;
 
 public class IndexModel : PageModel
 {
-    public static List<GenericCourses.Domain.Entities.Post> posts { get; set; }
+    // public static List<BlogPost> posts { get; set; }
+    public static PaginatedList<BlogPost> posts { get; set; }
+
+    public static int currentPage { get; set; }
 
     private readonly PostRepository postRepository;
 
@@ -15,24 +20,19 @@ public class IndexModel : PageModel
         this.postRepository = postRepository;
     }
 
-    public async void OnGetAsync()
+    // pagina para page por que o mvc nao interpreta page na query
+    public async Task OnGetAsync(
+            [FromQuery] int? pagina,
+            [FromServices] AppDbContext appDbContext
+    )
     {
-        posts = await postRepository.paginate(0);
-        //     posts = new List<test>();
-        //     posts = new Faker<test>("pt_BR")
-        //         .RuleFor(x => x.title, f => f.Company.Bs())
-        //         .RuleFor(x => x.author, f => f.Name.FirstName(Bogus.DataSets.Name.Gender.Female))
-        //         .RuleFor(x => x.qt_comments, f => f.PickRandomParam<int>([1, 2, 3, 4, 5]))
-        //         .RuleFor(x => x.created_at, f => f.Date.Recent().ToString("dd/MM/yyyy")
-        //                 ).Generate(10);
+        currentPage = pagina ?? 1;
+
+        // posts = await postRepository.paginate(currentPage);
+
+        posts = await PaginatedList<BlogPost>.CreateAsync(
+                from p in appDbContext.blogPosts select p,
+                currentPage
+                );
     }
 }
-
-public class test
-{
-    public string title { get; set; }
-    public string author { get; set; }
-    public string created_at { get; set; }
-    public int qt_comments { get; set; }
-}
-

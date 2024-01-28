@@ -16,5 +16,6 @@ public class User
     public DateTime createdAt { get; set; } = DateTime.Now;
     public Subscriptionplan? subscriptionplan { get; set; }
     public Guid? subscriptionplanId { get; set; }
-
+    
+    public ICollection<BlogPost>? posts { get; set; }
 }

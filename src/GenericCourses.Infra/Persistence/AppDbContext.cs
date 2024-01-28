@@ -13,7 +13,7 @@ public class AppDbContext : DbContext
     public DbSet<Course> courses { get; set; }
     public DbSet<Module> modules { get; set; }
     public DbSet<ModuleProgress> moduleProgresses { get; set; }
-    public DbSet<Post> posts { get; set; }
+    public DbSet<BlogPost> blogPosts { get; set; }
     public DbSet<CourseProgress> CourseProgresses { get; set; }
     public DbSet<Subscriptionplan> subscriptionplans { get; set; }
     public DbSet<User> users { get; set; }
@@ -26,31 +26,35 @@ public class AppDbContext : DbContext
     {
         var guid = Guid.NewGuid();
 
-        var posts = new Faker<Post>("pt_BR")
+        var posts = new Faker<BlogPost>("pt_BR")
           .RuleFor(x => x.title, f => f.Commerce.Product())
           .RuleFor(x => x.text, f => f.Lorem.Text())
-          .RuleFor(x => x.userId, f => f.PickRandomParam<Guid>([guid]));
+          .RuleFor(x=>x.userId,f=>f.PickRandomParam<Guid>([guid]));
+
+        var data =  posts.Generate(10);
+
+        var user = new User
+        {
+            id = guid,
+            email = "admin@admin.com",
+            name = "admin",
+        };
 
         modelBuilder.Entity<User>()
-          .HasData(
-              new User
-              {
-                  id = guid,
-                  email = "admin@admin.com",
-                  name = "admin"
-              }
+            .HasData(
+             user
           );
 
         modelBuilder.Entity<User>()
-          .HasData(new User{
-            id = Guid.NewGuid(),
-            email= "user@email.com",
-            name = "user"
+          .HasData(new User
+          {
+              id = Guid.NewGuid(),
+              email = "user@email.com",
+              name = "user"
           });
 
-        modelBuilder.Entity<Post>()
-          .HasData(posts.GenerateBetween(100, 100));
+        modelBuilder.Entity<BlogPost>()
+          .HasData(posts.Generate(10));
+
     }
-
-
 }

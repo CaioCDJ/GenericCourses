@@ -11,6 +11,7 @@ builder.Services.addInfra(builder.Configuration);
 builder.Services.AddRazorPages(options=>{
     // options.Conventions.AuthorizeFolder("/Admin");
 });
+
 builder.Services.AddAuthentication().AddCookie(options=>{
     options.LoginPath = "/Login";
 });

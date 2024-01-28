@@ -8,7 +8,7 @@ namespace GenericCourses.Web.Pages.Blog;
 public class PostModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
-    public static Post article { get; set; }
+    public static BlogPost article { get; set; }
 
     public PostModel(ILogger<IndexModel> logger)
     {
@@ -18,7 +18,7 @@ public class PostModel : PageModel
     public void OnGet(string id = "")
     {
         // testando o Layout
-        article = new Post();
+        article = new BlogPost();
         article.thumb = "https://images.unsplash.com/photo-1691874678829-76e4e7fb5e93?ixid=M3wxMTI1OHwwfDF8cmFuZG9tfHx8fHx8fHx8MTcwMjkwODgyNXw&ixlib=rb-4.0.3&q=85&w=1920";
         article.title = "O basico de Laravel";
 

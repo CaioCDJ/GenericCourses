@@ -5,9 +5,9 @@ namespace GenericCourses.Domain.Contracts.Repositories;
 
 public interface IPostReepsitory
 {
-    Task<Post> single(Guid id);
-    Task<List<Post>> paginate(int page, int size = 10);
-    Task<Post> store(Post post);
-    Task<Post> update(Post post);
-    Task<Post> remove(Guid id);
+    Task<BlogPost> single(Guid id);
+    Task<BlogPost> store(BlogPost post);
+    Task<BlogPost> update(BlogPost post);
+
+    Task<BlogPost> remove(Guid id);
 }

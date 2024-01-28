@@ -7,41 +7,33 @@ namespace GenericCourses.Infra.Reposiitories;
 
 public class PostRepository : IPostReepsitory
 {
-    private readonly AppDbContext _conteext;
+    private readonly AppDbContext _context;
 
     public PostRepository(AppDbContext appDbContext)
-      => _conteext = appDbContext;
+      => _context = appDbContext;
 
-    public async Task<Post> single(Guid id)
-      => await _conteext.posts.FirstOrDefaultAsync(x => x.id == id);
+    public async Task<BlogPost> single(Guid id)
+      => await _context.blogPosts.FirstOrDefaultAsync(x => x.id == id);
 
-
-    public async Task<List<Post>> paginate(int page, int size = 10)
+    public async Task<BlogPost> store(BlogPost post)
     {
-        var list = _conteext.posts.Take(size).ToList();
-
-        return list;
+        await _context.blogPosts.AddAsync(post);
+        await _context.SaveChangesAsync();
+        return new BlogPost();
     }
 
-    public async Task<Post> store(Post post)
+    public async Task<BlogPost> update(BlogPost post)
     {
-        await _conteext.posts.AddAsync(post);
-        await _conteext.SaveChangesAsync();
-        return new Post();
+        _context.Update(post);
+        await _context.SaveChangesAsync();
+        return new BlogPost();
     }
 
-    public async Task<Post> update(Post post)
-    {
-        _conteext.Update(post);
-        await _conteext.SaveChangesAsync();
-        return new Post();
-    }
-
-    public async Task<Post> remove(Guid id)
+    public async Task<BlogPost> remove(Guid id)
     {
         var post = await this.single(id);
-        _conteext.posts.Remove(post);
-        await _conteext.SaveChangesAsync();
-        return new Post();
+        _context.blogPosts.Remove(post);
+        await _context.SaveChangesAsync();
+        return new BlogPost();
     }
 }

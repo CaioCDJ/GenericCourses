@@ -17,4 +17,5 @@ public class Course
     public DateTime createdAt { get; set; } = DateTime.Now;
     [Column(TypeName="Date")]
     public DateTime lastupdate { get; set; } = DateTime.Now;
+    public List<Module> modules { get; set; }
 }
