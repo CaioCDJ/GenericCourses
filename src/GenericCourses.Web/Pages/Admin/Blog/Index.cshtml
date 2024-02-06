@@ -4,7 +4,8 @@
 Layout = "./../../Shared/_AdminLayout.cshtml";
 ViewData["Title"] = "Admin - Blog";
 }
-<main class="p-4 md:ml-64 h-auto pt-20">
+<main class="p-4 md:ml-64 h-auto pt-20" x-data="control">
+  <partial name="../../Shared/Partials/Modals/DeletePostModalPartial.cshtml" />
   <section class="bg-gray-900 p-3 sm:p-5">
     <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
       <!-- Start coding here -->
@@ -113,9 +114,11 @@ ViewData["Title"] = "Admin - Blog";
                   <button class="flex gap-2 px-5 py-2 rounded-md bg-sky-600 text-gray-100 font-semibold"> <i
                       class="bi bi-pencil-square h-5"></i>
                     Edit</button>
-                  <button class="flex gap-2 px-5 py-2 rounded-md bg-yellow-600 text-gray-100 font-semibold"> <i
-                      class="bi bi-archive h-5"></i>
-                    Archive</button>
+                  <button @@click="changeId('@item.id','@item.title')" data-modal-target="deletePostModal"
+                    data-modal-toggle="deletePostModal"
+                    class="flex gap-2 px-5 py-2 rounded-md bg-rose-600 text-gray-100 font-semibold"> <i
+                      class="bi bi-trash h-5"></i>
+                    Deletar</button>
                 </td>
               </tr>
               }}
@@ -177,3 +180,30 @@ ViewData["Title"] = "Admin - Blog";
     </div>
   </section>
 </main>
+
+@section Scripts{
+
+<script>
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('control', () => ({
+      textEx: '',
+      id: '',
+
+      changeId(id, titulo) {
+        this.id = id
+        this.textEx = "Você tem certeza que quer deletar o " + titulo
+        console.log(this.textEx)
+      },
+      remove(id) {
+        fetch("http://localhost:5196/admin/blog/" + this.id, {
+          method: "DELETE",
+        }).then(response => response.json())
+          .then(result => {
+            location.reload()
+          });
+      }
+    }))
+  })
+
+</script>
+}

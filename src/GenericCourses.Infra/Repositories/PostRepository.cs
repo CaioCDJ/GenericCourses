@@ -3,7 +3,7 @@ using GenericCourses.Domain.Contracts.Repositories;
 using GenericCourses.Infra.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace GenericCourses.Infra.Reposiitories;
+namespace GenericCourses.Infra.Repositories;
 
 public class PostRepository : IPostReepsitory
 {

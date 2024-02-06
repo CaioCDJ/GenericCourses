@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using GenericCourses.Domain.Dtos.Forms;
-using GenericCourses.Infra.Reposiitories;
+using GenericCourses.Infra.Repositories;
 
 namespace GenericCourses.Web.Pages.Admin.Blog.Post;
 

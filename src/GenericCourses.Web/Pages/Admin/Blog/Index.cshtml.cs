@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using GenericCourses.Infra.Reposiitories;
+using GenericCourses.Infra.Repositories;
 using GenericCourses.Infra.Paginators;
 using GenericCourses.Infra.Persistence;
 
@@ -12,6 +12,9 @@ public class IndexModel : PageModel
     public static PaginatedList<BlogPost> posts { get; set; }
 
     public static int currentPage { get; set; }
+
+    [BindProperty]
+    public string id {get;set;}
 
     private readonly PostRepository postRepository;
 

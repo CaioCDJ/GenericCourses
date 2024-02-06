@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using GenericCourses.Infra.Persistence;
-using GenericCourses.Infra.Reposiitories;
+using GenericCourses.Infra.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -21,8 +21,7 @@ public static class InfraInjection
                 );
         });
         
-        services.AddTransient<PostRepository>();
-
+        services.AddScoped<PostRepository>();
         return services;
     }
 }
