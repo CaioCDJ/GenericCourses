@@ -18,8 +18,9 @@ ViewData["Title"] = "Blog";
 
     <div class="grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8">
       <!-- article - start -->
-      @for(int i =0;i<10;i++){ <div class="flex flex-col overflow-hidden rounded-lg border-none bg-gray-800">
-        <a href="~/Blog/Post/dldl" class="group relative block h-48 overflow-hidden bg-gray-100 md:h-64">
+      @foreach(var item in IndexModel.posts){
+      <div class="flex flex-col overflow-hidden rounded-lg border-none bg-gray-800">
+        <a href="~/Blog/Post/@item.postId" class="group relative block h-48 overflow-hidden bg-gray-100 md:h-64">
           <img src="https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&q=75&fit=crop&w=600"
             loading="lazy" alt="Photo by Minh Pham"
             class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
@@ -27,8 +28,7 @@ ViewData["Title"] = "Blog";
 
         <div class="flex flex-1 flex-col p-4 sm:p-6">
           <h2 class="mb-2 text-lg font-semibold text-sky-500">
-            <a href="#" class="transition duration-100 hover:text-indigo-500 active:text-indigo-600">New trends in
-              Tech</a>
+            <a href="#" class="transition duration-100 hover:text-indigo-500 active:text-indigo-600">@item.title</a>
           </h2>
 
           <div class="mt-auto flex items-end justify-between">
@@ -39,8 +39,8 @@ ViewData["Title"] = "Blog";
               </div>
 
               <div>
-                <span class="block text-sky-700">Mike Lane</span>
-                <span class="block text-sm text-gray-400">July 19, 2021</span>
+                <span class="block text-sky-700">@item.author</span>
+                <span class="block text-sm text-gray-400">@item.date</span>
               </div>
             </div>
 
@@ -49,9 +49,10 @@ ViewData["Title"] = "Blog";
 
           </div>
         </div>
-    </div>}
-    <!-- article - end -->
-  </div>
+      </div>
+      }
+      <!-- article - end -->
+    </div>
   </div>
   <div class="mt-8">
     <nav aria-label="Page navigation example">

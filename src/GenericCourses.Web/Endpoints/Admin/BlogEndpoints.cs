@@ -6,7 +6,6 @@ namespace GenericCourses.Web.Endpoints.Admin;
 
 public static class BlogEndpoints
 {
-
     public static void MapBlogEndpoints(this WebApplication app)
     {
         var blogRoutes = app.MapGroup("admin/blog");
