@@ -6,5 +6,5 @@ public class PostDTO
     public string title { get; init; }
     public DateTime date { get; init; }
     public string author { get; init; }
-    // public string? categoria { get; init; } = "";
+    public string? category{ get; init; } = "";
 }

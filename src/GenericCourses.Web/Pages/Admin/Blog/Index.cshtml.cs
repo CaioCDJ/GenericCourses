@@ -34,7 +34,7 @@ public class IndexModel : PageModel
         // posts = await postRepository.paginate(currentPage);
 
         posts = await PaginatedList<BlogPost>.CreateAsync(
-                from p in appDbContext.blogPosts select p,
+                from p in appDbContext.blog_posts select p,
                 currentPage
                 );
     }

@@ -11,6 +11,8 @@ public class BlogPost
     public int acesses { get; set; } = 0;
     [Column(TypeName="Date")]
     public DateTime created_at { get; set; } = DateTime.Now;
-    public List<Category>? categories { get; set; }
-    public Guid userId { get; set; }
+    public Category? category {get;set;}
+    public Guid categoryId { get; set; } 
+    public Instructor instructor { get; set; }
+    public Guid instructorId { get; set; }
 }

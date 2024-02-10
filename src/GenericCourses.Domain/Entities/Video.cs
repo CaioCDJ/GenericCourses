@@ -11,6 +11,6 @@ public class Video
     public string? duration { get; set; }
     public int order { get; set; }
     [Column(TypeName="Date")]
-    public DateTime createdAt { get; set; } = DateTime.Now;
+    public DateTime created_at { get; set; } = DateTime.Now;
     public Guid moduleId{ get; set; }
 }

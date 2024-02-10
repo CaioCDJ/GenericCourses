@@ -7,4 +7,5 @@ public class VideoProgress{
   public Guid videoId { get; set; }
   public Module module { get; set; }
   public Guid moduleId { get; set; }
+  public bool done {  get; set; } = false;
 }
