@@ -23,6 +23,7 @@ public static class InfraInjection
         });
         
         services.AddScoped<PostRepository>();
+        services.AddScoped<InstructorRepository>();
         return services;
     }
 }

@@ -2,13 +2,14 @@ global using GenericCourses.Domain.Entities;
 using Microsoft.Extensions.FileProviders;
 using GenericCourses.Infra;
 using GenericCourses.Infra.Persistence;
+using GenericCourses.Application;
 using GenericCourses.Web.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.addInfra(builder.Configuration);
-
+builder.Services.addApplication();
 
 builder.Services.AddRazorPages(options=>{
     // options.Conventions.AuthorizeFolder("/Admin");

@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Markdig" Version="0.34.0" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -20,6 +21,7 @@
 
     <ProjectReference Include="..\GenericCourses.Domain\GenericCourses.Domain.csproj" />
     <ProjectReference Include="..\GenericCourses.Infra\GenericCourses.Infra.csproj" />
+    <ProjectReference Include="..\GenericCourses.Application\GenericCourses.Application.csproj" />
   </ItemGroup>
 
     <!-- mid -->

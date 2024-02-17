@@ -27,24 +27,31 @@ public class PostPaginator<PostDTO> : List<PostDTO>
         AppDbContext context, int pageIndex, int pageSize = 10
         )
     {
-        int offset = (pageIndex > 0 && pageIndex != 1)
+        pageIndex = (pageIndex > 1) ? pageIndex : 1;
+
+        int offset = (pageIndex > 1)
           ? (pageIndex * pageSize)
           : 0;
+
         using var conn = new NpgsqlConnection(context.Database.GetConnectionString());
 
-        var lst = await conn.QueryAsync<PostDTO>(@$"
-       SELECT b.id as postId, b.title ,b.created_at AS date ,u.name AS author ,c.category
+        var lst = await conn.QueryAsync<PostDTO>(@"
+            SELECT b.id as postId, b.title ,b.created_at AS date ,u.name AS author ,c.category
                 FROM blog_posts AS b
                     JOIN instructors AS i ON i.id = b.instructor_id
                     JOIN categories AS c ON c.id = b.category_id
                     JOIN users AS u ON u.id = i.user_id
                     ORDER BY b.created_at desc
-                    OFFSET {offset}
-                ");
-
+                    LIMIT @pageSize
+                    OFFSET @offset
+        ", new {pageSize =pageSize, offset = offset});
+       
+        var qt = await context.blog_posts.CountAsync(); 
+        
         conn.Close();
+
         return new PostPaginator<PostDTO>(
-            lst.ToList(), lst.Count(), pageIndex, pageSize
+            lst.ToList(), qt, pageIndex, pageSize
         );
     }
 

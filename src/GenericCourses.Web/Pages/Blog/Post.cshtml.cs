@@ -26,8 +26,6 @@ public class PostModel : PageModel
         Guid guid;
         if (Guid.TryParse(id, out guid))
             article = await _postRepository.single(guid);
-
-        Console.WriteLine((article is null) ? "fudeu" : "");
     }
 
 }

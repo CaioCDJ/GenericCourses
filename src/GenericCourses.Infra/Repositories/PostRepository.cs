@@ -1,5 +1,4 @@
 using GenericCourses.Domain.Entities;
-using GenericCourses.Domain.Contracts.Repositories;
 using GenericCourses.Infra.Persistence;
 using Microsoft.EntityFrameworkCore;
 
