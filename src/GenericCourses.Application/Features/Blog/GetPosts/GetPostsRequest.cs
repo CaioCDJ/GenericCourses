@@ -8,4 +8,4 @@ namespace GenericCourses.Application.Features.Blog;
 public record GetPostsRequest(
     int pageIndex,
     int pageSize = 8
-    ) : IRequest<PaginatedLista<PostDTO>>;
+    ) : IRequest<PaginatedList<PostDTO>>;

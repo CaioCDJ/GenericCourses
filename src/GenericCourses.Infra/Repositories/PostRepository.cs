@@ -1,18 +1,41 @@
 using GenericCourses.Domain.Entities;
+using GenericCourses.Domain.Dtos.Pages;
 using GenericCourses.Infra.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
+using Dapper;
 
 namespace GenericCourses.Infra.Repositories;
 
-public class PostRepository : IPostReepsitory
+public class PostRepository : IPostRepository
 {
     private readonly AppDbContext _context;
+    private readonly NpgsqlConnection _conn;
 
     public PostRepository(AppDbContext appDbContext)
-      => _context = appDbContext;
+    {
+        _context = appDbContext;
+        _conn = new NpgsqlConnection(appDbContext.Database.GetConnectionString());
+    }
 
     public async Task<BlogPost> single(Guid id)
       => await _context.blog_posts.FirstOrDefaultAsync(x => x.id == id);
+
+    public async Task<List<PostDTO>> paginate(int offset, int size = 8)
+    {
+
+        var lst = await _conn.QueryAsync<PostDTO>(@"
+            SELECT b.id as postId, b.title ,b.created_at AS date ,u.name AS author ,c.category
+                FROM blog_posts AS b
+                    JOIN instructors AS i ON i.id = b.instructor_id
+                    JOIN categories AS c ON c.id = b.category_id
+                    JOIN users AS u ON u.id = i.user_id
+                    ORDER BY b.created_at desc
+                    LIMIT @size
+                    OFFSET @offset
+        ", new { size = size, offset = offset });
+        return lst.ToList();
+    }
 
     public async Task<BlogPost> store(BlogPost post)
     {

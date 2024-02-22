@@ -1,14 +1,34 @@
 using GenericCourses.Application.Common;
 using GenericCourses.Domain.Dtos.Pages;
+using GenericCourses.Infra.Repositories;
+using GenericCourses.Infra.Persistence;
+
 using MediatR;
 
 namespace GenericCourses.Application.Features.Blog;
 
-public class GetPostsHandler : IRequestHandler<GetPostsRequest,PaginatedLista<PostDTO>>
+public class GetPostsHandler : IRequestHandler<GetPostsRequest, PaginatedList<PostDTO>>
 {
-  public async Task<PaginatedLista<PostDTO>> Handle(GetPostsRequest requests, CancellationToken ct){
+    private readonly PostRepository _postRepository;
+    private readonly AppDbContext _context;
 
-    var a =new List<PostDTO>();
-    return new PaginatedLista<PostDTO>(a,2,4,0);
-  }
+    public GetPostsHandler(PostRepository postRepository, AppDbContext context)
+    {
+        _postRepository = postRepository;
+        _context = context;
+    }
+
+    public async Task<PaginatedList<PostDTO>> Handle(GetPostsRequest requests, CancellationToken ct)
+    {
+        var index = (requests.pageIndex > 1) ? requests.pageIndex : 1;
+
+        int offset = (index > 1)
+          ? (requests.pageSize * index) : 0;
+
+        var lst = await _postRepository.paginate(offset);
+
+        return new PaginatedList<PostDTO>(
+          lst, _context.blog_posts.Count(), 4, 0
+        );
+    }
 }

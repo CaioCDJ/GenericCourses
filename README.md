@@ -3,7 +3,7 @@
 
 # Generic Courses
 
-Project created as a way to learn mainly Razor Pages applications.
+Project created as a way to learn aspnetCore Razor and MVC.
 
 ## Run Locally
 
