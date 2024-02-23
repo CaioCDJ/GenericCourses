@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@ViewData["Title"] - GenericCourses</title>
+  <link rel="stylesheet" href="/css/output.css" asp-append-version="true">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
+</head>
+
+<body class="bg-gray-900 bg-cover">
+  <main class="flex flex-col lg:flex-row gap-3 center w-full h-screen center">
+
+    @RenderBody()
+
+    <div class="w-3/5 text-center py-4 h-full bg-sky-700 hidden lg:flex flex-col px-10 justify-center gap-8">
+      <img class="h-full w-full" src="./imgs/logI.png" />
+      <a href="https://storyset.com/people" class="text-gray-300">People illustrations by Storyset</a>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+  <script src="//unpkg.com/alpinejs" defer></script>
+</body>
+
+</html>

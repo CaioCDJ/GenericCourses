@@ -27,6 +27,9 @@ public class GetPostsHandler : IRequestHandler<GetPostsRequest, PaginatedList<Po
 
         var lst = await _postRepository.paginate(offset);
 
+        // for (int i = 0; i <= lst.Count; i++)
+        // lst[i].postId = Convert.ToBase64String(      elst[i].postId);
+
         return new PaginatedList<PostDTO>(
           lst, _context.blog_posts.Count(), 4, 0
         );
