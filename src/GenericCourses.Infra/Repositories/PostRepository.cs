@@ -1,4 +1,5 @@
 using GenericCourses.Domain.Entities;
+using GenericCourses.Domain.Dtos.Querys;
 using GenericCourses.Domain.Dtos.Pages;
 using GenericCourses.Infra.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -10,12 +11,12 @@ namespace GenericCourses.Infra.Repositories;
 public class PostRepository : IPostRepository
 {
     private readonly AppDbContext _context;
-    private readonly NpgsqlConnection _conn;
+    private readonly string _connString;
 
     public PostRepository(AppDbContext appDbContext)
     {
         _context = appDbContext;
-        _conn = new NpgsqlConnection(appDbContext.Database.GetConnectionString());
+        _connString = appDbContext.Database.GetConnectionString();
     }
 
     public async Task<BlogPost> single(Guid id)
@@ -23,8 +24,8 @@ public class PostRepository : IPostRepository
 
     public async Task<List<PostDTO>> paginate(int offset, int size = 8)
     {
-
-        var lst = await _conn.QueryAsync<PostDTO>(@"
+        using var conn = new NpgsqlConnection(_connString);
+        var lst = await conn.QueryAsync<PostDTO>(@"
             SELECT b.id as postId, b.title ,b.created_at AS date ,u.name AS author ,c.category
                 FROM blog_posts AS b
                     JOIN instructors AS i ON i.id = b.instructor_id
@@ -35,6 +36,32 @@ public class PostRepository : IPostRepository
                     OFFSET @offset
         ", new { size = size, offset = offset });
         return lst.ToList();
+    }
+
+    public async Task<List<GetPostAdminQuery>> paginateAdmin(Guid id, int offset, int size = 8)
+    {
+        using var conn = new NpgsqlConnection(_connString);
+        var lst = await conn.QueryAsync<GetPostAdminQuery>(@"
+            SELECT b.id as postId, b.title ,b.created_at ,u.name AS author 
+                FROM blog_posts AS b
+                    JOIN instructors AS i ON i.id = b.instructor_id
+                    JOIN categories AS c ON c.id = b.category_id
+                    JOIN users AS u ON u.id = i.user_id
+                    WHERE b.instructor_id = @id
+                    ORDER BY b.created_at desc
+                    LIMIT @size
+                    OFFSET @offset
+        ", new { size = size, offset = offset, id = id });
+        return lst.ToList();
+    }
+    public async Task<int> QtByUsers(Guid id)
+    {
+        using var conn = new NpgsqlConnection(_connString);
+        return await conn.QuerySingleAsync<int>(@"
+            SELECT COUNT(*) FROM blog_posts
+                JOIN instructors AS i ON i.id = b.instructor_id
+                WHERE b.instructor_id = @id
+        ", new { id = id });
     }
 
     public async Task<BlogPost> store(BlogPost post)

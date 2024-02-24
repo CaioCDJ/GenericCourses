@@ -10,29 +10,27 @@ namespace GenericCourses.Infra.Repositories;
 public class InstructorRepository : IInstructorRepository
 {
     private readonly AppDbContext _context;
-    private readonly NpgsqlConnection _conn;
+    private readonly string _conString;
 
     public InstructorRepository(AppDbContext context)
     {
         _context = context;
-        _conn = new NpgsqlConnection(context.Database.GetConnectionString());
+        _conString = context.Database.GetConnectionString();
     }
 
 
     public async Task<AdminAccountDTO> accountInfo(Guid id)
     {
-        _conn.Open();
+        using var conn = new NpgsqlConnection(_conString);
         // 
-        var queryResult = await _conn.QueryFirstAsync<queryResult>(@$"
+        var queryResult = await conn.QueryFirstAsync<queryResult>(@$"
             SELECT
              (SELECT COUNT(*) FROM courses WHERE instructor_id = @id) as qtCourses,
              (SELECT COUNT(*) FROM blog_posts WHERE instructor_id = @id) as qtBlogPosts,
              (SELECT COUNT(*) FROM course_progresses WHERE course_id = @id AND done = TRUE) as qtStudentsFinished,
              (SELECT COUNT(*) FROM course_progresses WHERE course_id = @id ) as qtStudents;
-            ", new {id=id});
+            ", new { id = id });
 
-        await _conn.CloseAsync();
-        
         var dto = new AdminAccountDTO
         {
             qtStudents = queryResult.qtStudents,
