@@ -15,4 +15,11 @@ public class CoursesController : Controller
   {
     return View();
   }
+
+  public IActionResult Info(string id)
+    => View();
+
+  public IActionResult Watch(string id)
+    => View();
+
 }

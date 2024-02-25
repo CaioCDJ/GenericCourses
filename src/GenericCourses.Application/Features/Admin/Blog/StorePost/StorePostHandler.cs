@@ -22,7 +22,7 @@ public class StorePostHandler : IRequestHandler<StorePostRequest, BlogPost>
       instructorId = request.instructor_id
     });
 
-    if(post is null)
+    if (post is null)
       throw new Exception();
 
 

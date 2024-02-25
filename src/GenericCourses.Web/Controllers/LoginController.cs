@@ -7,7 +7,6 @@ namespace GenericCourses.Web.Controllers;
 
 public class LoginController : Controller
 {
-
     private readonly ILogger<HomeController> _logger;
     private readonly IMediator _mediatr;
 
