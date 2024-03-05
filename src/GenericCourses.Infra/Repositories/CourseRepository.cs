@@ -4,48 +4,44 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GenericCourses.Infra.Repositories;
 
-public class CourseRepository : ICourseRepository
-{
-    private readonly AppDbContext _context;
+public class CourseRepository : ICourseRepository {
+	private readonly AppDbContext _context;
 
-    public CourseRepository(AppDbContext context)
-      => _context = context;
+	public CourseRepository(AppDbContext context)
+	  => _context = context;
 
-    public async Task<Course> single(Guid id)
-      => await _context.courses.FirstOrDefaultAsync(x => x.id == id);
+	public async Task<Course> single(Guid id)
+	  => await _context.courses.FirstOrDefaultAsync(x => x.id == id);
 
-    public async Task<Course> store(Course course)
-    {
-        var check = await _context.courses.FirstOrDefaultAsync(x =>
-            x.title == course.title);
-        
-        if (check is not null) throw new Exception(message: $"Já existe um curso com o nome: {course.title}");
+	public async Task<Course> store(Course course) {
+		var check = await _context.courses.FirstOrDefaultAsync(x =>
+			x.title == course.title);
 
-        await _context.courses.AddAsync(course);
-        await _context.SaveChangesAsync();
-        return course;
-    }
+		if (check is not null) throw new Exception(message: $"Já existe um curso com o nome: {course.title}");
 
-    public async Task<Course> update(Guid id, Course course)
-    {
-        var courseCheck = await this.single(id);
+		await _context.courses.AddAsync(course);
+		await _context.SaveChangesAsync();
+		return course;
+	}
 
-        if (courseCheck is null) throw new Exception(message: $"O usuario não foi encontrado!");
+	public async Task<Course> update(Guid id, Course course) {
+		var courseCheck = await this.single(id);
 
-        _context.courses.Update(course);
-        await _context.SaveChangesAsync();
+		if (courseCheck is null) throw new Exception(message: $"O usuario não foi encontrado!");
 
-        return course;
-    }
+		_context.courses.Update(course);
+		await _context.SaveChangesAsync();
 
-    public async Task delete(Guid id)
-    {
-        var course = await _context.courses.FirstOrDefaultAsync(x => x.id == id);
+		return course;
+	}
 
-        if (course is null) throw new Exception(message: $"O Curso não foi encontrado!");
+	public async Task delete(Guid id) {
+		var course = await _context.courses.FirstOrDefaultAsync(x => x.id == id);
 
-        _context.courses.Remove(course);
+		if (course is null) throw new Exception(message: $"O Curso não foi encontrado!");
 
-        await _context.SaveChangesAsync();
-    }
+		_context.courses.Remove(course);
+
+		await _context.SaveChangesAsync();
+	}
 }

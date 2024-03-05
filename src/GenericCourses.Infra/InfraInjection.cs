@@ -7,23 +7,20 @@ using EFCore.NamingConventions;
 
 namespace GenericCourses.Infra;
 
-public static class InfraInjection
-{
+public static class InfraInjection {
 
-    public static IServiceCollection addInfra(
-        this IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddDbContext<AppDbContext>(options =>
-        {
-            options.UseNpgsql(
-                configuration.GetConnectionString("DefaultConnection"),
-                b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)
-                )
-            .UseSnakeCaseNamingConvention();
-        });
-        
-        services.AddScoped<PostRepository>();
-        services.AddScoped<InstructorRepository>();
-        return services;
-    }
+	public static IServiceCollection addInfra(
+		this IServiceCollection services, IConfiguration configuration) {
+		services.AddDbContext<AppDbContext>(options => {
+			options.UseNpgsql(
+				configuration.GetConnectionString("DefaultConnection"),
+				b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)
+				)
+			.UseSnakeCaseNamingConvention();
+		});
+
+		services.AddScoped<PostRepository>();
+		services.AddScoped<InstructorRepository>();
+		return services;
+	}
 }

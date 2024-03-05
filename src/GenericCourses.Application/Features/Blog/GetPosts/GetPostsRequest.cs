@@ -6,6 +6,6 @@ using GenericCourses.Domain.Dtos.Pages;
 namespace GenericCourses.Application.Features.Blog;
 
 public record GetPostsRequest(
-    int pageIndex,
-    int pageSize = 8
-    ) : IRequest<PaginatedList<PostDTO>>;
+	int pageIndex,
+	int pageSize = 8
+	) : IRequest<PaginatedList<PostDTO>>;

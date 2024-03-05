@@ -3,9 +3,8 @@ using GenericCourses.Domain.Dtos.Pages;
 
 namespace GenericCourses.Infra.Repositories;
 
-public interface IInstructorRepository
-{
+public interface IInstructorRepository {
 
-  Task<AdminAccountDTO> accountInfo(Guid id);
+	Task<AdminAccountDTO> accountInfo(Guid id);
 
 }

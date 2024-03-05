@@ -5,18 +5,17 @@ using MediatR;
 
 namespace GenericCourses.Web.Controllers;
 
-public class RegisterController : Controller
-{
+public class RegisterController : Controller {
 
-    private readonly ILogger<HomeController> _logger;
-    private readonly IMediator _mediatr;
+	private readonly ILogger<HomeController> _logger;
+	private readonly IMediator _mediatr;
 
-    public RegisterController(ILogger<HomeController> logger, IMediator mediator){
-      _logger = logger;
-      _mediatr = mediator;
-    }
+	public RegisterController(ILogger<HomeController> logger, IMediator mediator) {
+		_logger = logger;
+		_mediatr = mediator;
+	}
 
-    public IActionResult Index(){
-      return View("./Views/Auth/Register.cshtml");
-    }
+	public IActionResult Index() {
+		return View("./Views/Auth/Register.cshtml");
+	}
 }

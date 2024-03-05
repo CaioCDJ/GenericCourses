@@ -6,36 +6,33 @@ using Npgsql;
 
 namespace GenericCourses.Infra.Paginators;
 
-public class PostPaginator<PostDTO> : List<PostDTO>
-{
-    public int PageIndex { get; private set; }
-    public int TotalPages { get; private set; }
+public class PostPaginator<PostDTO> : List<PostDTO> {
+	public int PageIndex { get; private set; }
+	public int TotalPages { get; private set; }
 
-    public PostPaginator(List<PostDTO> items, int count, int pageIndex, int pageSize)
-    {
-        PageIndex = pageIndex;
-        TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+	public PostPaginator(List<PostDTO> items, int count, int pageIndex, int pageSize) {
+		PageIndex = pageIndex;
+		TotalPages = (int)Math.Ceiling(count / (double)pageSize);
 
-        this.AddRange(items);
-    }
+		this.AddRange(items);
+	}
 
-    public bool HasPreviousPage => PageIndex > 1;
+	public bool HasPreviousPage => PageIndex > 1;
 
-    public bool HasNextPage => PageIndex < TotalPages;
+	public bool HasNextPage => PageIndex < TotalPages;
 
-    public static async Task<PostPaginator<PostDTO>> CreateAsync(
-        AppDbContext context, int pageIndex, int pageSize = 10
-        )
-    {
-        pageIndex = (pageIndex > 1) ? pageIndex : 1;
+	public static async Task<PostPaginator<PostDTO>> CreateAsync(
+		AppDbContext context, int pageIndex, int pageSize = 10
+		) {
+		pageIndex = (pageIndex > 1) ? pageIndex : 1;
 
-        int offset = (pageIndex > 1)
-          ? (pageIndex * pageSize)
-          : 0;
+		int offset = (pageIndex > 1)
+		  ? (pageIndex * pageSize)
+		  : 0;
 
-        using var conn = new NpgsqlConnection(context.Database.GetConnectionString());
+		using var conn = new NpgsqlConnection(context.Database.GetConnectionString());
 
-        var lst = await conn.QueryAsync<PostDTO>(@"
+		var lst = await conn.QueryAsync<PostDTO>(@"
             SELECT b.id as postId, b.title ,b.created_at AS date ,u.name AS author ,c.category
                 FROM blog_posts AS b
                     JOIN instructors AS i ON i.id = b.instructor_id
@@ -44,15 +41,15 @@ public class PostPaginator<PostDTO> : List<PostDTO>
                     ORDER BY b.created_at desc
                     LIMIT @pageSize
                     OFFSET @offset
-        ", new {pageSize =pageSize, offset = offset});
-       
-        var qt = await context.blog_posts.CountAsync(); 
-        
-        conn.Close();
+        ", new { pageSize = pageSize, offset = offset });
 
-        return new PostPaginator<PostDTO>(
-            lst.ToList(), qt, pageIndex, pageSize
-        );
-    }
+		var qt = await context.blog_posts.CountAsync();
+
+		conn.Close();
+
+		return new PostPaginator<PostDTO>(
+			lst.ToList(), qt, pageIndex, pageSize
+		);
+	}
 
 }
