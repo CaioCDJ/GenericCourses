@@ -12,7 +12,7 @@ public class PostPaginator<PostDTO> : List<PostDTO> {
 
 	public PostPaginator(List<PostDTO> items, int count, int pageIndex, int pageSize) {
 		PageIndex = pageIndex;
-		TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+		TotalPages = (int) Math.Ceiling(count / (double) pageSize);
 
 		this.AddRange(items);
 	}

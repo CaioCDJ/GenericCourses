@@ -10,7 +10,9 @@ public class HomeController : Controller {
 	public HomeController(ILogger<HomeController> logger) {
 		_logger = logger;
 	}
-
+	[Route("/")]
+	[Route("/index")]
+	[Route("/home")]
 	public IActionResult Index() {
 		return View("./Views/Home/Index.cshtml");
 	}

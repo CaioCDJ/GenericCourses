@@ -16,6 +16,8 @@ public class BlogController : Controller {
 		_mediatr = mediator;
 	}
 
+	[Route("/blog")]
+	[Route("/articles")]
 	public async Task<IActionResult> Index(int? pageNumber) {
 		var paginatedList = await _mediatr.Send(new GetPostsRequest(
 			  (pageNumber is not null) ? pageNumber.Value : 0
@@ -24,6 +26,8 @@ public class BlogController : Controller {
 		return View(paginatedList);
 	}
 
+	[Route("/blog/{id}")]
+	[Route("/articles/{id}")]
 	public async Task<IActionResult> Post(string id) {
 
 		Guid guid;
@@ -33,7 +37,6 @@ public class BlogController : Controller {
 		}
 		else
 			return NotFound();
-
 	}
 
 	[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -51,7 +51,7 @@ public class AppDbContext : DbContext {
 		  .RuleFor(x => x.title, f => f.Commerce.Product())
 		  .RuleFor(x => x.text, f => f.Lorem.Text())
 		  .RuleFor(x => x.instructorId, f => f.PickRandomParam<Guid>([instructor.id]))
-          .RuleFor(x => x.categoryId, f => f.PickRandomParam<Guid>(
+		  .RuleFor(x => x.categoryId, f => f.PickRandomParam<Guid>(
 					  categories.Select(x => x.id).ToArray()));
 
 		var data = posts.Generate(10);

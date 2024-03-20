@@ -17,7 +17,7 @@ dotnet_style_allow_multiple_blank_lines_experimental = false
 dotnet_style_allow_statement_immediately_after_block_experimental = false
 
 
-csharp_space_after_cast = false
+csharp_space_after_cast = true
 csharp_space_after_colon_in_inheritance_clause = true
 csharp_space_after_comma = true
 csharp_space_after_dot = false
@@ -42,5 +42,14 @@ csharp_space_between_square_brackets = false
 
 
 # Newline settings
-csharp_new_line_before_finally = true
 csharp_new_line_between_query_expression_clauses = true
+csharp_new_line_before_members_in_object_initializers = true
+csharp_new_line_before_members_in_anonymous_types = true
+csharp_new_line_between_query_expression_clauses = true
+
+# braces
+csharp_indent_block_contents = true
+csharp_indent_braces = false
+csharp_indent_case_contents = true
+csharp_indent_case_contents_when_block = true
+

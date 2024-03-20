@@ -10,10 +10,14 @@ public class CoursesController : Controller {
 	public CoursesController(ILogger<HomeController> logger)
 	  => _logger = logger;
 
+	[Route("/courses")]
+	[Route("/cursos")]
 	public IActionResult Index() {
 		return View();
 	}
 
+	[Route("/courses/{id}")]
+	[Route("/cursos/{id}")]
 	public IActionResult Info(string id)
 	  => View();
 
