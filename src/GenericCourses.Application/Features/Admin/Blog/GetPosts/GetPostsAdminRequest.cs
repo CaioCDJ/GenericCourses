@@ -1,5 +1,5 @@
 using GenericCourses.Application.Common;
-using GenericCourses.Domain.Dtos.Querys;
+using GenericCourses.Infra.Repositories.Queries;
 using MediatR;
 
 namespace GenericCourses.Application.Features.Admin.Blog;

@@ -1,4 +1,4 @@
-namespace GenericCourses.Domain.Dtos.Querys;
+namespace GenericCourses.Infra.Repositories.Queries;
 
 public class GetPostAdminQuery {
 	public Guid postId { get; set; }

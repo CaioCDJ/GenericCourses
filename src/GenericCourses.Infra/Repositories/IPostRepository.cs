@@ -1,6 +1,6 @@
 using GenericCourses.Domain.Entities;
-using GenericCourses.Domain.Dtos.Querys;
 using GenericCourses.Domain.Dtos.Pages;
+using GenericCourses.Infra.Repositories.Queries;
 
 namespace GenericCourses.Infra.Repositories;
 

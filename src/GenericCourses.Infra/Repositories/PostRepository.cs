@@ -1,5 +1,5 @@
 using GenericCourses.Domain.Entities;
-using GenericCourses.Domain.Dtos.Querys;
+using GenericCourses.Infra.Repositories.Queries;
 using GenericCourses.Domain.Dtos.Pages;
 using GenericCourses.Infra.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +50,7 @@ public class PostRepository : IPostRepository {
         ", new { size = size, offset = offset, id = id });
 		return lst.ToList();
 	}
+
 	public async Task<int> QtByUsers(Guid id) {
 		using var conn = new NpgsqlConnection(_connString);
 		return await conn.QuerySingleAsync<int>(@"
