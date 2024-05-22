@@ -20,18 +20,42 @@ public class PostRepository : IPostRepository {
 	public async Task<BlogPost> single(Guid id)
 	  => await _context.blog_posts.FirstOrDefaultAsync(x => x.id == id);
 
-	public async Task<List<PostDTO>> paginate(int offset, int size = 8) {
+	public async Task<List<PostDTO>> paginate(
+		int offset, 
+		int size = 8, 
+		string[]? categories = null,
+		string? searchParam=null
+	) {
 		using var conn = new NpgsqlConnection(_connString);
-		var lst = await conn.QueryAsync<PostDTO>(@"
-            SELECT b.id as postId, b.title ,b.created_at AS date ,u.name AS author ,c.category
+		
+		string where=null;
+
+		if(searchParam is not null && (categories is not null && categories.Length>0)) {
+			where = "WHERE b.title LIKE @searchParam" + " AND " + "c.category IN @categories";
+		} else if (searchParam is not null) {
+			where = "WHERE b.title LIKE @searchTitle";
+		} else if (categories is not null && categories.Length>0) {
+			where = "WHERE c.category IN @categories";
+		}
+		
+		string query = @$"
+			SELECT b.id as postId, b.title ,b.created_at AS date ,u.name AS author ,c.category
                 FROM blog_posts AS b
                     JOIN instructors AS i ON i.id = b.instructor_id
                     JOIN categories AS c ON c.id = b.category_id
                     JOIN users AS u ON u.id = i.user_id
+                    {(string.IsNullOrEmpty(where) ? "" : where) }
                     ORDER BY b.created_at desc
                     LIMIT @size
-                    OFFSET @offset
-        ", new { size = size, offset = offset });
+                    OFFSET @offset";	
+	
+		var lst = await conn.QueryAsync<PostDTO>(query, new { 
+			size = size, 
+			offset = offset, 
+			categories = categories, 
+			searchTitle = "%" + searchParam + "%"
+		});
+		
 		return lst.ToList();
 	}
 

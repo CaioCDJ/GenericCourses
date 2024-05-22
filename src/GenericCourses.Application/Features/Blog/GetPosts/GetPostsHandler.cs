@@ -22,9 +22,12 @@ public class GetPostsHandler : IRequestHandler<GetPostsRequest, PaginatedList<Po
 		int offset = (index > 1)
 		  ? (requests.pageSize * index) : 0;
 
-		var lst = await _postRepository.paginate(offset);
-
-		// for (int i = 0; i <= lst.Count; i++)
+		var lst = await _postRepository.paginate(
+		  offset,
+		  requests.pageSize,
+		  requests.categories,
+		  requests.searchParam
+		);
 		// lst[i].postId = Convert.ToBase64String(      elst[i].postId);
 
 		return new PaginatedList<PostDTO>(

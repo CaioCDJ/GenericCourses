@@ -18,9 +18,16 @@ public class BlogController : Controller {
 
 	[Route("/blog")]
 	[Route("/articles")]
-	public async Task<IActionResult> Index(int? pageNumber) {
+	public async Task<IActionResult> Index(
+		int? pageNumber,
+		[FromQuery]string[]? categories, 
+		[FromQuery]string? search
+		) {
 		var paginatedList = await _mediatr.Send(new GetPostsRequest(
-			  (pageNumber is not null) ? pageNumber.Value : 0
+			  (pageNumber is not null) ? pageNumber.Value : 0,
+			  10,
+			  (categories is not null) ? categories : null,
+			  (search is not null) ? search : null
 			  ));
 
 		return View(paginatedList);
