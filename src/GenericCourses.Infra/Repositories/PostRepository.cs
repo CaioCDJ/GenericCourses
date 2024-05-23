@@ -31,11 +31,11 @@ public class PostRepository : IPostRepository {
 		string where=null;
 
 		if(searchParam is not null && (categories is not null && categories.Length>0)) {
-			where = "WHERE b.title LIKE @searchParam" + " AND " + "c.category IN @categories";
+			where = "WHERE b.title LIKE @searchTitle" + " AND " + "c.category = any(@categories)";
 		} else if (searchParam is not null) {
 			where = "WHERE b.title LIKE @searchTitle";
 		} else if (categories is not null && categories.Length>0) {
-			where = "WHERE c.category IN @categories";
+			where = "WHERE c.category = any (@categories)";
 		}
 		
 		string query = @$"
@@ -49,13 +49,15 @@ public class PostRepository : IPostRepository {
                     LIMIT @size
                     OFFSET @offset";	
 	
+		Console.WriteLine(query);	
+		
 		var lst = await conn.QueryAsync<PostDTO>(query, new { 
 			size = size, 
 			offset = offset, 
 			categories = categories, 
 			searchTitle = "%" + searchParam + "%"
 		});
-		
+
 		return lst.ToList();
 	}
 

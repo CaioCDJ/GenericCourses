@@ -21,6 +21,7 @@ public static class InfraInjection {
 
 		services.AddScoped<PostRepository>();
 		services.AddScoped<InstructorRepository>();
+		services.AddScoped<CategoriesRepository>();
 		return services;
 	}
 }

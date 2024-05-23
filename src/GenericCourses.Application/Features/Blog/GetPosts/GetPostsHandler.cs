@@ -7,31 +7,38 @@ using MediatR;
 
 namespace GenericCourses.Application.Features.Blog;
 
-public class GetPostsHandler : IRequestHandler<GetPostsRequest, PaginatedList<PostDTO>> {
+public class GetPostsHandler : IRequestHandler<GetPostsRequest, GetPostsResponse> {
 	private readonly PostRepository _postRepository;
+	private readonly CategoriesRepository _categoriesRepository;
 	private readonly AppDbContext _context;
 
-	public GetPostsHandler(PostRepository postRepository, AppDbContext context) {
+	public GetPostsHandler(PostRepository postRepository, AppDbContext context, CategoriesRepository categoriesRepository) {
 		_postRepository = postRepository;
+		_categoriesRepository = categoriesRepository;
 		_context = context;
 	}
 
-	public async Task<PaginatedList<PostDTO>> Handle(GetPostsRequest requests, CancellationToken ct) {
-		var index = (requests.pageIndex > 1) ? requests.pageIndex : 1;
+	public async Task<GetPostsResponse> Handle(GetPostsRequest request, CancellationToken cancellationToken) {
+
+		var index = (request.pageIndex > 1) ? request.pageIndex : 1;
 
 		int offset = (index > 1)
-		  ? (requests.pageSize * index) : 0;
+		  ? (request.pageSize * index) : 0;
 
 		var lst = await _postRepository.paginate(
 		  offset,
-		  requests.pageSize,
-		  requests.categories,
-		  requests.searchParam
+		  request.pageSize,
+		  request.categories,
+		  request.searchParam
 		);
-		// lst[i].postId = Convert.ToBase64String(      elst[i].postId);
 
-		return new PaginatedList<PostDTO>(
+		var categories = await _categoriesRepository.getAll();
+		// string[] categories = ["oliver","oliver 2"];
+
+		var pagination = new PaginatedList<PostDTO>(
 		  lst, _context.blog_posts.Count(), 4, 0
 		);
+
+		return new GetPostsResponse(pagination, categories);
 	}
 }

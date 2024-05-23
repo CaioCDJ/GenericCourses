@@ -20,13 +20,22 @@ public class BlogController : Controller {
 	[Route("/articles")]
 	public async Task<IActionResult> Index(
 		int? pageNumber,
-		[FromQuery]string[]? categories, 
+		[FromQuery]string? categories, 
 		[FromQuery]string? search
 		) {
+
+		string[] categoriesParams = null;
+
+		if(categories is not null) {
+			categoriesParams = (categories.Contains(","))
+				?categories.Split(',')
+				: [categories];
+		}
+
 		var paginatedList = await _mediatr.Send(new GetPostsRequest(
 			  (pageNumber is not null) ? pageNumber.Value : 0,
 			  10,
-			  (categories is not null) ? categories : null,
+			  (categoriesParams is not null) ? categoriesParams : null,
 			  (search is not null) ? search : null
 			  ));
 
