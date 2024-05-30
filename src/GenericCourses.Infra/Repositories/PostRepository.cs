@@ -21,40 +21,42 @@ public class PostRepository : IPostRepository {
 	  => await _context.blog_posts.FirstOrDefaultAsync(x => x.id == id);
 
 	public async Task<List<PostDTO>> paginate(
-		int offset, 
-		int size = 8, 
+		int offset,
+		int size = 8,
 		string[]? categories = null,
-		string? searchParam=null
+		string? searchParam = null
 	) {
 		using var conn = new NpgsqlConnection(_connString);
-		
-		string where=null;
 
-		if(searchParam is not null && (categories is not null && categories.Length>0)) {
-			where = "WHERE b.title LIKE @searchTitle" + " AND " + "c.category = any(@categories)";
-		} else if (searchParam is not null) {
-			where = "WHERE b.title LIKE @searchTitle";
-		} else if (categories is not null && categories.Length>0) {
-			where = "WHERE c.category = any (@categories)";
+		string where = null;
+
+		if (searchParam is not null && (categories is not null && categories.Length > 0)) {
+			where = "WHERE b.title LIKE @searchTitle" + " AND " + "c.name = any(@categories)";
 		}
-		
+		else if (searchParam is not null) {
+			where = "WHERE b.title LIKE @searchTitle";
+		}
+		else if (categories is not null && categories.Length > 0) {
+			where = "WHERE c.name = any (@categories)";
+		}
+
 		string query = @$"
-			SELECT b.id as postId, b.title ,b.created_at AS date ,u.name AS author ,c.category
+			SELECT b.id as postId, b.title ,b.created_at AS date ,u.name AS author ,c.name
                 FROM blog_posts AS b
                     JOIN instructors AS i ON i.id = b.instructor_id
-                    JOIN categories AS c ON c.id = b.category_id
+                    JOIN categories AS c ON c.blog_post_id = b.id
                     JOIN users AS u ON u.id = i.user_id
-                    {(string.IsNullOrEmpty(where) ? "" : where) }
+                    {(string.IsNullOrEmpty(where) ? "" : where)}
                     ORDER BY b.created_at desc
                     LIMIT @size
-                    OFFSET @offset";	
-	
-		Console.WriteLine(query);	
-		
-		var lst = await conn.QueryAsync<PostDTO>(query, new { 
-			size = size, 
-			offset = offset, 
-			categories = categories, 
+                    OFFSET @offset";
+
+		Console.WriteLine(query);
+
+		var lst = await conn.QueryAsync<PostDTO>(query, new {
+			size = size,
+			offset = offset,
+			categories = categories,
 			searchTitle = "%" + searchParam + "%"
 		});
 

@@ -8,4 +8,5 @@ public class Client {
 
 	public Subscriptionplan? subscriptionplan { get; set; }
 	public Guid? subscriptionplanId { get; set; }
+	public ICollection<Review> reviews { get; set; }
 }

@@ -10,11 +10,6 @@ Project created as a way to learn aspnetCore Razor and MVC.
 Clone the project
 
 ```bash
-  git clone https://link-to-projectgit@github.com:CaioCDJ/GenericCourses.git
-```
-or 
-
-```bash
   git clone https://github.com/CaioCDJ/GenericCourses.git
 ```
 

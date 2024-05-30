@@ -3,7 +3,7 @@ using GenericCourses.Domain.Dtos.Pages;
 
 namespace GenericCourses.Application.Features.Blog;
 
-public record GetPostsResponse (
+public record GetPostsResponse(
 	PaginatedList<PostDTO> Posts,
 	string[]? categories
 );
