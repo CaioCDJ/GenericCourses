@@ -11,4 +11,7 @@ public class Review {
 	public Guid clientId { get; set; }
 	public Course course { get; set; }
 	public Guid courseId { get; set; }
+
+	// Sem avaliacao por estrelas para manter a ,
+	// ambiguidade
 }

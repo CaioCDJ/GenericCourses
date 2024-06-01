@@ -7,4 +7,6 @@ public class Module {
 	public int order { get; set; } = 0;
 	public bool complete { get; set; } = false;
 	public List<Video>? videos { get; set; }
+	public Course course { get; set; }
+	public Guid courseId { get; set; }
 }

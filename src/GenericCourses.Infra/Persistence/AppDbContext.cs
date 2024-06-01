@@ -24,102 +24,188 @@ public class AppDbContext : DbContext {
 	public DbSet<VideoProgress> video_progresses { get; set; }
 	public DbSet<Comment> comments { get; set; }
 	public DbSet<Review> reviews { get; set; }
+	public DbSet<PostCategory> post_categories { get; set; }
+	public DbSet<CourseCategory> course_categories { get; set; }
 
 	public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder) {
-		var guid = Guid.NewGuid();
-		/*
-				// aumentando com o tempo
-				Category[] categories = [
-					new Category { name = "C#" },
-					new Category { name = "Javascript" },
-					new Category { name = "TypeScript" },
-					new Category { name = "Laravel" },
-					new Category { name = "Php" },
-					new Category { name = "Banco de dados" },
-					new Category { name = "Docker" },
-					new Category { name = "Postgresql" },
-					new Category { name = "C" },
-					new Category { name = "C" },
-				];
 
-				var instructor = new Instructor {
-					userId = guid
-				};
-				//
-				// var posts = new Faker<BlogPost>("pt_BR")
-				//   .RuleFor(x => x.title, f => f.Commerce.Product())
-				//   .RuleFor(x => x.text, f => f.Lorem.Text())
-				//   .RuleFor(x => x.instructorId, f => f.PickRandomParam<Guid>([instructor.id]));
-				//
-				// var data = posts.Generate(10);
-				//
-				// foreach(var item in data){
-				// 	item.category.Add(categories[new Random().Next(0, categories.Length)]);
-				// }
+		var instructorId = Guid.NewGuid();
+		var adminId = Guid.NewGuid();
 
-				var user = new User {
-					id = guid,
-					email = "admin@admin.com",
-					name = "admin",
-					password = Hasing.hash("admin12345")
-				};
+		var clientsUser = new Faker<User>("pt_BR")
+			.RuleFor(u => u.id, f => Guid.NewGuid())
+			.RuleFor(u => u.name, f => f.Person.FullName)
+			.RuleFor(u => u.email, f => f.Internet.Email())
+			.RuleFor(u => u.password, f => Hasing.hash(f.Internet.Password()))
+			.RuleFor(u => u.cpf, f => double.Parse(f.Person.Cpf().Replace(".", "").Replace("-", "")))
+			.RuleFor(u => u.phone, f => double.Parse(f.Person.Phone.Replace("(", "").Replace(")", "").Replace("-", "").Replace(" ", "")))
+			.RuleFor(u => u.is_active, f => true)
+			.RuleFor(u => u.created_at, f => DateTime.Now);
 
-				var coursesFaker = new Faker<Course>("pt_BR")
-				  .RuleFor(x => x.title, f => f.Commerce.Product())
-				  .RuleFor(x => x.description, f => f.Lorem.Text())
-				  .RuleFor(x=>x.is_free, f => f.Random.Bool(0.5f))
-				  .RuleFor(x=>x.active, f => f.Random.Bool(0.5f))
-				  .RuleFor(x => x.instructorId, f => f.PickRandomParam<Guid>([instructor.id]));
+		var usersList = clientsUser.Generate(50);
 
-				var courses = coursesFaker.Generate(15);
+		var clientsId = usersList.Select(x => x.id).ToArray();
 
-				var subscriptionPlan = new List<Subscriptionplan>{
-					new Subscriptionplan{
-						description = "Plano mensal",
-						price = 15.00f,
-						months = 1
-					},
-					new Subscriptionplan{
-						description = "Plano anual",
-						price = 150.00f,
-						months = 12
-					}
-				};
+		usersList.Add(
+			new User {
+				id = adminId,
+				name = "Admin",
+				email = "admin@admin",
+				password = Hasing.hash("admin123"),
+				cpf = 123456789,
+				phone = 123456789,
+				is_active = true,
+				created_at = DateTime.Now
+			}
+		);
 
-				modelBuilder.Entity<User>()
-					.HasData(
-					 user
-				  );
+		usersList.Add(
+			new User {
+				id = instructorId,
+				name = "instrutor 1",
+				email = "professor@preofessor.com",
+				password = Hasing.hash("professor123"),
+				cpf = 123456789,
+				phone = 123456789,
+				is_active = true,
+				created_at = DateTime.Now
+			}
+		);
 
-				modelBuilder.Entity<Instructor>()
-					.HasData(instructor);
+		// default acconts
+		modelBuilder.Entity<User>().HasData(usersList);
 
-				modelBuilder.Entity<User>()
-				  .HasData(new User {
-					  id = Guid.NewGuid(),
-					  email = "user@email.com",
-					  name = "user",
-					  password = Hasing.hash("algo4321")
-				  });
+		modelBuilder.Entity<Admin>().HasData(
+			new Admin {
+				userId = adminId
+			}
+		);
+		var instrutor = new Instructor {
+			userId = instructorId
+		};
 
-				modelBuilder.Entity<Category>()
-					.HasData(categories);
+		modelBuilder.Entity<Instructor>().HasData(instrutor);
 
-				// // modelBuilder.Entity<BlogPost>()
-				// //   .HasData(data);
+		var freePlanId = Guid.NewGuid();
+		// Subs
+		modelBuilder.Entity<Subscriptionplan>().HasData(
+			new Subscriptionplan {
+				id = freePlanId,
+				price = 0,
+				description = "Free",
+				created_at = DateTime.Now,
+				months = 0
+			},
+
+			new Subscriptionplan {
+				price = 35.0f,
+				description = "Mensal",
+				created_at = DateTime.Now,
+				months = 1
+			},
+
+			new Subscriptionplan {
+				price = 399.99f,
+				description = "Anual",
+				created_at = DateTime.Now,
+				months = 1
+			}
+		);
+
+		var clientData = new List<Client>();
+
+		for (int i = 0; i < clientsId.Count(); i++)
+			clientData.Add(new Client { userId = clientsId[i], subscriptionplanId = freePlanId });
+
+		modelBuilder.Entity<Client>().HasData(clientData);
+
+		var blogPostFaker = new Faker<BlogPost>("pt_BR")
+			.RuleFor(u => u.id, f => f.Random.Guid())
+			.RuleFor(u => u.instructorId, f => instrutor.id)
+			.RuleFor(u => u.text, f => f.Lorem.Paragraphs())
+			.RuleFor(u => u.title, f => f.Name.JobArea());
+
+		var posts = blogPostFaker.Generate(30);
 
 
-				for(int i =0;i< courses.Count;i++) {
-					courses[i].instructorId = instructor.id;
-					// var cats = categories.Take(Random.Shared.Next(0,categories.Length )).ToList();
-					// courses[i].categories = cats;
+		modelBuilder.Entity<BlogPost>()
+			.HasData(posts);
+
+		var categories = new List<Category>(){
+			new Category{name = "c#"},
+			new Category{name = "c"},
+			new Category{name = "Js"},
+			new Category{name = "Java"},
+			new Category{name = "Typescript"},
+			new Category{name = "PHP"},
+			new Category{name = "MySql"},
+			new Category{name = "SQL"},
+			new Category{name = "Rust"},
+			new Category{name = "F#"},
+		};
+
+		var rdm = new Random();
+
+		modelBuilder.Entity<Category>()
+			.HasData(categories);
+
+		var categoriesPost = new List<PostCategory>();
+
+		for (int i = 0; i < posts.Count; i++) {
+			categoriesPost.Add(
+				new PostCategory {
+					categoryId = categories[rdm.Next(0, categories.Count)].id,
+					blogPostId = posts[i].id
 				}
+			);
+		}
 
-				// modelBuilder.Entity<Course>()
-				// 	.HasData(courses);
+		modelBuilder.Entity<PostCategory>()
+			.HasData(categoriesPost);
 
-				modelBuilder.Entity<Subscriptionplan>();*/
+
+		// -- Courses -- 
+
+		var courseFaker = new Faker<Course>("pt_BR")
+			.RuleFor(x => x.title, f => f.Commerce.Product())
+			.RuleFor(x => x.description, f => f.Lorem.Paragraph())
+			.RuleFor(x => x.active, f => true)
+			.RuleFor(x => x.is_free, f => false)// tudo que e bom tem um preco, e o mmeu e inflacionado.
+			.RuleFor(x => x.instructorId, f => instrutor.id);
+
+		var coures = courseFaker.Generate(14);
+
+		var freeCourseId = Guid.NewGuid();
+
+		coures.Add(
+			new Course {
+				id = freeCourseId,
+				title = "Curso de baixa qualidade",
+				is_free = true,
+				instructorId = instrutor.id,
+				active = true,
+			});
+
+		modelBuilder.Entity<Course>()
+			.HasData(coures);
+
+		modelBuilder.Entity<Module>().HasData(
+			new Module {
+				title = "introducao",
+				courseId = freeCourseId
+			},
+			new Module {
+				title = "Modulo 2",
+				courseId = freeCourseId,
+				order = 1
+			},
+			new Module {
+				title = "Modulo 3",
+				courseId = freeCourseId,
+				order = 2
+			}
+		);
 	}
 }

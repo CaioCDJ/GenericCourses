@@ -9,7 +9,7 @@ public class Course {
 	public string? thumb { get; set; }
 	public bool is_free { get; set; } = false;
 	public string? duration { get; set; }
-	public ICollection<Category>? categories { get; set; }
+	public ICollection<CourseCategory>? courseCategories { get; set; }
 	public Instructor instructor { get; set; }
 	public Guid instructorId { get; set; }
 	public bool active { get; set; }
