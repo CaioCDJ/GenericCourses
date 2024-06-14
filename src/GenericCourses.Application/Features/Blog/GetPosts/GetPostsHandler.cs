@@ -8,11 +8,11 @@ using MediatR;
 namespace GenericCourses.Application.Features.Blog;
 
 public class GetPostsHandler : IRequestHandler<GetPostsRequest, GetPostsResponse> {
-	private readonly PostRepository _postRepository;
-	private readonly CategoriesRepository _categoriesRepository;
+	private readonly IPostRepository _postRepository;
+	private readonly ICategoriesRepository _categoriesRepository;
 	private readonly AppDbContext _context;
 
-	public GetPostsHandler(PostRepository postRepository, AppDbContext context, CategoriesRepository categoriesRepository) {
+	public GetPostsHandler(IPostRepository postRepository, AppDbContext context, ICategoriesRepository categoriesRepository) {
 		_postRepository = postRepository;
 		_categoriesRepository = categoriesRepository;
 		_context = context;

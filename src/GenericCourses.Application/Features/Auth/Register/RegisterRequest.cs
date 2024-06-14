@@ -3,7 +3,7 @@ using GenericCourses.Domain.Entities;
 
 namespace GenericCourses.Application.Features.Auth;
 
-public class RegisterRequest : IRequest<Client> {
+public class RegisterRequest : IRequest<User> {
 	public string name { get; set; }
 	public string email { get; set; }
 	public string password { get; set; }

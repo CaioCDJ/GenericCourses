@@ -1,10 +1,9 @@
 using GenericCourses.Domain.Entities;
-using GenericCourses.Infra.Persistence;
 
 namespace GenericCourses.Infra.Repositories;
 
 public interface IAuthRepository {
-	Task<bool> canRegister();
-	Task<User> register();
-	// Task<LoginRequest>();
+	Task<bool> canRegister(User user);
+	Task<User> register(User user);
+	Task<User> canLogin(string email, string password);
 }

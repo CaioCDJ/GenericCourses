@@ -16,7 +16,6 @@ public class InstructorRepository : IInstructorRepository {
 		_conString = context.Database.GetConnectionString();
 	}
 
-
 	public async Task<AdminAccountDTO> accountInfo(Guid id) {
 		using var conn = new NpgsqlConnection(_conString);
 		// 

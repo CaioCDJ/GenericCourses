@@ -24,6 +24,14 @@ public class AdminController : Controller {
 		return View();
 	}
 
+	[Route("/admin/post/new")]
+	public async Task<IActionResult> NewPost(
+		[FromServices] ICategoriesRepository categoriesRepository
+	) {
+		var categories = await categoriesRepository.getAll();
+		return View(categories);
+	}
+
 	[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 	public IActionResult Error() {
 

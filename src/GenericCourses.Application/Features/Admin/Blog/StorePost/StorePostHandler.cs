@@ -6,9 +6,9 @@ namespace GenericCourses.Application.Features.Admin.Blog;
 
 public class StorePostHandler : IRequestHandler<StorePostRequest, BlogPost> {
 
-	private readonly PostRepository _postRepository;
+	private readonly IPostRepository _postRepository;
 
-	public StorePostHandler(PostRepository postRepository) => _postRepository = postRepository;
+	public StorePostHandler(IPostRepository postRepository) => _postRepository = postRepository;
 
 	public async Task<BlogPost> Handle(StorePostRequest request, CancellationToken ct) {
 

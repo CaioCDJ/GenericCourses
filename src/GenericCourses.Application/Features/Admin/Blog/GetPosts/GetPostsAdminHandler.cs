@@ -8,11 +8,10 @@ namespace GenericCourses.Application.Features.Admin.Blog;
 
 public class GetPostsAdminHandler : IRequestHandler<GetPostsAdminRequest, PaginatedList<GetPostAdminQuery>> {
 
-	private readonly PostRepository _postRepository;
-	private readonly AppDbContext _context;
+	private readonly IPostRepository _postRepository;
 
-	public GetPostsAdminHandler(PostRepository postRepository, AppDbContext context) {
-		_postRepository = postRepository; _context = context;
+	public GetPostsAdminHandler(IPostRepository postRepository) {
+		_postRepository = postRepository;
 	}
 
 	public async Task<PaginatedList<GetPostAdminQuery>> Handle(GetPostsAdminRequest request, CancellationToken ct) {

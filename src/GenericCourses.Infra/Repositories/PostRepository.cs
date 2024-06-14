@@ -52,8 +52,6 @@ public class PostRepository : IPostRepository {
                     LIMIT @size
                     OFFSET @offset";
 
-		Console.WriteLine(query);
-
 		var lst = await conn.QueryAsync<PostDTO>(query, new {
 			size = size,
 			offset = offset,
