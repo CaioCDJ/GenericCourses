@@ -32,6 +32,13 @@ public class AdminController : Controller {
 		return View(categories);
 	}
 
+	[Route("/admin/posts")]
+	public async Task<IActionResult> Posts(
+		[FromServices] IPostRepository postRepository	
+	){
+		return View();
+	}
+
 	[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 	public IActionResult Error() {
 

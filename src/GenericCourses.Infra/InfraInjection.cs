@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using GenericCourses.Infra.Persistence;
 using GenericCourses.Infra.Repositories;
 using Microsoft.EntityFrameworkCore;
-using EFCore.NamingConventions;
 
 namespace GenericCourses.Infra;
 
@@ -21,6 +20,7 @@ public static class InfraInjection {
 
 		services.AddScoped<IPostRepository, PostRepository>();
 		services.AddScoped<InstructorRepository>();
+		services.AddScoped<IAuthRepository, AuthRepository>();
 		services.AddScoped<ICategoriesRepository, CategoriesRepository>();
 		services.AddScoped<ISubscriptionPlanRepository, SubscriptionPlanRepository>();
 		return services;
