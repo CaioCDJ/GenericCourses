@@ -44,6 +44,22 @@ public class AdminController : Controller {
 		return View();
 	}
 
+	[Route("/admin/courses/new")]
+	public async Task<IActionResult> NewCourse() {
+		return View();
+	}
+
+	[Route("/admin/courses/{id}/modules")]
+	public async Task<IActionResult> Modules([FromRoute] string id) {
+		return View();
+	}
+
+	[Route("/admin/courses/{id}/modules/{moduleId}/videos")]
+	public async Task<IActionResult> Videos(
+	    [FromRoute] string id,[FromRoute] string moduleId) {
+		return View();
+	}
+
 	[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 	public IActionResult Error() {
 

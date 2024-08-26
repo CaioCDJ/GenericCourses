@@ -8,10 +8,10 @@ ViewData["Title"] = "Modulos";
 	<div class="flex flex-col center card w-full bg-base-100">
 		<div class="card-body w-full">
 			<div class="w-full flex justify-between items-center">
-				<h1 class="text-accent text-3xl font-bold mb-4 ">Cursos</h1>
-				<a class="btn btn-primary" href="~/admin/courses">
+				<h1 class="text-accent text-3xl font-bold mb-4 ">Modulo</h1>
+				<a class="btn btn-primary" href="~/admin">
 					<i class="bi bi-plus-lg"></i>
-					Novo Curso
+					Novo Modulo
 				</a>
 			</div>
 			<div class="overflow-x-auto w-full p-2 ">
@@ -19,38 +19,28 @@ ViewData["Title"] = "Modulos";
 					<thead>
 						<tr class="text-white text-lg">
 							<th>Titulo </th>
-							<th>Instrutor</th>
-							<th>Ativo</th>
-							<th>Tipo</th>
+							<th>Completo</th>
 							<th>Criado em</th>
-							<th>Atualizado em</th>
-							<th>Qt. Modulos</th>
-							<th>Modulos</th>
+							<th>Qt.Videos</th>
+							<th>Videos</th>
 							<th>Ações</th>
 						</tr>
 					</thead>
 					<tbody>
 						@for(var i = 0; i < 10; i++){ <tr>
 							<td>Como realizar testes</td>
-							<td>teste da silva</td>
 							<td>
 								@if(i%2 == 0){
-								<span class="badge badge-success">Ativo</span>
+								<span class="badge badge-success">Completo</span>
 								}else{
-								<span class="badge badge-error">Inativo</span>
+								<span class="badge badge-error">Imcompleto</span>
 								}
 							</td>
+							<td>20/02/2023</td>
+							<td>@(i*2+1)</td>
 							<td>
-								@if(i%2 != 0){
-								<span class="badge badge-success badge-outline">Gratuito</span>
-								}else{
-								<span class="badge badge-error badge-outline">Plano</span>
-								}
+								<a href="~/admin/courses/kalsklaskldaks/modules/id/videos" class="link link-primary">Ver Videos</a>
 							</td>
-							<td>20/02/2023</td>
-							<td>20/02/2023</td>
-							<td>@(i+1)</td>
-							<td><a href="~/admin/courses/course_id/modules" class="link link-primary">Ver Modulos</a></td>
 							<td>
 								<div class="flex gap-4 ">
 									<button class="btn btn-sm ">

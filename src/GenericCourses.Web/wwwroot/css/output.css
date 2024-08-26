@@ -542,7 +542,7 @@ html{
   --a: 73.7476% 0.125393 200.746412;
   --n: 86.378% 0 0;
   --b1: 21.0084% 0.031763 264.664526;
-  --b2: 21.2566% 0.039773 258.277395;
+  --b2: 27.8078% 0.029596 256.847952;
   --b3: 21.3007% 0.048824 256.830234;
   --in: 70.7181% 0.167949 242.041983;
   --su: 82.9541% 0.212922 153.146499;
@@ -1128,6 +1128,11 @@ html{
   .footer-center{
     grid-auto-flow: row dense;
   }
+}
+
+.form-control{
+  display: flex;
+  flex-direction: column;
 }
 
 .label{
@@ -1823,6 +1828,20 @@ details.collapse summary::-webkit-details-marker{
   outline-offset: 2px;
 }
 
+.label-text{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  --tw-text-opacity: 1;
+  color: var(--fallback-bc,oklch(var(--bc)/var(--tw-text-opacity)));
+}
+
+.label-text-alt{
+  font-size: 0.75rem;
+  line-height: 1rem;
+  --tw-text-opacity: 1;
+  color: var(--fallback-bc,oklch(var(--bc)/var(--tw-text-opacity)));
+}
+
 .input input{
   --tw-bg-opacity: 1;
   background-color: var(--fallback-p,oklch(var(--p)/var(--tw-bg-opacity)));
@@ -1836,6 +1855,10 @@ details.collapse summary::-webkit-details-marker{
 
 .input[list]::-webkit-calendar-picker-indicator{
   line-height: 1em;
+}
+
+.input-bordered{
+  border-color: var(--fallback-bc,oklch(var(--bc)/0.2));
 }
 
 .input:focus,
@@ -1893,6 +1916,19 @@ details.collapse summary::-webkit-details-marker{
 
 .join-item:focus{
   isolation: isolate;
+}
+
+.link-primary{
+  --tw-text-opacity: 1;
+  color: var(--fallback-p,oklch(var(--p)/var(--tw-text-opacity)));
+}
+
+@supports (color:color-mix(in oklab,black,black)){
+  @media (hover:hover){
+    .link-primary:hover{
+      color: color-mix(in oklab,var(--fallback-p,oklch(var(--p)/1)) 80%,black);
+    }
+  }
 }
 
 .link:focus{
@@ -2187,6 +2223,10 @@ details.collapse summary::-webkit-details-marker{
   border-top-width: 1px;
   --tw-border-opacity: 1;
   border-top-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-border-opacity)));
+}
+
+.textarea-bordered{
+  border-color: var(--fallback-bc,oklch(var(--bc)/0.2));
 }
 
 .textarea:focus{
@@ -2915,6 +2955,10 @@ html:has(.drawer-toggle:checked){
   min-height: 100%;
 }
 
+.w-1\/2{
+  width: 50%;
+}
+
 .w-10{
   width: 2.5rem;
 }
@@ -3027,6 +3071,10 @@ html:has(.drawer-toggle:checked){
   max-width: 6000px;
 }
 
+.max-w-\[800px\]{
+  max-width: 800px;
+}
+
 .max-w-full{
   max-width: 100%;
 }
@@ -3057,6 +3105,10 @@ html:has(.drawer-toggle:checked){
 
 .max-w-sm{
   max-width: 24rem;
+}
+
+.max-w-xs{
+  max-width: 20rem;
 }
 
 .flex-1{
@@ -3396,6 +3448,11 @@ html:has(.drawer-toggle:checked){
 .bg-blue-50{
   --tw-bg-opacity: 1;
   background-color: rgb(239 246 255 / var(--tw-bg-opacity));
+}
+
+.bg-blue-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
 .bg-cyan-600{
@@ -3756,10 +3813,6 @@ html:has(.drawer-toggle:checked){
   padding-inline-start: 0.75rem;
 }
 
-.pt-20{
-  padding-top: 5rem;
-}
-
 .pt-4{
   padding-top: 1rem;
 }
@@ -4117,6 +4170,16 @@ section {
   }
 }
 
+.checked\:bg-blue-500:checked{
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
+}
+
+.checked\:bg-red-500:checked{
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
+}
+
 .hover\:border-gray-500:hover{
   --tw-border-opacity: 1;
   border-color: rgb(107 114 128 / var(--tw-border-opacity));
@@ -4125,6 +4188,11 @@ section {
 .hover\:bg-blue-100:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(219 234 254 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-blue-700:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(29 78 216 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-blue-800:hover{
@@ -4481,10 +4549,6 @@ section {
 
   .md\:mb-8{
     margin-bottom: 2rem;
-  }
-
-  .md\:ml-64{
-    margin-left: 16rem;
   }
 
   .md\:h-14{
@@ -4919,6 +4983,11 @@ section {
   .dark\:hover\:bg-gray-700:hover{
     --tw-bg-opacity: 1;
     background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+  }
+
+  .dark\:hover\:bg-gray-800:hover{
+    --tw-bg-opacity: 1;
+    background-color: rgb(31 41 55 / var(--tw-bg-opacity));
   }
 
   .dark\:hover\:bg-red-600:hover{

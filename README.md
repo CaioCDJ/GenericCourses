@@ -44,9 +44,9 @@ Start the server
 
 ## Tech Stack
 
-- [.Net 8]()
-- [AspnetCore]()
-- [tailwindCss]()
-- [Flowbite]()
-- [DaisyUi]()
+- [.Net 8](https://dotnet.microsoft.com/pt-br/download/dotnet/8.0)
+- [AspnetCore](https://dotnet.microsoft.com/pt-br/download/dotnet/8.0)
+- [tailwindCss](https://tailwindcss.com/)
+- [Flowbite](https://flowbite.com/)
+- [DaisyUi](https://daisyui.com/)
 
