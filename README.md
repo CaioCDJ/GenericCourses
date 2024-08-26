@@ -48,4 +48,5 @@ Start the server
 - [AspnetCore]()
 - [tailwindCss]()
 - [Flowbite]()
+- [DaisyUi]()
 

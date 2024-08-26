@@ -3,7 +3,6 @@ module.exports = {
 	content: [
 		'./Pages/**/*.cshtml',
 		'./Views/**/*.cshtml',
-		"./node_modules/flowbite/**/*.js"
 	],
 	theme: {
 		extend: {},
@@ -12,14 +11,29 @@ module.exports = {
 		// require('flowbite/plugin')
 		require("daisyui")
 	],
-	deysui: {
+	daisyui: {
 		styled: true,
-		themes: ['sunset'],
 		base: true,
 		utils: true,
 		logs: true,
 		rtl: false,
-		prefix: "",
+		themes: [
+			{
+				mytheme: {
+					primary: "#0369a1",
+					secondary: "#1e3a8a",
+					accent: "#00c1ca",
+					neutral: "#d2d2d2",
+					"base-100": "#111827",
+					"base-200": "#0D192B",
+					"base-300": "#09192F",
+					info: "#00aaff",
+					success: "#00ed81",
+					warning: "#f9b900",
+					error: "#cc0035",
+				}
+			},
+		],
 	},
 }
 

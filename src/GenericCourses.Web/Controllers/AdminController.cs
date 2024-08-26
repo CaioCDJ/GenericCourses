@@ -34,8 +34,13 @@ public class AdminController : Controller {
 
 	[Route("/admin/posts")]
 	public async Task<IActionResult> Posts(
-		[FromServices] IPostRepository postRepository	
-	){
+		[FromServices] IPostRepository postRepository
+	) {
+		return View();
+	}
+
+	[Route("/admin/courses")]
+	public async Task<IActionResult> Courses() {
 		return View();
 	}
 
