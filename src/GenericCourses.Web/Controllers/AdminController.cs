@@ -56,7 +56,7 @@ public class AdminController : Controller {
 
 	[Route("/admin/courses/{id}/modules/{moduleId}/videos")]
 	public async Task<IActionResult> Videos(
-	    [FromRoute] string id,[FromRoute] string moduleId) {
+		[FromRoute] string id, [FromRoute] string moduleId) {
 		return View();
 	}
 

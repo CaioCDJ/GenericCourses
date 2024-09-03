@@ -17,6 +17,12 @@ public class HomeController : Controller {
 		return View("./Views/Home/Index.cshtml");
 	}
 
+	[Route("/about")]
+	[Route("/sobre")]
+	public IActionResult About() {
+		return View();
+	}
+
 	public IActionResult Privacy() {
 		return View();
 	}
