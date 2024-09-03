@@ -1,6 +1,6 @@
 @{
 Layout = "../Shared/_AdminLayout.cshtml";
-ViewData["Title"] = "Videos";
+ViewData["Title"] = "Clientes";
 @model string[]
 }
 
@@ -8,30 +8,33 @@ ViewData["Title"] = "Videos";
 	<div class="flex flex-col center card w-full bg-base-100">
 		<div class="card-body w-full bg-base-200/50 rounded-md">
 			<div class="w-full flex justify-between items-center">
-				<h1 class="text-accent text-3xl font-bold mb-4 ">Videos</h1>
-				<a class="btn btn-primary" href="~/admin">
-					<i class="bi bi-plus-lg"></i>
-					Adicionar Video
-				</a>
+				<h1 class="text-accent text-3xl font-bold mb-4 ">Clientes</h1>
 			</div>
 			<div class="overflow-x-auto w-full p-2 ">
 				<table class="table text-white ">
 					<thead>
 						<tr class="text-white text-lg">
-							<th>Titulo </th>
+							<th>Nome</th>
+							<th>Email</th>
+							<th>Plano</th>
 							<th>Criado em</th>
+							<th>Status da conta</th>
 							<th>Ações</th>
 						</tr>
 					</thead>
 					<tbody>
-						@for(var i = 0; i < 10; i++){ <tr>
-							<td>Como realizar testes</td>
+						@for(int i=0;i<10 ; i++){ <tr>
+							<td>Alguem</td>
+							<td>alguem@alguem.com</td>
+							<td>
+								<span class="badge badge-primary badge-outline">Plano </span>
+							</td>
 							<td>20/02/2023</td>
 							<td>
 								@if(i%2 != 0){
-								<span class="badge badge-success">Gratuito</span>
+								<span class="badge badge-success badge-outline">Ativo</span>
 								}else{
-								<span class="badge badge-error">Plano</span>
+								<span class="badge badge-error badge-outline">Inativo</span>
 								}
 							</td>
 							<td>

@@ -19,11 +19,6 @@ public class AdminController : Controller {
 		return View();
 	}
 
-	[Route("/admin/account")]
-	public IActionResult Account() {
-		return View();
-	}
-
 	[Route("/admin/post/new")]
 	public async Task<IActionResult> NewPost(
 		[FromServices] ICategoriesRepository categoriesRepository
@@ -59,6 +54,13 @@ public class AdminController : Controller {
 		[FromRoute] string id, [FromRoute] string moduleId) {
 		return View();
 	}
+
+  [Route("/admin/clients")]
+  [Route("/admin/users")]
+  public async Task<IActionResult>Users(){
+    return View();
+  }
+
 
 	[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 	public IActionResult Error() {
