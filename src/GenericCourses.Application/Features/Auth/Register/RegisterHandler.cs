@@ -30,10 +30,10 @@ public class RegisterHandler : IRequestHandler<RegisterRequest, User> {
 
 		var freePlan = await _subscriptionPlanRepository.findFree();
 
-		await _subscriptionPlanRepository.sign(new Client() {
-			userId = user.id,
-			subscriptionplanId = freePlan.id
-		});
+		// await _subscriptionPlanRepository.sign(new Client() {
+		// 	userId = user.id,
+		// 	subscriptionplanId = freePlan.id
+		// });
 
 		return user;
 	}

@@ -8,7 +8,7 @@ namespace GenericCourses.Infra.Persistence;
 
 public class AppDbContext : DbContext {
 
-	public DbSet<Category> categories { get; set; }
+
 	public DbSet<Certificate> certificates { get; set; }
 	public DbSet<Course> courses { get; set; }
 	public DbSet<Module> modules { get; set; }
@@ -18,7 +18,9 @@ public class AppDbContext : DbContext {
 	public DbSet<Subscriptionplan> subscription_plans { get; set; }
 	public DbSet<User> users { get; set; }
 	public DbSet<Client> clients { get; set; }
+	public DbSet<User_Plan> user_plan { get; set; }
 	public DbSet<Admin> admins { get; set; }
+	public DbSet<Category> categories { get; set; }
 	public DbSet<Instructor> instructors { get; set; }
 	public DbSet<Video> videos { get; set; }
 	public DbSet<VideoProgress> video_progresses { get; set; }
@@ -77,11 +79,13 @@ public class AppDbContext : DbContext {
 		// default acconts
 		modelBuilder.Entity<User>().HasData(usersList);
 
-		modelBuilder.Entity<Admin>().HasData(
+		var admin =
 			new Admin {
 				userId = adminId
-			}
-		);
+			};
+
+		modelBuilder.Entity<Admin>().HasData(admin);
+
 		var instrutor = new Instructor {
 			userId = instructorId
 		};
@@ -96,31 +100,50 @@ public class AppDbContext : DbContext {
 				price = 0,
 				description = "Free",
 				created_at = DateTime.Now,
-				months = 0
+				months = 0,
+				adminId = admin.id
 			},
 
 			new Subscriptionplan {
 				price = 35.0f,
 				description = "Mensal",
 				created_at = DateTime.Now,
-				months = 1
+				months = 1,
+				adminId = admin.id
 			},
 
 			new Subscriptionplan {
 				price = 399.99f,
 				description = "Anual",
 				created_at = DateTime.Now,
-				months = 1
+				months = 1,
+				adminId = admin.id
 			}
 		);
 
 		var clientData = new List<Client>();
 
+
 		for (int i = 0; i < clientsId.Count(); i++)
-			clientData.Add(new Client { userId = clientsId[i], subscriptionplanId = freePlanId });
+			clientData.Add(new Client { userId = clientsId[i] });
 
 		modelBuilder.Entity<Client>().HasData(clientData);
 
+		// User_Plan
+
+		var subs_client = new List<User_Plan>();
+		for (int i = 0; i < clientsId.Count(); i++)
+			subs_client.Add(
+				new User_Plan() {
+					subscriptionplanId = freePlanId,
+					clientId = clientData[i].id
+				}
+		);
+
+		modelBuilder.Entity<User_Plan>().HasData(subs_client);
+
+
+		/// Blog Post
 		var blogPostFaker = new Faker<BlogPost>("pt_BR")
 			.RuleFor(u => u.id, f => f.Random.Guid())
 			.RuleFor(u => u.instructorId, f => instrutor.id)
@@ -134,16 +157,16 @@ public class AppDbContext : DbContext {
 			.HasData(posts);
 
 		var categories = new List<Category>(){
-			new Category{name = "c#"},
-			new Category{name = "c"},
-			new Category{name = "Js"},
-			new Category{name = "Java"},
-			new Category{name = "Typescript"},
-			new Category{name = "PHP"},
-			new Category{name = "MySql"},
-			new Category{name = "SQL"},
-			new Category{name = "Rust"},
-			new Category{name = "F#"},
+			new Category{name = "c#", userId = adminId },
+			new Category{name = "c", userId = adminId },
+			new Category{name = "Js", userId = adminId },
+			new Category{name = "Java", userId = adminId },
+			new Category{name = "Typescript", userId = adminId },
+			new Category{name = "PHP", userId = adminId },
+			new Category{name = "MySql", userId = adminId },
+			new Category{name = "SQL", userId = adminId },
+			new Category{name = "Rust", userId = adminId },
+			new Category{name = "F#", userId = adminId },
 		};
 
 		var rdm = new Random();

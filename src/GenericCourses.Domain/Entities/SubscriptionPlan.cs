@@ -10,4 +10,6 @@ public class Subscriptionplan {
 	public DateTime created_at { get; set; } = DateTime.Now;
 	public List<Client> clients { get; set; }
 	public int months { get; set; }
+	public Admin admin { get; set; }
+	public Guid adminId { get; set; }
 }

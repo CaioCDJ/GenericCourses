@@ -6,7 +6,5 @@ public class Client {
 	public User user { get; set; }
 	public Guid userId { get; set; }
 
-	public Subscriptionplan? subscriptionplan { get; set; }
-	public Guid? subscriptionplanId { get; set; }
 	public ICollection<Review> reviews { get; set; }
 }

@@ -75,7 +75,7 @@ public class AdminController : Controller {
 	}
 
 	[Route("/admin/categories")]
-	public async Task<IActionResult>Categories(){
+	public async Task<IActionResult> Categories() {
 		return View();
 	}
 
