@@ -1,0 +1,73 @@
+@{
+Layout = "../Shared/_AdminLayout.cshtml";
+ViewData["Title"] = "Planos";
+@model string[]
+}
+
+<section class="h-auto flex flex-col center w-full">
+	<div class="flex flex-col center card w-full bg-base-100">
+		<div class="card-body w-full bg-base-200/50 rounded-md">
+			<div class="w-full flex justify-between items-center">
+				<h1 class="text-accent text-3xl font-bold mb-4 ">Planos </h1>
+				<a class="btn btn-primary" href="~/admin">
+					<i class="bi bi-plus-lg"></i>
+					Novo Plano
+				</a>
+			</div>
+			<div class="overflow-x-auto w-full p-2 ">
+				<table class="table text-white ">
+					<thead>
+						<tr class="text-white text-lg">
+							<th>Nome </th>
+							<th>Criado Por:</th>
+							<th>Preço</th>
+							<th>Mêses</th>
+							<th>Criado em</th>
+							<th>Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						@for(var i = 0; i < 10; i++){ <tr>
+							<td>Plano planificado </td>
+							<td>Alguem</td>
+							<td>
+								@if(i%2 != 0){
+								<span class="badge badge-success">Gratuito</span>
+								}else{
+								<a class="text-info"> @(i*10)</a>
+								}
+							</td>
+							<td>@(i+1)</td>
+							<td>20/02/2023</td>
+							<td>
+								<div class="flex gap-4 ">
+									<button class="btn btn-sm ">
+										<i class="bi bi-pencil"></i>
+									</button>
+									<button class="btn btn-sm btn-error tooltip" data-tip="Desativar Plano">
+										<i class="bi bi-trash"></i>
+									</button>
+								</div>
+							</td>
+							</tr>
+							}
+					</tbody>
+				</table>
+			</div>
+
+			<div class="w-full flex justify-between items-center mt-8">
+				<div class="text-white">
+					Mostrando <span>1 de 100</span>
+				</div>
+				<div class="join">
+					<a class="join-item btn">«</a>
+					<a class="join-item btn" href="#">1</a>
+					<a class="join-item btn" href="#">2</a>
+					<a class="join-item btn" href="#">3</a>
+					<a class="join-item btn">»</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>

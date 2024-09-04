@@ -55,12 +55,29 @@ public class AdminController : Controller {
 		return View();
 	}
 
-  [Route("/admin/clients")]
-  [Route("/admin/users")]
-  public async Task<IActionResult>Users(){
-    return View();
-  }
+	[Route("/admin/clients")]
+	[Route("/admin/users")]
+	public async Task<IActionResult> Users() {
+		return View();
+	}
 
+	[Route("/admin/account")]
+	[Route("/admin/profile")]
+	public async Task<IActionResult> Account() {
+		return View();
+	}
+
+
+	[Route("/admin/plans")]
+	[Route("/admin/subscriptions")]
+	public async Task<IActionResult> Plans() {
+		return View();
+	}
+
+	[Route("/admin/categories")]
+	public async Task<IActionResult>Categories(){
+		return View();
+	}
 
 	[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 	public IActionResult Error() {

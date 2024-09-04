@@ -1,0 +1,123 @@
+@{
+Layout = "../Shared/_AdminLayout.cshtml";
+ViewData["Title"] = "Conta";
+}
+<main class="p-4 h-auto flex flex-col center gap-4 w-full">
+	<h1 class="text-white font-bold text-2xl text-left w-full max-w-[1400px]">Seja bem vindo de volta,
+		<i class="text-sky-500 ">Nome Pessoa</i>
+	</h1>
+	<section class="flex flex-col md:flex-row w-full gap-4 min-h-96 h-auto max-w-[1400px] ">
+		<div class="flex flex-col md:w-96 bg-gray-800 rounded-lg center gap-4 h-96">
+			<img class="h-44 w-44 rounded-full" src="AdminAccountModel.person.imgUrl" alt="Rounded avatar">
+			<div class="text-center flex center flex-col">
+				<h3 class="text-gray-100 font-bold text-xl">Ola</h3>
+				<span class="text-gray-300 text-lg font-semibold">Administrador</span>
+			</div>
+			<div>
+				<input
+					class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+					aria-describedby="file_input_help" id="file_input" type="file" placeholder="Trocar foto de perfil">
+				<p class="mt-1 text-sm text-gray-500 dark:text-gray-300 w-full text-center" id="file_input_help">PNG OU
+					JPG (MAX.
+					800x400px).</p>
+			</div>
+		</div>
+
+		<div class="flex flex-col w-full rounded-lg md:h-auto px-4" x-data="{tab:'info'}">
+			<div role="tablist" class="tabs tabs-lifted !border-0 ">
+				<a role="tab" class="tab !border-0 text-lg font-semibold" @@click="tab='info'"
+					:class="tab=='info'? 'bg-base-200' : ''">Informações</a>
+				<a role="tab" class="tab !border-0 text-lg font-semibold" @@click="tab='edit'"
+					:class="tab=='edit'? 'bg-base-200' : ''">Editar</a>
+			</div>
+
+			<div x-show="tab=='info'" class="w-full bg-base-200 p-4 flex flex-col gap-4">
+
+				<h3 class="font-semibold text-xl">Estatisticas</h3>
+
+				<div class="stats stats-vertical lg:stats-horizontal shadow">
+					<div class="stat">
+						<div class="stat-title">Coursos</div>
+						<div class="stat-value">4</div>
+					</div>
+
+					<div class="stat">
+						<div class="stat-title">Postagens no Blog</div>
+						<div class="stat-value">30</div>
+					</div>
+
+					<div class="stat">
+						<div class="stat-title">Alunos ou qualquer coisa</div>
+						<div class="stat-value">1,200</div>
+					</div>
+				</div>
+
+				<h3 class="font-semibold text-xl">Ultimos Posts</h3>
+
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+					@for(int i=0;i<4; i++){ <div class="flex flex-col items-center gap-4 md:flex-row lg:gap-6">
+						<div
+							class="group relative block h-56 w-full shrink-0 self-start overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-24 md:w-24 lg:h-40 lg:w-40">
+							<img src="https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&q=75&fit=crop&w=600"
+								loading="lazy" alt="Photo by Minh Pham"
+								class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
+						</div>
+
+						<div class="flex flex-col gap-2">
+							<span class="text-sm text-gray-400">July 19, 2021</span>
+
+							<h2 class="text-xl font-bold text-gray-800">
+								<a href="#" class="font-semibold text-gray-400">New
+									trends in Tech</a>
+							</h2>
+							<div>
+								<a class="btn btn-sm btn-outline btn-info">Editar</a>
+								<a class="btn btn-sm btn-outline btn-info">Ver</a>
+							</div>
+						</div>
+				</div> }
+
+			</div>
+
+		</div>
+
+		<div x-show="tab=='edit'" class="w-full bg-base-200" x-data="{edit:false}">
+			<form class="flex flex-col gap-4 p-4">
+				<h3 class="font-semibold text-xl">Editar Informaçoes</h3>
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
+					<label class="input input-bordered flex items-center gap-2">
+						Nome
+						<input type="text" class="grow" placeholder="Daisy" x-bind:disabled="!edit" />
+					</label>
+					<label class="input input-bordered flex items-center gap-2">
+						Email
+						<input type="email" class="grow" value="alguem@algo.com" x-bind:disabled="!edit" />
+					</label>
+
+					<label class="input input-bordered flex items-center gap-2 col-span-2">
+						Numero de Telefone
+						<input type="number" class="grow" value="1231-12312" x-bind:disabled="!edit" />
+					</label>
+
+
+					<label class="input input-bordered flex items-center gap-2">
+						Rede Social:
+						<input type="url" class="grow" placeholder="www.google.com" x-bind:disabled="!edit" />
+					</label>
+					<label class="input input-bordered flex items-center gap-2">
+						Github:
+						<input type="url" class="grow" value="http://github.com/CaioCDJ" x-bind:disabled="!edit" />
+					</label>
+				</div>
+
+				<div class="flex flex-row justify-between items-center">
+					<a class="btn btn-secondary" @@click="edit=!edit"
+						x-text="edit?'Cancelar Edição':'Editar'">Editar</a>
+					<button class="btn btn-success" x-show="edit" type="submit">Salvar Edição</button>
+				</div>
+			</form>
+		</div>
+
+		</div>
+	</section>
+</main>

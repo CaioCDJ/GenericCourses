@@ -21,6 +21,7 @@ public class CoursesController : Controller {
 	public IActionResult Info(string id)
 	  => View();
 
+	[Route("/course/{id}/Watch/{video_id}")]
 	public IActionResult Watch(string id)
 	  => View();
 
