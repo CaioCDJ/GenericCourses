@@ -1,14 +1,15 @@
 @{
 Layout = "../Shared/_AdminLayout.cshtml";
 ViewData["Title"] = "Modulos";
-@model string[]
 }
+
+@model PaginatedList<GenericCourses.Application.Features.Admin.Courses.GetModulesResponse>
 
 <section class="h-auto flex flex-col center w-full">
 	<div class="flex flex-col center card w-full bg-base-100">
 		<div class="card-body w-full bg-base-200/50 rounded-md">
 			<div class="w-full flex justify-between items-center">
-				<h1 class="text-accent text-3xl font-bold mb-4 ">Modulo</h1>
+				<h1 class="text-accent text-3xl font-bold mb-4 ">Modulos</h1>
 				<a class="btn btn-primary" href="~/admin">
 					<i class="bi bi-plus-lg"></i>
 					Novo Modulo
@@ -27,17 +28,18 @@ ViewData["Title"] = "Modulos";
 						</tr>
 					</thead>
 					<tbody>
-						@for(var i = 0; i < 10; i++){ <tr>
-							<td>Como realizar testes</td>
+						@foreach(var item in Model ){
+								<tr>
+							<td>@item.title</td>
 							<td>
-								@if(i%2 == 0){
+								@if(item.is_complete ){
 								<span class="badge badge-success">Completo</span>
 								}else{
 								<span class="badge badge-error">Imcompleto</span>
 								}
 							</td>
-							<td>20/02/2023</td>
-							<td>@(i*2+1)</td>
+							<td> @item.created_at </td>
+							<td> @item.qt_videos </td>
 							<td>
 								<a href="~/admin/courses/kalsklaskldaks/modules/id/videos" class="link link-primary">Ver Videos</a>
 							</td>

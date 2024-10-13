@@ -23,6 +23,9 @@ public static class InfraInjection {
 		services.AddScoped<IAuthRepository, AuthRepository>();
 		services.AddScoped<ICategoriesRepository, CategoriesRepository>();
 		services.AddScoped<ISubscriptionPlanRepository, SubscriptionPlanRepository>();
+		services.AddScoped<IModulesRepository, ModulesRepository>();
+		services.AddScoped<ICourseRepository, CourseRepository>();
 		return services;
+
 	}
 }

@@ -2,14 +2,18 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using GenericCourses.Web.Models;
 using GenericCourses.Infra.Repositories;
+using GenericCourses.Application.Features.Admin.Courses;
+using MediatR;
 
 namespace GenericCourses.Web.Controllers;
 
 public class AdminController : Controller {
 	private readonly ILogger<HomeController> _logger;
+	private readonly IMediator _mediatr;
 
-	public AdminController(ILogger<HomeController> logger) {
+	public AdminController(ILogger<HomeController> logger, IMediator mediator) {
 		_logger = logger;
+		_mediatr = mediator;
 	}
 
 	[Route("/admin")]
@@ -28,15 +32,16 @@ public class AdminController : Controller {
 	}
 
 	[Route("/admin/posts")]
-	public async Task<IActionResult> Posts(
-		[FromServices] IPostRepository postRepository
-	) {
+	public async Task<IActionResult> Posts() {
 		return View();
 	}
 
 	[Route("/admin/courses")]
-	public async Task<IActionResult> Courses() {
-		return View();
+	public async Task<IActionResult> Courses(int? page) {
+
+		var paginatedList = await _mediatr.Send(new GetCoursesAdminRequest(page ?? 0));
+
+		return View(paginatedList);
 	}
 
 	[Route("/admin/courses/new")]
@@ -45,8 +50,12 @@ public class AdminController : Controller {
 	}
 
 	[Route("/admin/courses/{id}/modules")]
-	public async Task<IActionResult> Modules([FromRoute] string id) {
-		return View();
+	public async Task<IActionResult> Modules([FromRoute] string id, int? page) {
+		Guid course_id = Guid.Parse(id);
+
+		var modules = await _mediatr.Send(new GetModulesRequest(page ?? 0, course_id));
+
+		return View(modules);
 	}
 
 	[Route("/admin/courses/{id}/modules/{moduleId}/videos")]

@@ -49,4 +49,5 @@ Start the server
 - [tailwindCss](https://tailwindcss.com/)
 - [Flowbite](https://flowbite.com/)
 - [DaisyUi](https://daisyui.com/)
+- [Postgres](https://www.postgresql.org/)
 
