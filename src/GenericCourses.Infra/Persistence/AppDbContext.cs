@@ -116,7 +116,7 @@ public class AppDbContext : DbContext {
 				price = 399.99f,
 				description = "Anual",
 				created_at = DateTime.Now,
-				months = 1,
+				months = 12,
 				adminId = admin.id
 			}
 		);

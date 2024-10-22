@@ -1,8 +1,8 @@
 @{
 Layout = "../Shared/_AdminLayout.cshtml";
 ViewData["Title"] = "Planos";
-@model string[]
 }
+@model PaginatedList<GenericCourses.Infra.Repositories.Queries.GetSubscriptionsQuery>
 
 <section class="h-auto flex flex-col center w-full">
 	<div class="flex flex-col center card w-full bg-base-100">
@@ -21,24 +21,27 @@ ViewData["Title"] = "Planos";
 							<th>Nome </th>
 							<th>Criado Por:</th>
 							<th>Preço</th>
+							<th>Quantidade de usuarios</th>
 							<th>Mêses</th>
 							<th>Criado em</th>
 							<th>Ações</th>
 						</tr>
 					</thead>
 					<tbody>
-						@for(var i = 0; i < 10; i++){ <tr>
-							<td>Plano planificado </td>
+						@foreach (var item in Model){
+						<tr>
+							<td>@item.description </td>
 							<td>Alguem</td>
 							<td>
-								@if(i%2 != 0){
+								@if(item.price ==0){
 								<span class="badge badge-success">Gratuito</span>
 								}else{
-								<a class="text-info"> @(i*10)</a>
+								<a class="text-info"> @item.price </a>
 								}
 							</td>
-							<td>@(i+1)</td>
-							<td>20/02/2023</td>
+							<td> </td>
+							<td>@item.months </td>
+							<td>@item.created_at </td>
 							<td>
 								<div class="flex gap-4 ">
 									<button class="btn btn-sm ">

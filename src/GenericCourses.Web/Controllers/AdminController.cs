@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using GenericCourses.Web.Models;
 using GenericCourses.Infra.Repositories;
 using GenericCourses.Application.Features.Admin.Courses;
+using GenericCourses.Application.Features.Admin.Subscriptions;
 using MediatR;
 
 namespace GenericCourses.Web.Controllers;
@@ -79,8 +80,9 @@ public class AdminController : Controller {
 
 	[Route("/admin/plans")]
 	[Route("/admin/subscriptions")]
-	public async Task<IActionResult> Plans() {
-		return View();
+	public async Task<IActionResult> Plans(int? page) {
+		var lst = await _mediatr.Send(new GetSubcriptionRequest(page ?? 0));
+		return View(lst);
 	}
 
 	[Route("/admin/categories")]
