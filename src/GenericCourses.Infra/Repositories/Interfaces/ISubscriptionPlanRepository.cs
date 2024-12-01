@@ -6,7 +6,7 @@ public interface ISubscriptionPlanRepository {
 	Task<Subscriptionplan> findOne(Guid id);
 	Task<Subscriptionplan> findFree();
 	Task<List<GetSubscriptionsQuery>> paginate(int offfset);
-	Task<int>count();
+	Task<int> count();
 	Task<Subscriptionplan> store(Subscriptionplan subscriptionplan);
 	Task<Subscriptionplan> update(Subscriptionplan subscriptionplan);
 	Task<bool> remove(Subscriptionplan subscriptionplan);

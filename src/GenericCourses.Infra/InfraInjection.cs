@@ -13,7 +13,7 @@ public static class InfraInjection {
 		services.AddDbContext<AppDbContext>(options => {
 			options.UseNpgsql(
 				configuration.GetConnectionString("DefaultConnection"),
-				b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)
+				b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName).CommandTimeout(100)
 				)
 			.UseSnakeCaseNamingConvention();
 		});

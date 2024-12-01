@@ -1,10 +1,12 @@
+@using GenericCourses.Domain.Entities;
+@model Course
 @{
 ViewData["Title"] = "Cursos de Como assistir um curso";
 }
 
 <main class="flex flex-col gap-4 center py-4">
   <section class="flex flex-col w-full md:w-5/6 max-w-[1500px] gap-4 px-5 md:px-0">
-    <h1 class="font-bold text-black text-sky-500 text-2xl">{-Nome do curso-}</h1>
+    <h1 class="font-bold text-black text-sky-500 text-2xl"> @Model.title </h1>
     <div class="w-full flex flex-col md:flex-row gap-2 h-auto max-h-[600px]">
       <div class="rounded-xl bg-indigo-400 w-full md:w-4/6 h-[40vh] md:h-auto bg-cover"
         style="background-image:url('https://images.unsplash.com/photo-1632908112019-0e27ef1e70d8?ixid=M3wxMTI1OHwwfDF8cmFuZG9tfHx8fHx8fHx8MTcwMzE3MTE4Nnw&ixlib=rb-4.0.3&q=85&w=1920')">
@@ -15,33 +17,38 @@ ViewData["Title"] = "Cursos de Como assistir um curso";
           <div class="h-20 w-20 rounded-full bg-green-500 bg-cover"
             style="background-image:url('https://images.unsplash.com/photo-1609910063430-33fc20be9f88?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGJveGVyJTIwZG9nfGVufDB8fDB8fHww') ;">
           </div>
-          <span class="text-lg text-sky-500 font-bold">Mexican Boxer</span>
+          <span class="text-lg text-sky-500 font-bold">Mexican </span>
         </div>
 
         <div class="flex-col flex gap-3">
           <span class="text-100 font-semibold text-lg">Conteudo do Curso</span>
           <div class="flex flex-col gap-2">
-            <p>Modulos: 4</p>
-            <p>Videos: 19</p>
+            <p>Modulos: @Model.modules.Count</p>
+            <p>Videos: @Model.modules.Sum(x => x.videos.Count) </p>
           </div>
         </div>
 
         <div class="flex-col flex gap-3">
           <span class="text-100 font-semibold text-lg">Categorias</span>
           <div class="flex gap-2 flex-wrap">
-            @for(int i=0;i<4;i++){ <span
+            @foreach(var item in Model.courseCategories) { 
+            				<span
               class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
-              Default
+               - @item.category
               </span>
               }
           </div>
 
           <div class="flex-col flex mt-2">
-            <!-- <button type="button" -->
-            <!--   class="text-white bg-gradient-to-r from-sky-500 via-sky-600 to-sky-700 w-full hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">Ver -->
-            <!--   Planos</button> -->
+			@if(Model.is_free){
             <button type="button"
               class="text-white bg-gradient-to-r from-emerald-400 via-emerald-500 w-full to-emerald-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Gratis</button>
+			}else{
+			<button type="button"
+              class="text-white bg-gradient-to-r from-sky-500 via-sky-600 to-sky-700 w-full hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">Ver
+              Planos</button>
+			}
+
           </div>
         </div>
       </div>
@@ -56,12 +63,13 @@ ViewData["Title"] = "Cursos de Como assistir um curso";
       <div id="accordion-flush" data-accordion="collapse"
         data-active-classes="bg-gray-900 text-gray-900 dark:text-white"
         data-inactive-classes="text-gray-500 dark:text-gray-400">
-        @for(int i=1 ;i<=4; i++){ <h2 id="accordion-flush-heading-@i">
+        @foreach(var module in Model.modules) {
+        		<h2 id="accordion-flush-heading-@module.order">
           <button type="button"
             class="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3"
-            data-accordion-target="#accordion-flush-body-@i" aria-expanded="true"
-            aria-controls="accordion-flush-body-@i">
-            <span class="text-sky-200 font-bold text-lg">Modulo @i</span>
+            data-accordion-target="#accordion-flush-body-@module.order" aria-expanded="true"
+            aria-controls="accordion-flush-body-@module.order">
+            <span class="text-sky-200 font-bold text-lg">@module.title </span>
             <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -69,10 +77,11 @@ ViewData["Title"] = "Cursos de Como assistir um curso";
             </svg>
           </button>
           </h2>
-          <div id="accordion-flush-body-@i" class="hidden" aria-labelledby="accordion-flush-heading-1">
+          <div id="accordion-flush-body-@module.order" class="hidden" aria-labelledby="accordion-flush-heading-1">
             <div class="py-5 border-b border-gray-200 dark:border-gray-700">
               <ul class="flex flex-col gap-2">
-                @for(int ii=1;ii<=5;ii++){ <li class="font-semibold">@ii. Boxer Lesson</li>
+                @foreach(var video in module.videos) { 
+                <li class="font-semibold">@video.order - @video.title </li>
                   }
               </ul>
             </div>

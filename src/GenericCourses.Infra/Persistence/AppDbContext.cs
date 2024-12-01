@@ -8,7 +8,6 @@ namespace GenericCourses.Infra.Persistence;
 
 public class AppDbContext : DbContext {
 
-
 	public DbSet<Certificate> certificates { get; set; }
 	public DbSet<Course> courses { get; set; }
 	public DbSet<Module> modules { get; set; }
@@ -32,7 +31,6 @@ public class AppDbContext : DbContext {
 	public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder) {
-
 		var instructorId = Guid.NewGuid();
 		var adminId = Guid.NewGuid();
 
@@ -214,21 +212,52 @@ public class AppDbContext : DbContext {
 		modelBuilder.Entity<Course>()
 			.HasData(coures);
 
+		var module1_Guid = Guid.NewGuid();
+		var module2_Guid = Guid.NewGuid();
+		var module3_Guid = Guid.NewGuid();
+
 		modelBuilder.Entity<Module>().HasData(
 			new Module {
+				id = module1_Guid,
 				title = "introducao",
 				courseId = freeCourseId
 			},
 			new Module {
+				id = module2_Guid,
 				title = "Modulo 2",
 				courseId = freeCourseId,
 				order = 1
 			},
 			new Module {
+				id = module3_Guid,
 				title = "Modulo 3",
 				courseId = freeCourseId,
 				order = 2
 			}
 		);
+
+		var videosFaker = new Faker<Video>("pt_BR")
+			.RuleFor(x => x.title, f => f.Commerce.ProductName())
+			.RuleFor(x => x.videoUrl, f => "")
+			.RuleFor(x => x.moduleId, f => module1_Guid);
+
+		var videos_modules = videosFaker.Generate(30).ToList();
+
+		for (int i = 0; i < videos_modules.Count; i +=10) {
+			for (int a = 0; a < 10; a++) {
+				int index = i + a;
+				videos_modules[index].order = index;
+				videos_modules[index].videoUrl = "https://www.youtube.com/watch?v=P_rG9ttOgj4";
+				videos_modules[index].moduleId = i switch {
+					0 => module1_Guid,
+					10 => module2_Guid,
+					20 => module3_Guid,
+					_ => Guid.NewGuid()
+				};
+			}
+		};
+
+		modelBuilder.Entity<Video>()
+			.HasData(videos_modules);
 	}
 }

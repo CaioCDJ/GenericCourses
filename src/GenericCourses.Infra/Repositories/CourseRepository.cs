@@ -17,7 +17,13 @@ public class CourseRepository : ICourseRepository {
 	}
 
 	public async Task<Course> single(Guid id)
-	  => await _context.courses.FirstOrDefaultAsync(x => x.id == id);
+	  => await _context.courses
+			.Include(x=>x.modules.OrderBy(x=>x.order))
+			.ThenInclude(x=>x.videos.OrderBy(x=>x.order))
+			.Include(x=>x.courseCategories)
+			.Include(x=>x.instructor)
+			.ThenInclude(x=>x.user)
+			.SingleOrDefaultAsync(x => x.id == id);
 
 
 	public async Task<List<GetCourseAdminQuery>> paginateAdmin(int size = 10, int offset = 0) {
