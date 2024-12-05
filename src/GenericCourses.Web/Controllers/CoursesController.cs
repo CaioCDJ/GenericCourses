@@ -10,7 +10,7 @@ public class CoursesController : Controller {
 	private readonly ILogger<HomeController> _logger;
 	private readonly IMediator _mediatr;
 
-	public CoursesController(ILogger<HomeController> logger, IMediator mediatr){
+	public CoursesController(ILogger<HomeController> logger, IMediator mediatr) {
 		_logger = logger;
 		_mediatr = mediatr;
 	}
@@ -23,12 +23,12 @@ public class CoursesController : Controller {
 
 	[Route("/courses/{id}")]
 	[Route("/cursos/{id}")]
-	public async Task<IActionResult> Info([FromRoute]string id){
-		
+	public async Task<IActionResult> Info([FromRoute] string id) {
+
 		var guid_id = Guid.Parse(id);
-		
+
 		var course = await _mediatr.Send(new GetCourseInfoRequest(guid_id));
-		
+
 		return View(course);
 	}
 

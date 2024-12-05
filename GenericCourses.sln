@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericCourses.Infra", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericCourses.Web", "src\GenericCourses.Web\GenericCourses.Web.csproj", "{3D8E95C1-1704-4ECF-82B5-BB3CAFD54430}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{DA8CD78B-0948-4DC6-B449-760BF2F1C5A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{3D8E95C1-1704-4ECF-82B5-BB3CAFD54430}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D8E95C1-1704-4ECF-82B5-BB3CAFD54430}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D8E95C1-1704-4ECF-82B5-BB3CAFD54430}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA8CD78B-0948-4DC6-B449-760BF2F1C5A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA8CD78B-0948-4DC6-B449-760BF2F1C5A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA8CD78B-0948-4DC6-B449-760BF2F1C5A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA8CD78B-0948-4DC6-B449-760BF2F1C5A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0F097968-D143-4B8A-AC00-D250181F89EC} = {6AEAF43E-4665-4092-9103-9F649D6E1C0C}

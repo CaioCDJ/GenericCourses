@@ -36,7 +36,7 @@ public class GetCoursesAdminHandler : IRequestHandler<GetCoursesAdminRequest, Pa
 			// int qt = (qts.Exists(x => x.id == item.id) ? qts.FirstOrDefault(x=>x.id==item.id).count :0 ;
 			int qt = 0;
 
-			if (qts.Exists(x => x.id == item.id)) {
+			if (qts is not null && qts.Exists(x => x.id == item.id)) {
 				qt = qts.FirstOrDefault(x => x.id == item.id).count;
 			}
 

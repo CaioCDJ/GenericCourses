@@ -243,7 +243,7 @@ public class AppDbContext : DbContext {
 
 		var videos_modules = videosFaker.Generate(30).ToList();
 
-		for (int i = 0; i < videos_modules.Count; i +=10) {
+		for (int i = 0; i < videos_modules.Count; i += 10) {
 			for (int a = 0; a < 10; a++) {
 				int index = i + a;
 				videos_modules[index].order = index;

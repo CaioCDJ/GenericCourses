@@ -7,7 +7,6 @@ var builder = WebApplication.CreateBuilder(args); {
 
 	builder.Services.addInfra(builder.Configuration);
 	builder.Services.addApplication();
-
 }
 
 var app = builder.Build(); {

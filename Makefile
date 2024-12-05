@@ -9,3 +9,6 @@ update-db:
 
 run:
 	dotnet watch run --project src/GenericCourses.Web
+
+test:
+	cd tests && clear && dotnet test && cd ..
