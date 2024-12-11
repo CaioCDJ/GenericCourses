@@ -16,7 +16,7 @@ public class CourseRepository : ICourseRepository {
 		_connString = context.Database.GetConnectionString();
 	}
 
-	public async Task<Course> single(Guid id)
+	public async Task<Course?> single(Guid id)
 	  => await _context.courses
 			.Include(x => x.modules.OrderBy(x => x.order))
 			.ThenInclude(x => x.videos.OrderBy(x => x.order))

@@ -34,7 +34,7 @@ public class GetPostsHandler : IRequestHandler<GetPostsRequest, GetPostsResponse
 
 		var categories = await _categoriesRepository.getAll();
 		// string[] categories = ["oliver","oliver 2"];
-
+		
 		var pagination = new PaginatedList<PostDTO>(
 		  lst, _context.blog_posts.Count(), 4, 0
 		);

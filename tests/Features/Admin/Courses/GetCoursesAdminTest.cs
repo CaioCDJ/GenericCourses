@@ -10,9 +10,9 @@ using GenericCourses.Infra.Persistence;
 using NSubstitute;
 using Bogus;
 
-namespace tests;
+namespace tests.Features.Admin.Courses;
 
-public class GetCoursesAdminTest {
+public class GetCoursesAdminTests {
 
 	private readonly ICourseRepository _course_repository;
 	private readonly IModulesRepository _modules_repository;
@@ -21,7 +21,7 @@ public class GetCoursesAdminTest {
 
 	private readonly ITestOutputHelper _testOutputHelper;
 
-	public GetCoursesAdminTest(ITestOutputHelper output) {
+	public GetCoursesAdminTests(ITestOutputHelper output) {
 		_course_repository = Substitute.For<ICourseRepository>();
 		_modules_repository = Substitute.For<IModulesRepository>();
 		_testOutputHelper = output;
