@@ -7,34 +7,19 @@ Project created as a way to learn aspnetCore Razor and MVC.
 
 ## Run Locally
 
+> [!WARNING]  
+> It will need docker and docker-compose to be installed in your machine
+
 Clone the project
 
 ```bash
   git clone https://github.com/CaioCDJ/GenericCourses.git
 ```
-
-Go to the project directory
-
-```bash
-  cd GenericCourses
-```
-
-Install dependencies
+Building and running the containers
 
 ```bash
-  npm install
+  sudo docker compose up
 ```
-
-```bash
-  dotnet restore
-```
-
-Start the server
-
-```bash
-  dotnet run --prject ./src/GenericCourses.Web/
-```
-
 
 ## Acknowledgements
 

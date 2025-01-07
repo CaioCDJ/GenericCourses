@@ -1,0 +1,29 @@
+version: "0.1"
+
+networks:
+    mynetwork:
+        driver: bridge
+
+services:
+    web_app:
+        container_name: generic_courses
+        build: .
+        ports:
+            - 8081:8081
+            - 8080:8080
+        depends_on:
+            - "app_db"
+        networks:
+            - mynetwork
+
+    app_db:
+        image: postgres
+        container_name: generic_courses_db
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_PASSWORD: mysecretpassword
+            POSTGRES_USER: postgres
+            POSTGRES_DB: GenericCourses
+        networks:
+            - mynetwork
