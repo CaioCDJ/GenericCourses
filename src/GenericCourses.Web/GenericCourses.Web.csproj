@@ -19,9 +19,4 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
-    <!-- mid -->
-    <Target Name="Tailwind" BeforeTargets="build">
-        <Exec Command="npm run css:build" />
-    </Target>
 </Project>

@@ -1,0 +1,166 @@
+@{
+ViewData["Title"] = "Editar Informacoes";
+}
+
+<main x-data="page" class="flex flex-col gap-8 px-8 center">
+
+	<section class="grid grid-cols-1 lg:grid-cols-2 justify-between gap-8 w-full">
+		<!-- 
+			TODO:
+			- Cursos Iniciados
+			- Cursos Finalizados
+			- Plano 
+			- Reviews
+		-->
+
+		<div class="flex flex-col gap-2 center w-full" id="chart">
+			<!-- PI chart of categories -->
+		</div>
+
+		<div class="flex flex-col gap-2">
+
+			<h3 class="text-xl font-semibold">Estatisticas da conta</h3>
+
+			<div class="grid grid-cols-2">
+				<span class="text-lg font-semibold">Ultimo acesso:</span>
+				<span class="text-lg">19/01/2024</span>
+
+				<span class="text-lg font-semibold">Cursos Iniciados:</span>
+				<span class="text-lg">19</span>
+
+				<span class="text-lg font-semibold">Cursos Finalizados:</span>
+				<span class="text-lg">2</span>
+
+				<span class="text-lg font-semibold">Reviews:</span>
+				<span class="text-lg">0</span>
+			</div>
+
+			<h4 class="text-xl font-bold">Plano atual</h4>
+
+			<div class="w-full grid grid-cols-2">
+
+				<span class="text-lg font-semibold ">Preço:</span>
+				<span class="text-lg text-green-600">R$ 99.99</span>
+
+				<span class="text-lg font-semibold ">Messes:</span>
+				<span class="text-lg text-gray-200">99</span>
+			</div>
+
+			<div class="flex flex-col gap-2 w-full ">
+				<span class="text-lg font-semibold">Previção de termino</span>
+				<span class="text-3xl font-bold text-sky-600">23/02/2030</span>
+			</div>
+
+		</div>
+
+	</section>
+
+	<section class="w-full flex center flex-col ">
+
+		<h4 class="text-xl font-semibold">Certificados</h4>
+
+		<div class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 justify-items-center">
+			@for(int i=0;i<=3;i++){ <a
+				class="card bg-base-100 image-full w-full md:w-56 xl:w-64 shadow-xl before:!bg-slate-700">
+				<figure>
+					<img src="https://images.unsplash.com/photo-1597773150796-e5c14ebecbf5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+						alt="Shoes" />
+				</figure>
+				<div class="card-body">
+					<h2 class="card-title text-slate-100">Sharp-C!</h2>
+					<div class="card-actions justify-end">
+						<span
+							class="bg-sky-100 text-sky-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">F#</span>
+						<span
+							class="bg-sky-100 text-sky-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">F#</span>
+					</div>
+				</div>
+				</a>}
+
+		</div>
+
+	</section>
+
+	<section class="flex flex-col gap-3 w-full">
+
+		<h4>Informações da conta</h4>
+
+		<form class="flex flex-col gap-3">
+
+			<!--
+			TODO:
+			- Nome 
+			- Email
+			- Phone
+			-->
+			<label class="input input-bordered flex items-center gap-2">
+				Nome
+				<input type="text" class="grow" placeholder="Daisy" x-bind:disabled="!edit" />
+			</label>
+			<label class="input input-bordered flex items-center gap-2">
+				Email
+				<input type="email" class="grow" value="alguem@algo.com" x-bind:disabled="!edit" />
+			</label>
+
+			<label class="input input-bordered flex items-center gap-2 col-span-2">
+				Numero de Telefone
+				<input type="number" class="grow" value="1231-12312" x-bind:disabled="!edit" />
+			</label>
+
+
+			<div class="flex flex-row gap-4 justify-between w-full">
+				<div>
+					<button class="btn btn-success" x-show="edit" type="submit">Salvar Edição</button>
+					<a class="btn btn-secondary" @@click="edit=!edit"
+						x-text="edit?'Cancelar Edição':'Editar'">Editar</a>
+				</div>
+				<button class="btn btn-error">Excluir conta</button>
+			</div>
+		</form>
+
+	</section>
+
+</main>
+
+@section Scripts{
+
+<script defer>
+	document.addEventListener('alpine:init', () => {
+		Alpine.data('page', () => ({
+			edit: false,
+			init() {
+				var options = {
+					series: [44, 55, 13, 43, 22],
+					chart: {
+						width: 380,
+						type: 'pie',
+					},
+					labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+					legend: {
+						show: true, // Make sure the legend is displayed
+						position: 'right', // Position of the legend (you can change this as needed)
+						labels: {
+							colors: ['#d2d2d2','#d2d2d2','#d2d2d2','#d2d2d2','#d2d2d2','#d2d2d2'] // Custom color for each legend label
+						}
+					},
+					responsive: [{
+						breakpoint: 480,
+						options: {
+							chart: {
+								width: 200
+							},
+							legend: {
+								position: 'bottom'
+							}
+						}
+					}]
+				};
+
+				var chart = new ApexCharts(document.querySelector("#chart"), options);
+				chart.render();
+
+			}
+		}))
+	})
+</script>
+}
