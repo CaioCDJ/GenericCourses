@@ -5,73 +5,150 @@ ViewData["Title"] = "Modulos";
 
 @model PaginatedList<GenericCourses.Application.Features.Admin.Courses.GetModulesResponse>
 
-<section class="h-auto flex flex-col center w-full">
-	<div class="flex flex-col center card w-full bg-base-100">
-		<div class="card-body w-full bg-base-200/50 rounded-md">
-			<div class="w-full flex justify-between items-center">
-				<h1 class="text-accent text-3xl font-bold mb-4 ">Modulos</h1>
-				<a class="btn btn-primary" href="~/admin">
-					<i class="bi bi-plus-lg"></i>
-					Novo Modulo
-				</a>
+	<section class="h-auto flex flex-col center w-full" x-data="page">
+
+		@await Html.PartialAsync("_ConfirmModal")
+
+		<dialog id="create_modal" class="modal">
+			<div class="modal-box bg-base-100 p-5 flex flex-col gap-4">
+				<h3 class="text-lg font-bold" x-html="modal_title"></h3>
+				<div class="modal-action min-w-auto md:min-w-[400px]">
+					<form method="dialog" class="flex flex-col gap-2">
+
+						<label class="form-control w-full ">
+							<div class="label">
+								<span class="label-text">Titulo</span>
+							</div>
+							<input x-model="nome" type="text" class="input input-bordered w-full" />
+							<div class="label">
+								<!-- <span class="label-text-alt">Bottom Left label</span> -->
+							</div>
+						</label>
+
+						<label class="form-control w-full ">
+							<div class="label">
+								<span class="label-text">Order</span>
+							</div>
+							<input type="number" class="input input-bordered w-full" />
+							<div class="label">
+								<!-- <span class="label-text-alt">Bottom Left label</span> -->
+							</div>
+						</label>
+
+
+						<label class="form-control">
+							<div class="label">
+								<span class="label-text">Descrição</span>
+							</div>
+							<textarea class="textarea textarea-bordered h-56 resize-none"></textarea>
+							<div class="label">
+								<!-- <span class="label-text-alt">Alt label</span> -->
+							</div>
+						</label>
+
+						<div class="flex w-full items-center justify-between">
+							<button class="btn btn-success">Confirmar</button>
+							<a class="btn" @@click="create_modal.close()">Close</a>
+						</div>
+					</form>
+				</div>
 			</div>
-			<div class="overflow-x-auto w-full p-2 ">
-				<table class="table text-white ">
-					<thead>
-						<tr class="text-white text-lg">
-							<th>Titulo </th>
-							<th>Completo</th>
-							<th>Criado em</th>
-							<th>Qt.Videos</th>
-							<th>Videos</th>
-							<th>Ações</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach(var item in Model ){
-								<tr>
-							<td>@item.title</td>
-							<td>
-								@if(item.is_complete ){
-								<span class="badge badge-success">Completo</span>
-								}else{
-								<span class="badge badge-error">Imcompleto</span>
-								}
-							</td>
-							<td> @item.created_at </td>
-							<td> @item.qt_videos </td>
-							<td>
-								<a href="~/admin/courses/kalsklaskldaks/modules/id/videos" class="link link-primary">Ver Videos</a>
-							</td>
-							<td>
-								<div class="flex gap-4 ">
-									<button class="btn btn-sm ">
-										<i class="bi bi-pencil"></i>
-									</button>
-									<button class="btn btn-sm btn-error">
-										<i class="bi bi-trash"></i>
-									</button>
-								</div>
-							</td>
+		</dialog>
+
+		<div class="flex flex-col center card w-full bg-base-100">
+			<div class="card-body w-full bg-base-200/50 rounded-md">
+				<div class="w-full flex justify-between items-center">
+					<h1 class="text-accent text-3xl font-bold mb-4 ">Modulos</h1>
+					<button class="btn btn-primary" @@click="new_modal">
+						<i class="bi bi-plus-lg"></i>
+						Novo Modulo
+					</button>
+				</div>
+				<div class="overflow-x-auto w-full p-2 ">
+					<table class="table text-white ">
+						<thead>
+							<tr class="text-white text-lg">
+								<th>Titulo </th>
+								<th>Completo</th>
+								<th>Criado em</th>
+								<th>Qt.Videos</th>
+								<th>Videos</th>
+								<th>Ações</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach(var item in Model ){
+							<tr>
+								<td>@item.title</td>
+								<td>
+									@if(item.is_complete ){
+									<span class="badge badge-success">Completo</span>
+									}else{
+									<span class="badge badge-error">Imcompleto</span>
+									}
+								</td>
+								<td> @item.created_at </td>
+								<td> @item.qt_videos </td>
+								<td>
+									<a href="~/admin/courses/kalsklaskldaks/modules/id/videos"
+										class="link link-primary">Ver Videos</a>
+								</td>
+								<td>
+									<div class="flex gap-4 ">
+										<button class="btn btn-sm " @@click="edit_modal">
+											<i class="bi bi-pencil"></i>
+										</button>
+										<button class="btn btn-sm btn-error" @@click="delete_modal('@item.title')">
+											<i class="bi bi-trash"></i>
+										</button>
+									</div>
+								</td>
 							</tr>
 							}
-					</tbody>
-				</table>
-			</div>
-
-			<div class="w-full flex justify-between items-center mt-8">
-				<div class="text-white">
-					Mostrando <span>1 de 100</span>
+						</tbody>
+					</table>
 				</div>
-				<div class="join">
-					<a class="join-item btn">«</a>
-					<a class="join-item btn" href="#">1</a>
-					<a class="join-item btn" href="#">2</a>
-					<a class="join-item btn" href="#">3</a>
-					<a class="join-item btn">»</a>
-				</div>
-			</div>
 
+				<div class="w-full flex justify-between items-center mt-8">
+					<div class="text-white">
+						Mostrando <span>1 de 100</span>
+					</div>
+					<div class="join">
+						<a class="join-item btn">«</a>
+						<a class="join-item btn" href="#">1</a>
+						<a class="join-item btn" href="#">2</a>
+						<a class="join-item btn" href="#">3</a>
+						<a class="join-item btn">»</a>
+					</div>
+				</div>
+
+			</div>
 		</div>
-	</div>
-</section>
+	</section>
+
+	@section Scripts{
+	<script defer>
+		document.addEventListener('alpine:init', () => {
+			Alpine.data('page', () => ({
+				nome: "",
+				modal_title: "",
+				confirm_txt: "",
+
+				new_modal() {
+					this.modal_title = "Nova Modulo"
+					create_modal.showModal()
+				},
+				edit_modal() {
+					this.modal_title = "Editar Modulo"
+					create_modal.showModal()
+				},
+				delete_modal(name) {
+					this.confirm_txt = "Voce realmente deseja deletar " + name + "?"
+					confirm_modal.showModal();
+				}
+			})
+			)
+		})	
+	</script>
+
+	}

@@ -4,73 +4,96 @@ ViewData["Title"] = "Planos";
 }
 @model PaginatedList<GenericCourses.Infra.Repositories.Queries.GetSubscriptionsQuery>
 
-<section class="h-auto flex flex-col center w-full">
-	<div class="flex flex-col center card w-full bg-base-100">
-		<div class="card-body w-full bg-base-200/50 rounded-md">
-			<div class="w-full flex justify-between items-center">
-				<h1 class="text-accent text-3xl font-bold mb-4 ">Planos </h1>
-				<a class="btn btn-primary" href="~/admin">
-					<i class="bi bi-plus-lg"></i>
-					Novo Plano
-				</a>
+	<dialog id="create_modal" class="modal">
+		<div class="modal-box">
+			<h3 class="text-lg font-bold">Hello!</h3>
+			<p class="py-4">Press ESC key or click the button below to close</p>
+			<div class="modal-action">
+				<form method="dialog">
+					<!-- if there is a button in form, it will close the modal -->
+				</form>
 			</div>
-			<div class="overflow-x-auto w-full p-2 ">
-				<table class="table text-white ">
-					<thead>
-						<tr class="text-white text-lg">
-							<th>Nome </th>
-							<th>Criado Por:</th>
-							<th>Preço</th>
-							<th>Quantidade de usuarios</th>
-							<th>Mêses</th>
-							<th>Criado em</th>
-							<th>Ações</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach (var item in Model){
-						<tr>
-							<td>@item.description </td>
-							<td>Alguem</td>
-							<td>
-								@if(item.price ==0){
-								<span class="badge badge-success">Gratuito</span>
-								}else{
-								<a class="text-info"> @item.price </a>
-								}
-							</td>
-							<td> </td>
-							<td>@item.months </td>
-							<td>@item.created_at </td>
-							<td>
-								<div class="flex gap-4 ">
-									<button class="btn btn-sm ">
-										<i class="bi bi-pencil"></i>
-									</button>
-									<button class="btn btn-sm btn-error tooltip" data-tip="Desativar Plano">
-										<i class="bi bi-trash"></i>
-									</button>
-								</div>
-							</td>
+		</div>
+	</dialog>
+
+	<section class="h-auto flex flex-col center w-full" x-data="page">
+		<div class="flex flex-col center card w-full bg-base-100">
+			<div class="card-body w-full bg-base-200/50 rounded-md">
+				<div class="w-full flex justify-between items-center">
+					<h1 class="text-accent text-3xl font-bold mb-4 ">Planos </h1>
+					<button class="btn btn-primary" onclick="my_modal_1.showModal()">
+						<i class="bi bi-plus-lg"></i>
+						Novo Plano
+					</button>
+				</div>
+				<div class="overflow-x-auto w-full p-2 ">
+					<table class="table text-white ">
+						<thead>
+							<tr class="text-white text-lg">
+								<th>Nome </th>
+								<th>Criado Por:</th>
+								<th>Preço</th>
+								<th>Quantidade de usuarios</th>
+								<th>Mêses</th>
+								<th>Criado em</th>
+								<th>Ações</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var item in Model){
+							<tr>
+								<td>@item.description </td>
+								<td>Alguem</td>
+								<td>
+									@if(item.price ==0){
+									<span class="badge badge-success">Gratuito</span>
+									}else{
+									<a class="text-info"> @item.price </a>
+									}
+								</td>
+								<td> </td>
+								<td>@item.months </td>
+								<td>@item.created_at </td>
+								<td>
+									<div class="flex gap-4 ">
+										<button class="btn btn-sm ">
+											<i class="bi bi-pencil"></i>
+										</button>
+										<button class="btn btn-sm btn-error tooltip" data-tip="Desativar Plano">
+											<i class="bi bi-trash"></i>
+										</button>
+									</div>
+								</td>
 							</tr>
 							}
-					</tbody>
-				</table>
-			</div>
-
-			<div class="w-full flex justify-between items-center mt-8">
-				<div class="text-white">
-					Mostrando <span>1 de 100</span>
+						</tbody>
+					</table>
 				</div>
-				<div class="join">
-					<a class="join-item btn">«</a>
-					<a class="join-item btn" href="#">1</a>
-					<a class="join-item btn" href="#">2</a>
-					<a class="join-item btn" href="#">3</a>
-					<a class="join-item btn">»</a>
-				</div>
-			</div>
 
+				<div class="w-full flex justify-between items-center mt-8">
+					<div class="text-white">
+						Mostrando <span>1 de 100</span>
+					</div>
+					<div class="join">
+						<a class="join-item btn">«</a>
+						<a class="join-item btn" href="#">1</a>
+						<a class="join-item btn" href="#">2</a>
+						<a class="join-item btn" href="#">3</a>
+						<a class="join-item btn">»</a>
+					</div>
+				</div>
+
+			</div>
 		</div>
-	</div>
-</section>
+	</section>
+
+
+	@section Scripts{
+	<script defer>
+		document.addEventListener("alpine:init", () => {
+			Alpine.data("page", () => ({
+
+			}))
+		});
+	</script>
+	}
