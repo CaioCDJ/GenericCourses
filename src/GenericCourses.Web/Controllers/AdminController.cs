@@ -44,6 +44,11 @@ public class AdminController : Controller {
 
 		return View(paginatedList);
 	}
+	
+	[Route("/admin/courses/new")]
+	public IActionResult newCourse(){
+		return View();
+	}
 
 	[Route("/admin/courses/new")]
 	public async Task<IActionResult> NewCourse() {

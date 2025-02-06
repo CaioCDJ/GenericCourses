@@ -7,12 +7,10 @@ using Npgsql;
 
 namespace GenericCourses.Infra.Repositories;
 
-public class CourseRepository : ICourseRepository {
-	private readonly AppDbContext _context;
+internal sealed class CourseRepository : Repository<Course>, ICourseRepository {
 	private readonly string _connString;
 
-	public CourseRepository(AppDbContext context) {
-		_context = context;
+	public CourseRepository(AppDbContext context) : base(context) {
 		_connString = context.Database.GetConnectionString();
 	}
 
@@ -50,38 +48,4 @@ public class CourseRepository : ICourseRepository {
 		return lst.ToList();
 	}
 
-	public async Task<int> count()
-		=> await _context.courses.CountAsync();
-
-	public async Task<Course> store(Course course) {
-		var check = await _context.courses.FirstOrDefaultAsync(x =>
-			x.title == course.title);
-
-		if (check is not null) throw new Exception(message: $"Já existe um curso com o nome: {course.title}");
-
-		await _context.courses.AddAsync(course);
-		await _context.SaveChangesAsync();
-		return course;
-	}
-
-	public async Task<Course> update(Guid id, Course course) {
-		var courseCheck = await this.single(id);
-
-		if (courseCheck is null) throw new Exception(message: $"O usuario não foi encontrado!");
-
-		_context.courses.Update(course);
-		await _context.SaveChangesAsync();
-
-		return course;
-	}
-
-	public async Task delete(Guid id) {
-		var course = await _context.courses.FirstOrDefaultAsync(x => x.id == id);
-
-		if (course is null) throw new Exception(message: $"O Curso não foi encontrado!");
-
-		_context.courses.Remove(course);
-
-		await _context.SaveChangesAsync();
-	}
 }

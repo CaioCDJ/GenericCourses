@@ -6,13 +6,11 @@ using Dapper;
 
 namespace GenericCourses.Infra.Repositories;
 
-public class CategoriesRepository : ICategoriesRepository {
+internal sealed class CategoriesRepository :Repository<Category>, ICategoriesRepository {
 
-	private readonly AppDbContext _context;
 	private readonly string _conString;
 
-	public CategoriesRepository(AppDbContext context) {
-		_context = context;
+	public CategoriesRepository(AppDbContext context):base(context) {
 		_conString = context.Database.GetConnectionString();
 	}
 

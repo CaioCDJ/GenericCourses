@@ -13,7 +13,7 @@ public class DeletePostHandler : IRequestHandler<DeletePostRequest, bool> {
 		if (post is null)
 			throw new Exception("not found");
 
-		await _postRepository.remove(request.postId);
+		await _postRepository.remove(post);
 
 		return true;
 	}

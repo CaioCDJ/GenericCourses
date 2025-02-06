@@ -8,12 +8,10 @@ using Npgsql;
 
 namespace GenericCourses.Infra.Repositories;
 
-public class ModulesRepository : IModulesRepository {
-	private readonly AppDbContext _context;
+internal sealed class ModulesRepository : Repository<Module>, IModulesRepository {
 	private readonly string _connString;
 
-	public ModulesRepository(AppDbContext context) {
-		_context = context;
+	public ModulesRepository(AppDbContext context):base(context) {
 		_connString = context.Database.GetConnectionString();
 	}
 
@@ -71,21 +69,4 @@ public class ModulesRepository : IModulesRepository {
 		return lst.ToList();
 	}
 
-	public async Task<Module> store(Module module) {
-		await _context.modules.AddAsync(module);
-		await _context.SaveChangesAsync();
-		return module;
-	}
-
-	public async Task<Module> update(Module module) {
-		_context.modules.Update(module);
-		await _context.SaveChangesAsync();
-		return module;
-	}
-
-	public async Task<Module> remove(Module module) {
-		_context.modules.Remove(module);
-		await _context.SaveChangesAsync();
-		return module;
-	}
 }

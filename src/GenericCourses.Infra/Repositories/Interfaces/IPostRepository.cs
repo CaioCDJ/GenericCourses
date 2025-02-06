@@ -12,5 +12,5 @@ public interface IPostRepository {
 	Task<int> QtByUsers(Guid id);
 	Task<BlogPost> store(BlogPost post);
 	Task<BlogPost> update(BlogPost post);
-	Task<BlogPost> remove(Guid id);
+	Task<BlogPost> remove(BlogPost post);
 }

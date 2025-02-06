@@ -9,6 +9,6 @@ public interface ICourseRepository {
 	Task<List<GetCourseAdminQuery>> paginateAdmin(int size = 10, int offset = 0);
 	Task<int> count();
 	Task<Course> store(Course course);
-	Task<Course> update(Guid id, Course course);
-	Task delete(Guid id);
+	Task<Course> update( Course course);
+	Task<Course> remove(Course course);
 }
