@@ -1,156 +1,153 @@
 @{
 Layout = "../Shared/_AdminLayout.cshtml";
 ViewData["Title"] = "Videos";
-@model string[]
 }
+@model PaginatedList<GenericCourses.Application.Features.Admin.Courses.GetVideosResponse>
 
-<section class="h-auto flex flex-col center w-full" x-data="page">
+	<section class="h-auto flex flex-col center w-full" x-data="page">
 
-	@await Html.PartialAsync("_ConfirmModal")
+		@await Html.PartialAsync("_ConfirmModal")
 
-	<dialog id="create_modal" class="modal">
-		<div class="modal-box bg-base-100 p-5 flex flex-col gap-4">
-			<h3 class="text-lg font-bold" x-html="modal_title"></h3>
-			<div class="modal-action min-w-auto md:min-w-[400px]">
-				<form method="dialog" class="flex flex-col gap-2">
-					<div class="grid grid-cols-2 gap-2">
+		<dialog id="create_modal" class="modal">
+			<div class="modal-box bg-base-100 p-5 flex flex-col gap-4">
+				<h3 class="text-lg font-bold" x-html="modal_title"></h3>
+				<div class="modal-action min-w-auto md:min-w-[400px]">
+					<form method="dialog" class="flex flex-col gap-2">
+						<div class="grid grid-cols-2 gap-2">
 
-						<div class="flex flex-col gap-2">
-							<label class="form-control w-full ">
+							<div class="flex flex-col gap-2">
+								<label class="form-control w-full ">
+									<div class="label">
+										<span class="label-text">Titulo</span>
+									</div>
+									<input x-model="nome" type="text" class="input input-bordered w-full" />
+									<div class="label">
+										<!-- <span class="label-text-alt">Bottom Left label</span> -->
+									</div>
+								</label>
+
+								<label class="form-control w-full ">
+									<div class="label">
+										<span class="label-text">Order</span>
+									</div>
+									<input type="number" class="input input-bordered w-full" />
+									<div class="label">
+										<!-- <span class="label-text-alt">Bottom Left label</span> -->
+									</div>
+								</label>
+
+								<label class="form-control w-full ">
+									<div class="label">
+										<span class="label-text">Video Url:</span>
+									</div>
+									<input type="text" class="input input-bordered w-full" />
+									<div class="label">
+										<!-- <span class="label-text-alt">Bottom Left label</span> -->
+									</div>
+								</label>
+							</div>
+
+							<label class="form-control h-full">
 								<div class="label">
-									<span class="label-text">Titulo</span>
+									<span class="label-text">Descrição</span>
 								</div>
-								<input x-model="nome" type="text" class="input input-bordered w-full" />
+								<textarea class="textarea textarea-bordered h-full resize-none"></textarea>
 								<div class="label">
-									<!-- <span class="label-text-alt">Bottom Left label</span> -->
+									<!-- <span class="label-text-alt">Alt label</span> -->
 								</div>
 							</label>
 
-							<label class="form-control w-full ">
-								<div class="label">
-									<span class="label-text">Order</span>
-								</div>
-								<input type="number" class="input input-bordered w-full" />
-								<div class="label">
-									<!-- <span class="label-text-alt">Bottom Left label</span> -->
-								</div>
-							</label>
-
-							<label class="form-control w-full ">
-								<div class="label">
-									<span class="label-text">Video Url:</span>
-								</div>
-								<input type="text" class="input input-bordered w-full" />
-								<div class="label">
-									<!-- <span class="label-text-alt">Bottom Left label</span> -->
-								</div>
-							</label>
 						</div>
-
-						<label class="form-control h-full">
-							<div class="label">
-								<span class="label-text">Descrição</span>
-							</div>
-							<textarea class="textarea textarea-bordered h-full resize-none"></textarea>
-							<div class="label">
-								<!-- <span class="label-text-alt">Alt label</span> -->
-							</div>
-						</label>
-
-					</div>
-					<div class="flex w-full items-center justify-between">
-						<button class="btn btn-success">Confirmar</button>
-						<a class="btn" @@click="create_modal.close()">Close</a>
-					</div>
-				</form>
+						<div class="flex w-full items-center justify-between">
+							<button class="btn btn-success">Confirmar</button>
+							<a class="btn" @@click="create_modal.close()">Close</a>
+						</div>
+					</form>
+				</div>
 			</div>
-		</div>
-	</dialog>
+		</dialog>
 
 
-	<div class="flex flex-col center card w-full bg-base-100">
-		<div class="card-body w-full bg-base-200/50 rounded-md">
-			<div class="w-full flex justify-between items-center">
-				<h1 class="text-accent text-3xl font-bold mb-4 ">Videos</h1>
-				<button class="btn btn-primary" @@click="new_modal">
-					<i class="bi bi-plus-lg"></i>
-					Adicionar Video
-				</button>
-			</div>
-			<div class="overflow-x-auto w-full p-2 ">
-				<table class="table text-white ">
-					<thead>
-						<tr class="text-white text-lg">
-							<th>Titulo </th>
-							<th>Criado em</th>
-							<th>Ações</th>
-						</tr>
-					</thead>
-					<tbody>
-						@for(var i = 0; i < 10; i++){ <tr>
-							<td>Como realizar testes</td>
-							<td>20/02/2023</td>
-							<td>
-								@if(i%2 != 0){
-								<span class="badge badge-success">Gratuito</span>
-								}else{
-								<span class="badge badge-error">Plano</span>
-								}
-							</td>
-							<td>
-								<div class="flex gap-4 ">
-									<button class="btn btn-sm " @@click="edit_modal">
-										<i class="bi bi-pencil"></i>
-									</button>
-									<button class="btn btn-sm btn-error" @@click="delete_modal('@i')">
-										<i class="bi bi-trash"></i>
-									</button>
-								</div>
-							</td>
+		<div class="flex flex-col center card w-full bg-base-100">
+			<div class="card-body w-full bg-base-200/50 rounded-md">
+				<div class="w-full flex justify-between items-center">
+					<h1 class="text-accent text-3xl font-bold mb-4 ">Videos</h1>
+					<button class="btn btn-primary" @@click="new_modal">
+						<i class="bi bi-plus-lg"></i>
+						Adicionar Video
+					</button>
+				</div>
+				<div class="overflow-x-auto w-full p-2 ">
+					<table class="table text-white ">
+						<thead>
+							<tr class="text-white text-lg">
+								<th>Ordem</th>
+								<th>Titulo </th>
+								<th>Criado em</th>
+								<th>Ações</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach(var item in Model){
+							<tr>
+								<td>@item.order</td>
+								<td>@item.title</td>
+								<td>@item.created_at</td>
+								<td>
+									<div class="flex gap-4 ">
+										<button class="btn btn-sm " @@click="edit_modal">
+											<i class="bi bi-pencil"></i>
+										</button>
+										<button class="btn btn-sm btn-error"
+											@@click="delete_modal('@item.title','@item.id')">
+											<i class="bi bi-trash"></i>
+										</button>
+									</div>
+								</td>
 							</tr>
 							}
-					</tbody>
-				</table>
-			</div>
-
-			<div class="w-full flex justify-between items-center mt-8">
-				<div class="text-white">
-					Mostrando <span>1 de 100</span>
+						</tbody>
+					</table>
 				</div>
-				<div class="join">
-					<a class="join-item btn">«</a>
-					<a class="join-item btn" href="#">1</a>
-					<a class="join-item btn" href="#">2</a>
-					<a class="join-item btn" href="#">3</a>
-					<a class="join-item btn">»</a>
-				</div>
-			</div>
 
+				<div class="w-full flex justify-between items-center mt-8">
+					<div class="text-white">
+						Mostrando <span>1 de 100</span>
+					</div>
+					<div class="join">
+						<a class="join-item btn">«</a>
+						<a class="join-item btn" href="#">1</a>
+						<a class="join-item btn" href="#">2</a>
+						<a class="join-item btn" href="#">3</a>
+						<a class="join-item btn">»</a>
+					</div>
+				</div>
+
+			</div>
 		</div>
-	</div>
-</section>
+	</section>
 
-@section Scripts{
-<script defer>
-	document.addEventListener('alpine:init', () => {
-		Alpine.data('page', () => ({
-			nome: "",
-			modal_title: "",
-			confirm_txt: "",
-			new_modal() {
-				this.modal_title = "Nova Video"
-				create_modal.showModal()
-			},
-			edit_modal() {
-				this.modal_title = "Editar Video"
-				create_modal.showModal()
-			},
-			delete_modal(name) {
-				this.confirm_txt = "Voce realmente deseja deletar " + name + "?"
-				confirm_modal.showModal();
-			}
-		})
-		)
-	})	
-</script>
-}
+	@section Scripts{
+	<script defer>
+		document.addEventListener('alpine:init', () => {
+			Alpine.data('page', () => ({
+				nome: "",
+				modal_title: "",
+				confirm_txt: "",
+				new_modal() {
+					this.modal_title = "Nova Video"
+					create_modal.showModal()
+				},
+				edit_modal() {
+					this.modal_title = "Editar Video"
+					create_modal.showModal()
+				},
+				delete_modal(name, id) {
+					this.confirm_txt = "Voce realmente deseja deletar " + name + "?"
+					confirm_modal.showModal();
+				}
+			})
+			)
+		})	
+	</script>
+	}

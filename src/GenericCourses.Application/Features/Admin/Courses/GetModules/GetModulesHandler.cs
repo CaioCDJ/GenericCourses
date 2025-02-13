@@ -34,6 +34,7 @@ public class GetModulesHandler : IRequestHandler<GetModulesRequest, PaginatedLis
 			});
 		}
 
-		return new PaginatedList<GetModulesResponse>(res_lst, lst.Count, request.pageIndex); }
+		return new PaginatedList<GetModulesResponse>(res_lst, lst.Count, request.pageIndex);
+	}
 
 }

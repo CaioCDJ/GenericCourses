@@ -11,7 +11,7 @@ internal sealed class SubscriptionPlanRepository : Repository<Subscriptionplan>,
 
 	private readonly string _connString;
 
-	public SubscriptionPlanRepository(AppDbContext context):base(context) {
+	public SubscriptionPlanRepository(AppDbContext context) : base(context) {
 		_connString = context.Database.GetConnectionString();
 	}
 
@@ -30,7 +30,7 @@ internal sealed class SubscriptionPlanRepository : Repository<Subscriptionplan>,
 			SELECT *, (SELECT COUNT(*) FROM clients AS c WHERE c.subscriptionplanid = sp.id ) AS clients 
 				FROM subscription_plans AS sp;
 				", new { offfset });
-		
+
 		await conn.CloseAsync();
 
 		return lst.ToList();

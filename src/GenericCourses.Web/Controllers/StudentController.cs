@@ -13,7 +13,7 @@ public class StudentController : Controller {
 	public IActionResult Account() {
 		return View();
 	}
-	
+
 	[Route("/account/info")]
 	public IActionResult Configuration() {
 		return View();

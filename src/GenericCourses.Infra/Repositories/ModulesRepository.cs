@@ -11,7 +11,7 @@ namespace GenericCourses.Infra.Repositories;
 internal sealed class ModulesRepository : Repository<Module>, IModulesRepository {
 	private readonly string _connString;
 
-	public ModulesRepository(AppDbContext context):base(context) {
+	public ModulesRepository(AppDbContext context) : base(context) {
 		_connString = context.Database.GetConnectionString();
 	}
 

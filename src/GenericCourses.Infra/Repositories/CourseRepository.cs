@@ -14,6 +14,13 @@ internal sealed class CourseRepository : Repository<Course>, ICourseRepository {
 		_connString = context.Database.GetConnectionString();
 	}
 
+	public async Task<List<Course>> paginate(int page = 1)
+		=> await _context.courses
+			.Include(x => x.courseCategories)
+			.Skip((page == 1) ? 0 : page * 10)
+			.Take(10)
+			.ToListAsync();
+
 	public async Task<Course?> single(Guid id)
 	  => await _context.courses
 			.Include(x => x.modules.OrderBy(x => x.order))

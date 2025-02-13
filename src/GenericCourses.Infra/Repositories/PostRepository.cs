@@ -9,10 +9,10 @@ using Dapper;
 namespace GenericCourses.Infra.Repositories;
 
 internal sealed class PostRepository : Repository<BlogPost>, IPostRepository {
-	
+
 	private readonly string _connString;
 
-	public PostRepository(AppDbContext appDbContext):base(appDbContext) {
+	public PostRepository(AppDbContext appDbContext) : base(appDbContext) {
 		_connString = appDbContext.Database.GetConnectionString();
 	}
 

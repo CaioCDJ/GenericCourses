@@ -17,7 +17,7 @@ public static class InfraInjection {
 				)
 			.UseSnakeCaseNamingConvention();
 		});
-
+		services.AddScoped<IVideosRepository, VideosRepository>();
 		services.AddScoped<IPostRepository, PostRepository>();
 		services.AddScoped<InstructorRepository>();
 		services.AddScoped<IAuthRepository, AuthRepository>();

@@ -34,7 +34,7 @@ public class GetModulesAdminTests {
 
 	}
 
-	[Fact(DisplayName ="It should runs correctly")]
+	[Fact(DisplayName = "It should runs correctly")]
 	public async Task should_run_correctly() {
 
 		// arrange
@@ -57,14 +57,14 @@ public class GetModulesAdminTests {
 
 		var request = new GetModulesRequest(0, Guid.Empty);
 
-		_course_repository.single(Arg.Any<Guid>()).Returns((Course)null);
+		_course_repository.single(Arg.Any<Guid>()).Returns((Course) null);
 		_modules_repository.paginate(Arg.Any<Guid>(), Arg.Any<int>()).Returns(_faker_paginate.Generate(10));
 
 		var handler = new GetModulesHandler(_modules_repository, _course_repository);
 
 		// act
 		var response = await Assert.ThrowsAsync<Exception>(
-			()=> handler.Handle(request, CancellationToken.None)
+			() => handler.Handle(request, CancellationToken.None)
 		);
 
 		// assert

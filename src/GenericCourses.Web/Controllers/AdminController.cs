@@ -44,9 +44,9 @@ public class AdminController : Controller {
 
 		return View(paginatedList);
 	}
-	
+
 	[Route("/admin/courses/new")]
-	public IActionResult newCourse(){
+	public IActionResult newCourse() {
 		return View();
 	}
 
@@ -61,13 +61,21 @@ public class AdminController : Controller {
 
 		var modules = await _mediatr.Send(new GetModulesRequest(page ?? 0, course_id));
 
+		ViewBag.id = id;
+
 		return View(modules);
 	}
 
 	[Route("/admin/courses/{id}/modules/{moduleId}/videos")]
 	public async Task<IActionResult> Videos(
+		int page,
 		[FromRoute] string id, [FromRoute] string moduleId) {
-		return View();
+
+		Guid guid_module = Guid.Parse(moduleId);
+
+		var videos = await _mediatr.Send(new GetVideosRequest(guid_module));
+
+		return View(videos);
 	}
 
 	[Route("/admin/clients")]
