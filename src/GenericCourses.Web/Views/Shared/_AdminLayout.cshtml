@@ -45,7 +45,7 @@
 								</summary>
 								<ul class="z-10">
 									<li><a href="~/admin/Account"> <i class="bi bi-person"></i> Conta</a></li>
-									<li><a href=""><i class="bi bi-box-arrow-right"></i> Sair</a></li>
+									<li><a href="~/logout"><i class="bi bi-box-arrow-right"></i> Sair</a></li>
 								</ul>
 							</details>
 						</li>
@@ -72,12 +72,18 @@
 					<li>
 						<a href="~/admin/posts"><i class="bi bi-file-text"></i>Blog </a>
 					</li>
+					@{
+					var role = User.FindFirst(ClaimTypes.Role)?.Value;
+					}
+					@if(role == "admin"){
 					<li>
 						<a href="~/admin/users"><i class="bi bi-person"></i> Usuarios</a>
 					</li>
+
 					<li>
 						<a href="~/admin/plans"><i class="bi bi-receipt"></i> Planos</a>
 					</li>
+					}
 					<li><a href="~/admin/categories"> <i class="bi bi-bar-chart"></i>Categorias</a></li>
 				</ul>
 

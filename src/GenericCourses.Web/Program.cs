@@ -2,6 +2,7 @@ using GenericCourses.Infra;
 using GenericCourses.Infra.Persistence;
 using GenericCourses.Application;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args); {
 	// Add services to the container.
@@ -9,6 +10,13 @@ var builder = WebApplication.CreateBuilder(args); {
 
 	builder.Services.addInfra(builder.Configuration);
 	builder.Services.addApplication();
+	builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+	.AddCookie(options => {
+		options.ExpireTimeSpan = TimeSpan.FromHours(3);// momentaneo
+		options.SlidingExpiration = true;
+		options.AccessDeniedPath = "/Forbidden/";
+	});
+
 }
 
 var app = builder.Build(); {
@@ -26,9 +34,11 @@ var app = builder.Build(); {
 	app.UseStaticFiles();
 
 	app.UseRouting();
-
+	app.UseAuthentication();
 	app.UseAuthorization();
-
+	app.UseCookiePolicy(new CookiePolicyOptions {
+		MinimumSameSitePolicy = SameSiteMode.Strict
+	});
 	app.MapControllers();
 
 	app.Run();

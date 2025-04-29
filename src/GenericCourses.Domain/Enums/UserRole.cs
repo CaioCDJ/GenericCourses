@@ -1,4 +1,4 @@
-namespace GenericCourses.Domain.Entities;
+namespace GenericCourses.Domain.Enums;
 
 public enum UserRole {
 	admin = 0,

@@ -3,28 +3,28 @@ Layout = "../Shared/_LoginLayout.cshtml";
 ViewData["Title"] = "Login";
 }
 <form method="post" class="lg:w-2/5 w-full flex flex-col py-12 h-full px-14 justify-center">
-  <a href="~/" class="font-semibold text-sky-500 text-2xl">Generic Courses</a>
-  <h1 class="text-white text-5xl font-black">Seja bem vindo</h1>
-  <p class="text-gray-300 mt-5">
-    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint.
-  </p>
-  <div class="flex flex-col gap-8 mt-10">
-    <div>
-      <label for="first_name" class="block mb-2 text-sm font-medium text-white">Email:</label>
-      <input type="text" id="first_name"
-        class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-        placeholder="example@email.com" required>
-    </div>
-    <div>
-      <label for="Senha:" class="block mb-2 text-sm font-medium text-white">Senha:</label>
-      <input type="password"
-        class="border text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-        required>
-    </div>
-  </div>
-  <button type="submit"
-    class="text-white mt-7 text-lg w-full bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-sky-800 font-semibold rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Confirmar</button>
-  <div class="text-gray-300 mt-5">
-    Não tem uma conta? <a href="Register" class="text-sky-500 font-bold italic">Cadastre-se</a>
-  </div>
+	<a href="~/" class="font-semibold text-sky-500 text-2xl">Generic Courses</a>
+	<h1 class="text-white text-5xl font-black">Seja bem vindo</h1>
+	<p class="text-gray-300 mt-5">
+		Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint.
+	</p>
+	<div class="flex flex-col gap-8 mt-10">
+		<div>
+			<label class="block mb-2 text-sm font-medium text-white">Email:</label>
+			<input type="text" id="first_name" name="email"
+				class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+				placeholder="example@email.com" required>
+		</div>
+		<div>
+			<label for="Senha:" class="block mb-2 text-sm font-medium text-white">Senha:</label>
+			<input type="password" name="password"
+				class="border text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+				required>
+		</div>
+	</div>
+	<button type="submit"
+		class="text-white mt-7 text-lg w-full bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-sky-800 font-semibold rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Confirmar</button>
+	<div class="text-gray-300 mt-5">
+		Não tem uma conta? <a href="Register" class="text-sky-500 font-bold italic">Cadastre-se</a>
+	</div>
 </form>

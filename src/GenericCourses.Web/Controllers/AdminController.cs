@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using GenericCourses.Web.Models;
 using GenericCourses.Infra.Repositories;
 using GenericCourses.Application.Features.Admin.Courses;
@@ -8,6 +9,7 @@ using MediatR;
 
 namespace GenericCourses.Web.Controllers;
 
+[Authorize(Roles = "admin, instructor")]
 public class AdminController : Controller {
 	private readonly ILogger<HomeController> _logger;
 	private readonly IMediator _mediatr;
@@ -77,7 +79,7 @@ public class AdminController : Controller {
 
 		return View(videos);
 	}
-
+	[Authorize(Roles = "admin")]
 	[Route("/admin/clients")]
 	[Route("/admin/users")]
 	public async Task<IActionResult> Users() {

@@ -1,9 +1,11 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using GenericCourses.Web.Models;
 using GenericCourses.Application.Features.Courses.GetCourse;
 using GenericCourses.Application.Features.Courses;
 using MediatR;
+
 
 namespace GenericCourses.Web.Controllers;
 
@@ -39,6 +41,7 @@ public class CoursesController : Controller {
 	}
 
 	[Route("/course/{id}/Watch/{video_id}")]
+	[Authorize(Roles = "client")]
 	public IActionResult Watch(string id)
 	  => View();
 

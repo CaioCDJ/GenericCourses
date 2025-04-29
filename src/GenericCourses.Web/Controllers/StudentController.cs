@@ -1,9 +1,11 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using GenericCourses.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GenericCourses.Web.Controllers;
 
+[Authorize(Roles = "client")]
 public class StudentController : Controller {
 
 	private readonly ILogger<StudentController> _logger;

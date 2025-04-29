@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+
 namespace GenericCourses.Domain.Entities;
 
 public class User {

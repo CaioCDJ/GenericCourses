@@ -4,9 +4,26 @@
 			<span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Generic Courses</span>
 		</a>
 		<div class="flex items-center lg:order-2">
+			@{
+			var role = User.FindFirst(ClaimTypes.Role)?.Value;
+			}
+
+			@if( User.Identity.IsAuthenticated){
+
+			@if(role == "admin" ){
+			<a href="~/admin/"
+				class="text-gray-400 hover:text-white hover:bg-sky-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none ">Dashboard
+			</a>
+			}
+
+			<a href="~/logout"
+				class="text-gray-400 hover:text-white hover:bg-sky-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none ">Sair
+			</a>
+			}else{
 			<a href="~/login"
 				class="text-gray-400 hover:text-white hover:bg-sky-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none ">Log
 				in</a>
+			}
 			<button data-collapse-toggle="mobile-menu-2" type="button"
 				class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
 				aria-controls="mobile-menu-2" aria-expanded="false">

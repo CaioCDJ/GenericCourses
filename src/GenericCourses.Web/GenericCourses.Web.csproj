@@ -5,9 +5,10 @@
     <ProjectReference Include="..\GenericCourses.Domain\GenericCourses.Domain.csproj" />
     <ProjectReference Include="..\GenericCourses.Infra\GenericCourses.Infra.csproj" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.3.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

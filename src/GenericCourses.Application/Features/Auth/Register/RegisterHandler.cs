@@ -1,6 +1,5 @@
 using MediatR;
 using GenericCourses.Domain.Entities;
-using MediatR;
 using GenericCourses.Infra.Security;
 using GenericCourses.Infra.Repositories;
 
@@ -26,14 +25,15 @@ public class RegisterHandler : IRequestHandler<RegisterRequest, User> {
 			cpf = double.Parse(request.cpf),
 		};
 
-		await _authRepository.canRegister(user);
+		if (!await _authRepository.canRegister(user)) {
+			throw new Exception();
+		}
+
+		var client = await _authRepository.register(user);
 
 		var freePlan = await _subscriptionPlanRepository.findFree();
 
-		// await _subscriptionPlanRepository.sign(new Client() {
-		// 	userId = user.id,
-		// 	subscriptionplanId = freePlan.id
-		// });
+		await _subscriptionPlanRepository.sign(client, freePlan.id);
 
 		return user;
 	}

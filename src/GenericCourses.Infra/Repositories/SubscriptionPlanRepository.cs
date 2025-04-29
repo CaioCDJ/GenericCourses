@@ -36,10 +36,17 @@ internal sealed class SubscriptionPlanRepository : Repository<Subscriptionplan>,
 		return lst.ToList();
 	}
 
-	public async Task<Client> sign(Client client) {
-		await _context.clients.AddAsync(client);
+	public async Task<Client?> sign(Client client, Guid plan_id) {
+		var plan = await _context.subscription_plans.SingleOrDefaultAsync(x => x.id == plan_id);
+
+		if (plan is null) return null;
+
+		_context.user_plan.Add(new User_Plan() {
+			client = client,
+			subscriptionplanId = plan_id
+		});
+		_context.Update<Subscriptionplan>(plan);
 		await _context.SaveChangesAsync();
 		return client;
 	}
-
 }
