@@ -58,6 +58,6 @@ public class GetCoursesAdminHandler : IRequestHandler<GetCoursesAdminRequest, Pa
 
 		var count = await _courseRepository.count();
 
-		return new PaginatedList<GetCoursesAdminResponse>(res_lst, count, request.pageIndex);
+		return new PaginatedList<GetCoursesAdminResponse>(res_lst, count.HasValue ? count.Value : 0, request.pageIndex);
 	}
 }

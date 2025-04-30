@@ -17,7 +17,7 @@ internal sealed class CourseRepository : Repository<Course>, ICourseRepository {
 	public async Task<List<Course>> paginate(int page = 1)
 		=> await _context.courses
 			.Include(x => x.courseCategories)
-			.Skip((page == 1) ? 0 : page * 10)
+			.Skip((page > 1) ? (page - 1) * 10 : 0)
 			.Take(10)
 			.ToListAsync();
 

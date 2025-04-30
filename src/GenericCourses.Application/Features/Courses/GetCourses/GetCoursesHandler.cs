@@ -15,10 +15,15 @@ public class GetCoursesHandler : IRequestHandler<GetCoursesRequest, PaginatedLis
 
 		var lst = await _courses_repository.paginate(request.page);
 
-		int qt = await _courses_repository.count();
+		var qt = await _courses_repository.count();
 
-		return new PaginatedList<Course>(
-		  lst, qt, 4, 0
-		);
+		var paginated = new PaginatedList<Course>(
+		  lst, (qt.HasValue ? qt.Value : 0), request.page, 10
+			);
+
+		return paginated;
+		// return new PaginatedList<Course>(
+		//   lst, (qt.HasValue ? qt.Value : 0), 4, 0
+		// );
 	}
 }

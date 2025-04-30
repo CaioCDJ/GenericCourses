@@ -15,7 +15,6 @@ internal sealed class PostRepository : Repository<BlogPost>, IPostRepository {
 	public PostRepository(AppDbContext appDbContext) : base(appDbContext) {
 		_connString = appDbContext.Database.GetConnectionString();
 	}
-
 	public async Task<BlogPost> single(Guid id)
 	  => await _context.blog_posts.FirstOrDefaultAsync(x => x.id == id);
 

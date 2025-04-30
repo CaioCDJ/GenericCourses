@@ -109,19 +109,10 @@ ViewData["Title"] = "Modulos";
 					</table>
 				</div>
 
-				<div class="w-full flex justify-between items-center mt-8">
-					<div class="text-white">
-						Mostrando <span>1 de 100</span>
-					</div>
-					<div class="join">
-						<a class="join-item btn">«</a>
-						<a class="join-item btn" href="#">1</a>
-						<a class="join-item btn" href="#">2</a>
-						<a class="join-item btn" href="#">3</a>
-						<a class="join-item btn">»</a>
-					</div>
-				</div>
 
+				@if(Model.TotalPages>1){
+				@await Html.PartialAsync("../Shared/Partials/AdminPaginator.cshtml", Model.pagination());
+				}
 			</div>
 		</div>
 	</section>

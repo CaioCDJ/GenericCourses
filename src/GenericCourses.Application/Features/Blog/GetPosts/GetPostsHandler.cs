@@ -23,7 +23,7 @@ public class GetPostsHandler : IRequestHandler<GetPostsRequest, GetPostsResponse
 		var index = (request.pageIndex > 1) ? request.pageIndex : 1;
 
 		int offset = (index > 1)
-		  ? (request.pageSize * index) : 0;
+		  ? (request.pageSize * (index - 1)) : 0;
 
 		var lst = await _postRepository.paginate(
 		  offset,
@@ -33,10 +33,11 @@ public class GetPostsHandler : IRequestHandler<GetPostsRequest, GetPostsResponse
 		);
 
 		var categories = await _categoriesRepository.getAll();
-		// string[] categories = ["oliver","oliver 2"];
+
+		var qt = await _postRepository.count();
 
 		var pagination = new PaginatedList<PostDTO>(
-		  lst, _context.blog_posts.Count(), 4, 0
+		  lst, qt.HasValue ? qt.Value : 0, request.pageIndex, request.pageSize
 		);
 
 		return new GetPostsResponse(pagination, categories);

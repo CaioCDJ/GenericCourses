@@ -1,0 +1,28 @@
+@model Nav
+
+<div class="w-full flex justify-between items-center mt-8">
+	<div class="text-white">
+		Mostrando o pau <span>1 de 100</span>
+	</div>
+	<div class="join">
+
+		@if(Model.HasPreviousPage){
+		<a class="join-item btn" asp-route-page="@(Model.PageIndex-1)">«</a>
+		}else{
+		<a class="join-item btn btn-disabled">«</a>
+
+		}
+		@for(int i=1;i<= Model.TotalPages;i++){ @if(i==Model.PageIndex){ <a class="join-item btn btn-primary" href="#">
+			@i</a>
+			}else{
+			<a class="join-item btn" asp-route-page="@i">@i</a>
+			}
+			}
+
+			@if(Model.HasNextPage){
+			<a class="join-item btn" asp-route-page="@(Model.PageIndex+1)">»</a>
+			}else{
+			<a class="join-item btn btn-disabled">»</a>
+			}
+	</div>
+</div>

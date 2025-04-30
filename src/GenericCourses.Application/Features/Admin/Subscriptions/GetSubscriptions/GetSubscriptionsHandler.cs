@@ -17,13 +17,13 @@ public class GetSubscriptionsHandler : IRequestHandler<GetSubcriptionRequest, Pa
 	public async Task<PaginatedList<GetSubscriptionsQuery>> Handle(GetSubcriptionRequest request, CancellationToken cancellationToken) {
 
 		var lst = await _subscriptionPlanRepository.paginate(
-			request.page >= 1 ? request.page * 10 : 0
+			request.page >= 1 ? (request.page - 1) * 10 : 0
 		);
 
-		int count = 10;
+		var qt = await _subscriptionPlanRepository.count();
 
 		return new PaginatedList<GetSubscriptionsQuery>(
-			lst, count, request.page
+			lst, (qt.HasValue ? qt.Value : 0), request.page, 10
 		);
 	}
 }

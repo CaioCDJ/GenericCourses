@@ -10,7 +10,7 @@ internal abstract class Repository<T> where T : class {
 	protected Repository(AppDbContext appDbContext)
 		=> _context = appDbContext;
 
-	public async Task<int> count()
+	public async Task<int?> count()
 		=> await _context.Set<T>().CountAsync();
 
 	public async Task<T> store(T entity) {

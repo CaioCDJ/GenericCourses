@@ -10,6 +10,7 @@ public interface IPostRepository {
 			string? searchParam = null);
 	Task<List<GetPostAdminQuery>> paginateAdmin(Guid id, int offset, int size = 8);
 	Task<int> QtByUsers(Guid id);
+	Task<int?> count();
 	Task<BlogPost> store(BlogPost post);
 	Task<BlogPost> update(BlogPost post);
 	Task<BlogPost> remove(BlogPost post);

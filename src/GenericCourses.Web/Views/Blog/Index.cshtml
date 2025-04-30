@@ -4,7 +4,7 @@
 @model GetPostsResponse
 
 @{
-	ViewData["Title"] = "Blog";
+ViewData["Title"] = "Blog";
 }
 
 <main class="py-6 sm:py-8 lg:py-12">
@@ -33,10 +33,7 @@
 								d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
 						</svg>
 					</div>
-					<input 
-						type="search" 
-						id="search"
-						x-model="search"
+					<input type="search" id="search" x-model="search"
 						class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 						placeholder="Buscar Artigo:">
 					<button type="submit"
@@ -46,12 +43,12 @@
 				<div class="flex flex-row gap-3 center flex-wrap w-full py-5">
 					@foreach(var item in Model.categories)
 					{
-						<div class="flex items-center mb-2">
-							<input type="checkbox" value="@item" x-model='categories'
-								class="w-4 h-4  border-gray-300 rounded focus:ring-blue-600 ring-offset-gray-800 bg-gray-700 border-gray-600">
-							<label for="default-checkbox" class="ms-2 text-sm font-medium text-gray-300">
-								@item</label>
-						</div>
+					<div class="flex items-center mb-2">
+						<input type="checkbox" value="@item" x-model='categories'
+							class="w-4 h-4  border-gray-300 rounded focus:ring-blue-600 ring-offset-gray-800 bg-gray-700 border-gray-600">
+						<label for="default-checkbox" class="ms-2 text-sm font-medium text-gray-300">
+							@item</label>
+					</div>
 					}
 				</div>
 			</form>
@@ -63,43 +60,43 @@
 			<!-- article - start -->
 			@foreach (var item in Model.Posts)
 			{
-				<div class="flex flex-col overflow-hidden rounded-lg border-none bg-gray-800">
-					<a href="~/blog/@item.postId" class="group relative block h-48 overflow-hidden bg-gray-100 md:h-64">
-						<img src="https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&q=75&fit=crop&w=600"
-							loading="lazy" alt="Photo by Minh Pham"
-							class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
-					</a>
+			<div class="flex flex-col overflow-hidden rounded-lg border-none bg-gray-800">
+				<a href="~/blog/item.postId" class="group relative block h-48 overflow-hidden bg-gray-100 md:h-64">
+					<img src="https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&q=75&fit=crop&w=600"
+						loading="lazy" alt="Photo by Minh Pham"
+						class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
+				</a>
 
-					<div class="flex flex-1 flex-col p-4 sm:p-6">
-						<h2 class="mb-2 text-lg font-semibold text-sky-500">
-							<a href="~/blog/@item.postId"
-								class="transition duration-100 hover:text-indigo-500 active:text-indigo-600">@item.title</a>
-						</h2>
+				<div class="flex flex-1 flex-col p-4 sm:p-6">
+					<h2 class="mb-2 text-lg font-semibold text-sky-500">
+						<a href="~/blog/@item.postId"
+							class="transition duration-100 hover:text-indigo-500 active:text-indigo-600">@item.title</a>
+					</h2>
 
-						<div class="mt-auto flex items-end justify-between">
-							<div class="flex items-center gap-2">
-								<div class="h-10 w-10 shrink-0 overflow-hidden rounded-full bg-gray-100">
-									<img src="https://images.unsplash.com/photo-1611898872015-0571a9e38375?auto=format&q=75&fit=crop&w=64"
-										loading="lazy" alt="Photo by Brock Wegner"
-										class="h-full w-full object-cover object-center" />
-								</div>
-								<div>
-									<span class="block text-sky-700">@item.author</span>
-									<span class="block text-sm text-gray-400">@item.date</span>
-								</div>
+					<div class="mt-auto flex items-end justify-between">
+						<div class="flex items-center gap-2">
+							<div class="h-10 w-10 shrink-0 overflow-hidden rounded-full bg-gray-100">
+								<img src="https://images.unsplash.com/photo-1611898872015-0571a9e38375?auto=format&q=75&fit=crop&w=64"
+									loading="lazy" alt="Photo by Brock Wegner"
+									class="h-full w-full object-cover object-center" />
 							</div>
-							<span
-								class="bg-sky-100 text-sky-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">@item.category</span>
+							<div>
+								<span class="block text-sky-700">@item.author</span>
+								<span class="block text-sm text-gray-400">@item.date</span>
+							</div>
 						</div>
+						<span
+							class="bg-sky-100 text-sky-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">@item.category</span>
 					</div>
 				</div>
+			</div>
 			}
 			<!-- article - end -->
 		</div>
 	</div>
 	<div class="mt-8">
-		@if(Model.Posts.HasNextPage){
-			@await Html.PartialAsync("_BlogPaginator", Model.Posts)
+		@if(Model.Posts.TotalPages >1){
+		@await Html.PartialAsync("../Shared/Partials/Paginator.cshtml", Model.Posts.pagination());
 		}
 	</div>
 </main>
@@ -110,33 +107,33 @@
 	document.addEventListener("alpine:init", function () {
 		Alpine.data("frm", () => ({
 			search: "",
-			categories:[],
+			categories: [],
 
-			init(){
+			init() {
 				var searchParams = new URLSearchParams(window.location.search);
-				if(searchParams.has("search"))
+				if (searchParams.has("search"))
 					this.search = searchParams.get("search");
-				if(searchParams.has("categories"))
+				if (searchParams.has("categories"))
 					this.categories = searchParams.get("categories").split(",");
 			},
 
-			submit(){
-				if(this.search.length > 0 || this.categories.length > 0){
+			submit() {
+				if (this.search.length > 0 || this.categories.length > 0) {
 					var searchParams = new URLSearchParams(window.location.search);
 
-			    	if(this.search.length > 0)
+					if (this.search.length > 0)
 						searchParams.set("search", this.search);
 
-					if(this.categories.length > 0)
-			    		searchParams.set("categories", this.categories.join(","));
+					if (this.categories.length > 0)
+						searchParams.set("categories", this.categories.join(","));
 
-				 	location.search = searchParams.toString();
+					location.search = searchParams.toString();
 				}
-				
+
 			}
 		}))
-	})	
-	
+	})
+
 </script>
 
 }

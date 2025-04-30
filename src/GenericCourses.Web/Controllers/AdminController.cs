@@ -96,7 +96,8 @@ public class AdminController : Controller {
 	[Route("/admin/plans")]
 	[Route("/admin/subscriptions")]
 	public async Task<IActionResult> Plans(int? page) {
-		var lst = await _mediatr.Send(new GetSubcriptionRequest(page ?? 0));
+		var lst = await _mediatr.Send(new GetSubcriptionRequest(page ?? 1));
+
 		return View(lst);
 	}
 

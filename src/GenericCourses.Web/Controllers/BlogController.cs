@@ -19,7 +19,7 @@ public class BlogController : Controller {
 	[Route("/blog")]
 	[Route("/articles")]
 	public async Task<IActionResult> Index(
-		int? pageNumber,
+		int? page,
 		[FromQuery] string? categories,
 		[FromQuery] string? search
 		) {
@@ -32,14 +32,14 @@ public class BlogController : Controller {
 				: [categories];
 		}
 
-		var paginatedList = await _mediatr.Send(new GetPostsRequest(
-			  pageIndex: (pageNumber is not null) ? pageNumber.Value : 0,
+		var response = await _mediatr.Send(new GetPostsRequest(
+			  pageIndex: (page is not null) ? page.Value : 1,
 			  pageSize: 10,
 			  categories: (categoriesParams is not null) ? categoriesParams : null,
 			  searchParam: (search is not null) ? search : null
 			  ));
 
-		return View(paginatedList);
+		return View(response);
 	}
 
 	[Route("/blog/{id}")]

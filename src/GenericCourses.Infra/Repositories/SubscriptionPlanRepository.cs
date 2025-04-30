@@ -21,15 +21,19 @@ internal sealed class SubscriptionPlanRepository : Repository<Subscriptionplan>,
 	public async Task<Subscriptionplan?> findFree()
 		=> await _context.subscription_plans.FirstOrDefaultAsync(x => x.price == 0);
 
-	public async Task<List<GetSubscriptionsQuery>> paginate(int offfset) {
+	public async Task<List<GetSubscriptionsQuery>> paginate(int offset) {
 		using var conn = new NpgsqlConnection(_connString);
 
 		await conn.OpenAsync();
 
 		var lst = await conn.QueryAsync<GetSubscriptionsQuery>(@$"
 			SELECT *, (SELECT COUNT(*) FROM clients AS c WHERE c.subscriptionplanid = sp.id ) AS clients 
-				FROM subscription_plans AS sp;
-				", new { offfset });
+				FROM subscription_plans AS sp
+                ORDER BY price
+				LIMIT 10
+                OFFSET @offset
+				;
+				", new { offset = offset });
 
 		await conn.CloseAsync();
 
