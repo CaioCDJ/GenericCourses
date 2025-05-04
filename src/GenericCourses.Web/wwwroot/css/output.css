@@ -4138,6 +4138,11 @@ html:has(.drawer-toggle:checked){
   border-color: rgb(55 65 81 / var(--tw-border-opacity));
 }
 
+.\!bg-primary{
+  --tw-bg-opacity: 1 !important;
+  background-color: var(--fallback-p,oklch(var(--p)/var(--tw-bg-opacity))) !important;
+}
+
 .bg-\[\#35466b9c\]{
   background-color: #35466b9c;
 }
@@ -4258,6 +4263,11 @@ html:has(.drawer-toggle:checked){
 
 .bg-white\/30{
   background-color: rgb(255 255 255 / 0.3);
+}
+
+.bg-primary{
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-p,oklch(var(--p)/var(--tw-bg-opacity)));
 }
 
 .bg-opacity-50{

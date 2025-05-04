@@ -3,85 +3,80 @@ Layout = "../Shared/_AdminLayout.cshtml";
 ViewData["Title"] = "Posts ";
 }
 
-<section class="h-auto flex flex-col center w-full" x-data="page">
-	@await Html.PartialAsync("_ConfirmModal")
-	<div class="flex flex-col center card w-full bg-base-100">
-		<div class="card-body w-full bg-base-200/50 rounded-md">
-			<div class="w-full flex justify-between items-center">
-				<h1 class="text-accent text-3xl font-bold mb-4 ">Posts</h1>
-				<a class="btn btn-primary" href="~/admin/post/new">
-					<i class="bi bi-plus-lg"></i>
-					Criar Post
-				</a>
-			</div>
-			<div class="overflow-x-auto w-full p-2 ">
-				<table class="table text-white ">
-					<thead>
-						<tr class="text-white text-lg">
-							<th>Titulo </th>
-							<th>Autor</th>
-							<th>Criado em</th>
-							<th>Acessos</th>
-							<th>Comentarios</th>
-							<th>Ações</th>
-						</tr>
-					</thead>
-					<tbody>
-						@for(var i = 0; i < 10; i++){ <tr>
-							<td>teste da silva</td>
-							<td>teste</td>
-							<td>teste</td>
-							<td>90</td>
-							<td>90</td>
-							<td>
-								<div class="flex gap-4 ">
-									<button class="btn btn-sm ">
-										<i class="bi bi-pencil"></i>
-									</button>
-									<button class="btn btn-sm btn-error" @@click="delete_modal('@i')">
-										<i class="bi bi-trash"></i>
-									</button>
-								</div>
+@model PaginatedList<GenericCourses.Infra.Repositories.Queries.GetPostAdminQuery>
 
-							</td>
+	<section class="h-auto flex flex-col center w-full" x-data="page">
+		@await Html.PartialAsync("_ConfirmModal")
+		<div class="flex flex-col center card w-full bg-base-100">
+			<div class="card-body w-full bg-base-200/50 rounded-md">
+				<div class="w-full flex justify-between items-center">
+					<h1 class="text-accent text-3xl font-bold mb-4 ">Posts</h1>
+					<a class="btn btn-primary" href="~/admin/post/new">
+						<i class="bi bi-plus-lg"></i>
+						Criar Post
+					</a>
+				</div>
+				<div class="overflow-x-auto w-full p-2 ">
+					<table class="table text-white ">
+						<thead>
+							<tr class="text-white text-lg">
+								<th>Titulo </th>
+								<th>Autor</th>
+								<th>Criado em</th>
+								<th>Acessos</th>
+								<th>Comentarios</th>
+								<th>Ações</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach(var item in Model){ <tr>
+								<td>@item.title</td>
+								<td>@item.author</td>
+								<td>teste</td>
+								<td>90</td>
+								<td>90</td>
+								<td>
+									<div class="flex gap-4 ">
+										<button class="btn btn-sm ">
+											<i class="bi bi-pencil"></i>
+										</button>
+										<button class="btn btn-sm btn-error" @@click="delete_modal('')">
+											<i class="bi bi-trash"></i>
+										</button>
+									</div>
+
+								</td>
 							</tr>
 							}
-					</tbody>
-				</table>
-			</div>
-
-			<div class="w-full flex justify-between items-center mt-8">
-				<div class="text-white">
-					Mostrando <span>1 de 100</span>
+						</tbody>
+					</table>
 				</div>
-				<div class="join">
-					<a class="join-item btn">«</a>
-					<a class="join-item btn" href="#">1</a>
-					<a class="join-item btn" href="#">2</a>
-					<a class="join-item btn" href="#">3</a>
-					<a class="join-item btn">»</a>
+
+				<div class="w-full flex justify-between items-center mt-8">
+					@if(Model.TotalPages>1){
+					@await Html.PartialAsync("../Shared/Partials/AdminPaginator.cshtml", Model.pagination());
+					}
 				</div>
 			</div>
 		</div>
-	</div>
-</section>
+	</section>
 
 
-@section Scripts{
-<script defer>
-	document.addEventListener('alpine:init', () => {
-		Alpine.data('page', () => ({
-			nome: "",
-			modal_title: "",
-			confirm_txt: "",
+	@section Scripts{
+	<script defer>
+		document.addEventListener('alpine:init', () => {
+			Alpine.data('page', () => ({
+				nome: "",
+				modal_title: "",
+				confirm_txt: "",
 
-			delete_modal(name) {
-				this.confirm_txt = "Voce realmente deseja deletar " + name + "?"
-				confirm_modal.showModal();
-			}
-		})
-		)
-	})	
-</script>
+				delete_modal(name) {
+					this.confirm_txt = "Voce realmente deseja deletar " + name + "?"
+					confirm_modal.showModal();
+				}
+			})
+			)
+		})	
+	</script>
 
-}
+	}

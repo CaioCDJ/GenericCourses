@@ -60,19 +60,27 @@ internal sealed class PostRepository : Repository<BlogPost>, IPostRepository {
 		return lst.ToList();
 	}
 
-	public async Task<List<GetPostAdminQuery>> paginateAdmin(Guid id, int offset, int size = 8) {
+	public async Task<List<GetPostAdminQuery>> paginateAdmin(int offset, int size = 8, Guid? id = null) {
 		using var conn = new NpgsqlConnection(_connString);
-		var lst = await conn.QueryAsync<GetPostAdminQuery>(@"
+
+		string where_clause = "";
+
+		if (id is not null)
+			where_clause = "WHERE b.instructor_id = @id";
+
+		var lst = await conn.QueryAsync<GetPostAdminQuery>(@$"
             SELECT b.id as postId, b.title ,b.created_at ,u.name AS author 
                 FROM blog_posts AS b
                     JOIN instructors AS i ON i.id = b.instructor_id
-                    JOIN categories AS c ON c.id = b.category_id
+                    LEFT JOIN post_categories AS pc ON pc.blog_post_id = b.id
+					LEFT JOIN categories AS c ON c.id = pc.category_id
                     JOIN users AS u ON u.id = i.user_id
-                    WHERE b.instructor_id = @id
+                    {where_clause}
                     ORDER BY b.created_at desc
                     LIMIT @size
                     OFFSET @offset
         ", new { size = size, offset = offset, id = id });
+        Console.WriteLine(offset);
 		return lst.ToList();
 	}
 

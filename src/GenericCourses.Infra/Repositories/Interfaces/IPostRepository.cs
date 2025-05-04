@@ -8,7 +8,7 @@ public interface IPostRepository {
 	Task<BlogPost> single(Guid id);
 	Task<List<PostDTO>> paginate(int offset, int size = 8, string[]? categories = null,
 			string? searchParam = null);
-	Task<List<GetPostAdminQuery>> paginateAdmin(Guid id, int offset, int size = 8);
+	Task<List<GetPostAdminQuery>> paginateAdmin(int offset, int size = 8, Guid? id = null);
 	Task<int> QtByUsers(Guid id);
 	Task<int?> count();
 	Task<BlogPost> store(BlogPost post);

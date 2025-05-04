@@ -15,12 +15,18 @@ public class GetPostsAdminHandler : IRequestHandler<GetPostsAdminRequest, Pagina
 	}
 
 	public async Task<PaginatedList<GetPostAdminQuery>> Handle(GetPostsAdminRequest request, CancellationToken ct) {
-		var lst = await _postRepository.paginateAdmin(request.userId, request.pageSize);
-		var qt = await _postRepository.QtByUsers(request.userId);
+
+		int offset = (request.pageSize > 1)
+		  ? (request.pageSize * (request.pageIndex - 1)) : 0;
+		
+		var lst = await _postRepository.paginateAdmin(offset,request.pageSize);
+		
+		var qt = (request.userId.HasValue)
+			? await _postRepository.QtByUsers(request.userId.Value)
+			: await _postRepository.count();
 
 		return new PaginatedList<GetPostAdminQuery>(
-			lst, qt, request.pageIndex
+			lst, qt.Value, request.pageIndex, 10
 		  );
-
 	}
 }

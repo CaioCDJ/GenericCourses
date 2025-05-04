@@ -5,6 +5,7 @@ using GenericCourses.Web.Models;
 using GenericCourses.Infra.Repositories;
 using GenericCourses.Application.Features.Admin.Courses;
 using GenericCourses.Application.Features.Admin.Subscriptions;
+using GenericCourses.Application.Features.Admin.Blog;
 using MediatR;
 
 namespace GenericCourses.Web.Controllers;
@@ -35,8 +36,15 @@ public class AdminController : Controller {
 	}
 
 	[Route("/admin/posts")]
-	public async Task<IActionResult> Posts() {
-		return View();
+	public async Task<IActionResult> Posts(int page = 1) {
+
+		var response = await _mediatr.Send(new GetPostsAdminRequest(
+			pageIndex: page,
+			pageSize: 10,
+			userId: null
+		));
+
+		return View(response);
 	}
 
 	[Route("/admin/courses")]
@@ -47,13 +55,31 @@ public class AdminController : Controller {
 		return View(paginatedList);
 	}
 
-	[Route("/admin/courses/new")]
-	public IActionResult newCourse() {
-		return View();
+	[HttpPost]
+	[Route("/admin/courses/{id}")]
+	public async Task<IActionResult> DeleteCourse([FromRoute] string id) {
+		var course_id = Guid.Parse(id);
+		var res = await _mediatr.Send(new DisableCourseRequest(course_id));
+
+		return RedirectToAction("Courses");
+	}
+
+	[HttpPost]
+	[Route("/admin/courses/new_module/{course_id}")]
+	public async Task<IActionResult> NewModules(
+		[FromRoute] string course_id, [FromForm] StoreModuleFormPost post_request) {
+
+		var id = Guid.Parse(course_id);
+
+		var module = await _mediatr.Send(new StoreModuleRequest(
+			course_id: id, title: post_request.title, description: post_request.description
+		));
+
+		return RedirectToAction("Courses");
 	}
 
 	[Route("/admin/courses/new")]
-	public async Task<IActionResult> NewCourse() {
+	public IActionResult newCourse() {
 		return View();
 	}
 
