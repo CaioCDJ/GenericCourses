@@ -40,7 +40,7 @@ ViewData["Title"] = "Modulos";
 							<div class="label">
 								<span class="label-text">Descrição</span>
 							</div>
-							<textarea name="description" class="textarea textarea-bordered h-56 resize-none"></textarea>
+							<textarea id="editor" name="description" class="textarea textarea-bordered h-56 resize-none"></textarea>
 							<div class="label">
 								<!-- <span class="label-text-alt">Alt label</span> -->
 							</div>
@@ -124,6 +124,11 @@ ViewData["Title"] = "Modulos";
 				modal_title: "",
 				confirm_txt: "",
 
+				init(){
+					const easymde = new EasyMDE({
+						element: document.getElementById('editor'),
+					});
+				},
 				new_modal() {
 					this.modal_title = "Nova Modulo"
 					create_modal.showModal()

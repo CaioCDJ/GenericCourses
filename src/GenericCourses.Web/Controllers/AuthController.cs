@@ -29,9 +29,10 @@ public class AuthController : Controller {
 	[Route("/login")]
 	public async Task<IActionResult> LoginPost(LoginRequest request) {
 		var res = await _mediatr.Send(request);
-
+		
 		var claims = new List<Claim>{
 			new Claim(ClaimTypes.Surname,res.name),
+			new Claim(ClaimTypes.Hash, res.Id.ToString()),
 			new Claim(ClaimTypes.Role, res.role.ToString())
 		};
 

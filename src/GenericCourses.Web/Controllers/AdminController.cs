@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using GenericCourses.Web.Models;
@@ -37,19 +38,34 @@ public class AdminController : Controller {
 
 	[Route("/admin/posts")]
 	public async Task<IActionResult> Posts(int page = 1) {
-
 		var response = await _mediatr.Send(new GetPostsAdminRequest(
 			pageIndex: page,
 			pageSize: 10,
 			userId: null
 		));
-
 		return View(response);
 	}
-	
+
+	[Route("/admin/post/{id}")]
+	public async Task<IActionResult> DeletePost([FromRoute]string id){
+		
+		var post_id = Guid.Parse(id);
+
+		var response = await _mediatr.Send(
+			new DeletePostRequest(post_id)
+		);
+
+		if(response){}
+
+		return RedirectToAction("Posts");
+	}
+
+
 	[Route("/admin/courses")]
 	public async Task<IActionResult> Courses(int? page) {
+		var user = HttpContext.User;
 
+		Console.WriteLine(user.FindFirst(ClaimTypes.Surname).Value);
 		var paginatedList = await _mediatr.Send(new GetCoursesAdminRequest(page ?? 0));
 
 		return View(paginatedList);
@@ -74,7 +90,7 @@ public class AdminController : Controller {
 		Guid course_id = Guid.Parse(id);
 
 		var modules = await _mediatr.Send(new GetModulesRequest(page , course_id));
-		Console.WriteLine(modules.TotalPages);
+		
 		ViewBag.id = id;
 
 		return View(modules);
