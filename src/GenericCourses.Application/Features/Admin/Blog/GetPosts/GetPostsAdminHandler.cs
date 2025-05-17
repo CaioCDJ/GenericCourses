@@ -16,7 +16,7 @@ public class GetPostsAdminHandler : IRequestHandler<GetPostsAdminRequest, Pagina
 
 	public async Task<PaginatedList<GetPostAdminQuery>> Handle(GetPostsAdminRequest request, CancellationToken ct) {
 
-		int offset = (request.pageSize > 1)
+		int offset = (request.pageIndex > 1)
 		  ? (request.pageSize * (request.pageIndex - 1)) : 0;
 		
 		var lst = await _postRepository.paginateAdmin(offset,request.pageSize);

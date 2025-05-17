@@ -23,8 +23,10 @@ public class GetModulesHandler : IRequestHandler<GetModulesRequest, PaginatedLis
 			throw new Exception();
 
 		var lst = await _modulesRepository.paginate(request.course_id, request.pageIndex);
-
+	
 		var res_lst = new List<GetModulesResponse>();
+
+		var qt = await _modulesRepository.countPagination(course.id);
 
 		foreach (var item in lst) {
 			res_lst.Add(new GetModulesResponse {
@@ -34,7 +36,7 @@ public class GetModulesHandler : IRequestHandler<GetModulesRequest, PaginatedLis
 			});
 		}
 
-		return new PaginatedList<GetModulesResponse>(res_lst, lst.Count, request.pageIndex);
+		return new PaginatedList<GetModulesResponse>(res_lst, qt, request.pageIndex,10);
 	}
 
 }

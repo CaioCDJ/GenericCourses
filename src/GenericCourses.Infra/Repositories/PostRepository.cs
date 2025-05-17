@@ -16,8 +16,10 @@ internal sealed class PostRepository : Repository<BlogPost>, IPostRepository {
 		_connString = appDbContext.Database.GetConnectionString();
 	}
 	public async Task<BlogPost> single(Guid id)
-	  => await _context.blog_posts.FirstOrDefaultAsync(x => x.id == id);
-
+	  => await _context.blog_posts
+		.Include(x=>x.postCategories)
+		.FirstOrDefaultAsync(x => x.id == id);
+		
 	public async Task<List<PostDTO>> paginate(
 		int offset,
 		int size = 8,
@@ -80,7 +82,6 @@ internal sealed class PostRepository : Repository<BlogPost>, IPostRepository {
                     LIMIT @size
                     OFFSET @offset
         ", new { size = size, offset = offset, id = id });
-        Console.WriteLine(offset);
 		return lst.ToList();
 	}
 

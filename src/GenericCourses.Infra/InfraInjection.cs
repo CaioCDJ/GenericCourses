@@ -19,7 +19,7 @@ public static class InfraInjection {
 		});
 		services.AddScoped<IVideosRepository, VideosRepository>();
 		services.AddScoped<IPostRepository, PostRepository>();
-		services.AddScoped<InstructorRepository>();
+		services.AddScoped<IInstructorRepository,InstructorRepository>();
 		services.AddScoped<IAuthRepository, AuthRepository>();
 		services.AddScoped<ICategoriesRepository, CategoriesRepository>();
 		services.AddScoped<ISubscriptionPlanRepository, SubscriptionPlanRepository>();

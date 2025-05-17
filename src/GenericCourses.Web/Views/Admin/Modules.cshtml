@@ -12,14 +12,14 @@ ViewData["Title"] = "Modulos";
 		<dialog id="create_modal" class="modal">
 			<div class="modal-box bg-base-100 p-5 flex flex-col gap-4">
 				<h3 class="text-lg font-bold" x-html="modal_title"></h3>
-				<div class="modal-action min-w-auto md:min-w-[400px]">
-					<form method="dialog" class="flex flex-col gap-2">
+				<div class="modal-action min-w-auto md:min-w-[400px] center">
+					<form method="dialog" class="flex flex-col gap-2 w-full" method="post" >
 
 						<label class="form-control w-full ">
 							<div class="label">
 								<span class="label-text">Titulo</span>
 							</div>
-							<input x-model="nome" type="text" class="input input-bordered w-full" />
+							<input name="title" x-model="nome" type="text" class="input input-bordered w-full" />
 							<div class="label">
 								<!-- <span class="label-text-alt">Bottom Left label</span> -->
 							</div>
@@ -29,7 +29,7 @@ ViewData["Title"] = "Modulos";
 							<div class="label">
 								<span class="label-text">Order</span>
 							</div>
-							<input type="number" class="input input-bordered w-full" />
+							<input name="order" type="number" class="input input-bordered w-full" />
 							<div class="label">
 								<!-- <span class="label-text-alt">Bottom Left label</span> -->
 							</div>
@@ -40,15 +40,15 @@ ViewData["Title"] = "Modulos";
 							<div class="label">
 								<span class="label-text">Descrição</span>
 							</div>
-							<textarea class="textarea textarea-bordered h-56 resize-none"></textarea>
+							<textarea name="description" class="textarea textarea-bordered h-56 resize-none"></textarea>
 							<div class="label">
 								<!-- <span class="label-text-alt">Alt label</span> -->
 							</div>
 						</label>
 
 						<div class="flex w-full items-center justify-between">
-							<button class="btn btn-success">Confirmar</button>
 							<a class="btn" @@click="create_modal.close()">Close</a>
+							<button class="btn btn-success" type="submit">Confirmar</button>
 						</div>
 					</form>
 				</div>
@@ -109,9 +109,8 @@ ViewData["Title"] = "Modulos";
 					</table>
 				</div>
 
-
 				@if(Model.TotalPages>1){
-				@await Html.PartialAsync("../Shared/Partials/AdminPaginator.cshtml", Model.pagination());
+					@await Html.PartialAsync("../Shared/Partials/AdminPaginator.cshtml", Model.pagination());
 				}
 			</div>
 		</div>

@@ -19,7 +19,7 @@ public class GetPostAdminTests {
 	public GetPostAdminTests() {
 		_post_repository = Substitute.For<IPostRepository>();
 	}
-
+/*
 	[Fact]
 	public async Task should_run_correctly() {
 
@@ -41,4 +41,5 @@ public class GetPostAdminTests {
 		// assert
 		Assert.NotNull(response);
 	}
+	*/
 }

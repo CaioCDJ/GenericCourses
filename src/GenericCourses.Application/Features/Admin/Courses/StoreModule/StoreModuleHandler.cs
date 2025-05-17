@@ -19,6 +19,11 @@ public class StoreModuleHandler : IRequestHandler<StoreModuleRequest, Module> {
 		var course = await _courseRepository.single(request.course_id);
 
 		if (course is null) { }
+		
+		Console.WriteLine(@$"
+			{request.title}
+			{request.description}
+		");
 
 		var module = await _modulesRepository.store(new Module() {
 			title = request.title,

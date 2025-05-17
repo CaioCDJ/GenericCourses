@@ -46,7 +46,7 @@ public class AdminController : Controller {
 
 		return View(response);
 	}
-
+	
 	[Route("/admin/courses")]
 	public async Task<IActionResult> Courses(int? page) {
 
@@ -64,34 +64,34 @@ public class AdminController : Controller {
 		return RedirectToAction("Courses");
 	}
 
-	[HttpPost]
-	[Route("/admin/courses/new_module/{course_id}")]
-	public async Task<IActionResult> NewModules(
-		[FromRoute] string course_id, [FromForm] StoreModuleFormPost post_request) {
-
-		var id = Guid.Parse(course_id);
-
-		var module = await _mediatr.Send(new StoreModuleRequest(
-			course_id: id, title: post_request.title, description: post_request.description
-		));
-
-		return RedirectToAction("Courses");
-	}
-
 	[Route("/admin/courses/new")]
 	public IActionResult newCourse() {
 		return View();
 	}
 
 	[Route("/admin/courses/{id}/modules")]
-	public async Task<IActionResult> Modules([FromRoute] string id, int? page) {
+	public async Task<IActionResult> Modules([FromRoute] string id, int page=1) {
 		Guid course_id = Guid.Parse(id);
 
-		var modules = await _mediatr.Send(new GetModulesRequest(page ?? 0, course_id));
-
+		var modules = await _mediatr.Send(new GetModulesRequest(page , course_id));
+		Console.WriteLine(modules.TotalPages);
 		ViewBag.id = id;
 
 		return View(modules);
+	}
+
+	[HttpPost]
+	[Route("/admin/courses/{id}/modules")]
+	public async Task<IActionResult> StoreModule(
+			[FromRoute] string id, StoreModuleFormPost formPost){
+	
+		Guid course_id = Guid.Parse(id);
+		
+		var response = await _mediatr.Send(new StoreModuleRequest(
+			course_id:course_id,order: formPost.order, description: formPost.description, title:formPost.title
+		));
+			
+		return RedirectToAction("Modules", new { id = id});
 	}
 
 	[Route("/admin/courses/{id}/modules/{moduleId}/videos")]

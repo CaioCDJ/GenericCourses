@@ -7,14 +7,15 @@ using Npgsql;
 
 namespace GenericCourses.Infra.Repositories;
 
-public class InstructorRepository : IInstructorRepository {
-	private readonly AppDbContext _context;
+internal sealed class InstructorRepository : Repository<Instructor>, IInstructorRepository {
 	private readonly string _conString;
 
-	public InstructorRepository(AppDbContext context) {
-		_context = context;
+	public InstructorRepository(AppDbContext context) : base(context) {
 		_conString = context.Database.GetConnectionString();
 	}
+
+	public async Task<Instructor?> single(Guid id)
+		=> await _context.instructors.SingleOrDefaultAsync(x => x.id == id);
 
 	public async Task<AdminAccountDTO> accountInfo(Guid id) {
 		using var conn = new NpgsqlConnection(_conString);

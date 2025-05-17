@@ -19,20 +19,22 @@ internal sealed class ModulesRepository : Repository<Module>, IModulesRepository
 		=> await _context.modules.SingleOrDefaultAsync(item => item.id == id);
 
 
-	public async Task<List<ModulesByCourseQuery>> paginate(Guid course_id, int? page) {
+	public async Task<List<ModulesByCourseQuery>> paginate(Guid course_id, int page) {
 
 		using var conn = new NpgsqlConnection(_connString);
 
 		await conn.OpenAsync();
 
-		int offset = page == null ? 0 : (int) page * 10;
-
-		string query = @$"
+		int offset = (page > 1)
+			? (10 * (page - 1)) : 0;
+		string query = @"
 			SELECT id,title,complete 
 				FROM modules AS m 
-					ORDER BY m.order
-					LIMIT 10
-					OFFSET @offset
+					WHERE course_id = @course_id
+						ORDER BY m.order
+						LIMIT 10
+						OFFSET @offset
+					
 		";
 
 		var lst = await conn.QueryAsync<ModulesByCourseQuery>(
@@ -42,6 +44,11 @@ internal sealed class ModulesRepository : Repository<Module>, IModulesRepository
 
 		return lst.ToList();
 	}
+
+	public async Task<int> countPagination(Guid course_id)
+		=> await _context.modules
+			.Where(x => x.courseId == course_id)
+			.CountAsync();
 
 	public async Task<List<QtModulesByCourseQuery>> countByCourse(Guid[] ids) {
 		using var conn = new NpgsqlConnection(_connString);

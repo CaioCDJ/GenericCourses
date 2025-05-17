@@ -15,8 +15,6 @@ public class DisableCourseHandler : IRequestHandler<DisableCourseRequest, Course
 
 		var course = await _courseRepository.single(request.id);
 
-		Console.WriteLine("MAS QUE PORRA");
-
 		if( course is null){}
 
 		course.active = false;
