@@ -28,6 +28,9 @@ public class AdminController : Controller {
 		return View();
 	}
 
+	// ===========================================================
+	//						  Blog
+	// ===========================================================
 	[Route("/admin/post/new")]
 	public async Task<IActionResult> NewPost(
 		[FromServices] ICategoriesRepository categoriesRepository
@@ -60,7 +63,9 @@ public class AdminController : Controller {
 		return RedirectToAction("Posts");
 	}
 
-
+	// ===========================================================
+	//					      Courses
+	// ===========================================================
 	[Route("/admin/courses")]
 	public async Task<IActionResult> Courses(int? page) {
 		var user = HttpContext.User;
@@ -121,6 +126,11 @@ public class AdminController : Controller {
 
 		return View(videos);
 	}
+
+
+	// ===========================================================
+	//						  Users
+	// ===========================================================
 	[Authorize(Roles = "admin")]
 	[Route("/admin/clients")]
 	[Route("/admin/users")]
@@ -135,6 +145,12 @@ public class AdminController : Controller {
 	}
 
 
+	// ===========================================================
+	//					  Subscriptions
+	// ===========================================================
+	// TODO:
+	// - Delete 
+	// - Update
 	[Route("/admin/plans")]
 	[Route("/admin/subscriptions")]
 	public async Task<IActionResult> Plans(int? page) {
@@ -142,7 +158,26 @@ public class AdminController : Controller {
 
 		return View(lst);
 	}
+	
+	[HttpPost]
+	[Route("/admin/plans")]
+	public async Task<IActionResult> Store_Plans(StoreSubscriptionForm form_request ){
+		
+		var user_id = HttpContext.User.Claims.FirstOrDefault(x=>x.Type == ClaimTypes.Hash).Value;
+		
+		var response = await _mediatr.Send(new StoreSubscriptionRequest(
+			price: form_request.price,
+			description: form_request.description,
+			months: form_request.months,
+			admin_id: Guid.Parse(user_id)
+		));
 
+		return RedirectToAction("Plans");
+	}
+
+	// ===========================================================
+	//					    Categories
+	// ===========================================================
 	[Route("/admin/categories")]
 	public async Task<IActionResult> Categories() {
 		return View();

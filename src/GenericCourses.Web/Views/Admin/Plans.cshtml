@@ -4,24 +4,49 @@ ViewData["Title"] = "Planos";
 }
 @model PaginatedList<GenericCourses.Infra.Repositories.Queries.GetSubscriptionsQuery>
 
+<section class="h-auto flex flex-col center w-full" x-data="page">
 	<dialog id="create_modal" class="modal">
 		<div class="modal-box">
-			<h3 class="text-lg font-bold">Hello!</h3>
-			<p class="py-4">Press ESC key or click the button below to close</p>
-			<div class="modal-action">
-				<form method="dialog">
-					<!-- if there is a button in form, it will close the modal -->
+			<div class="modal-action min-w-auto md:min-w-[400px]">
+				<form method="post" action='/admin/plans' class="flex flex-col gap-6 center w-full">
+					<h2 class="text-lg font-semibold">Nova Inscrição</h2>	
+
+					<div class="w-full">
+						<label class="block mb-2 text-sm font-medium text-white">Valor:</label>
+						<input type="number" name="price"
+							class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+							placeholder="" required>
+					</div>
+					
+					<div class="w-full">
+						<label class="block mb-2 text-sm font-medium text-white">Mês:</label>
+						<input type="number" name="months"
+							class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+							placeholder="" required>
+					</div>
+
+					<div class="w-full">
+						<label class="block mb-2 text-sm font-medium text-white">Descrição:</label>
+						<textarea name="description"
+							class="resize-none h-56 border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+							required>
+						</textarea>
+					</div>
+			
+					<div class="flex flex-row items-center justify-between gap-[15px] w-full">
+						<a class="btn" @@click="frm_create.close()">Cancelar</a>
+						<button class="btn btn-success">Confirmar</button>
+					</div>
 				</form>
 			</div>
 		</div>
 	</dialog>
 
-	<section class="h-auto flex flex-col center w-full" x-data="page">
 		<div class="flex flex-col center card w-full bg-base-100">
 			<div class="card-body w-full bg-base-200/50 rounded-md">
 				<div class="w-full flex justify-between items-center">
 					<h1 class="text-accent text-3xl font-bold mb-4 ">Planos </h1>
-					<button class="btn btn-primary" onclick="my_modal_1.showModal()">
+					<button class="btn btn-primary" @@click="new_subs">
 						<i class="bi bi-plus-lg"></i>
 						Novo Plano
 					</button>
@@ -83,7 +108,11 @@ ViewData["Title"] = "Planos";
 	<script defer>
 		document.addEventListener("alpine:init", () => {
 			Alpine.data("page", () => ({
+				frm_create: document.querySelector("#create_modal"),
 
+				new_subs() {
+					this.frm_create.showModal()
+				}
 			}))
 		});
 	</script>
