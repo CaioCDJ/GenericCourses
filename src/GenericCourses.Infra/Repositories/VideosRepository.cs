@@ -13,6 +13,6 @@ internal sealed class VideosRepository : Repository<Video>, IVideosRepository {
 		=> await _context.videos.Where(x => x.moduleId == module_id)
 			.Skip((page == 1) ? 0 : page * 10)
 			.Take(10)
-			.OrderBy(x=>x.order)
+			.OrderBy(x => x.order)
 			.ToListAsync();
 }

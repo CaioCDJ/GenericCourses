@@ -7,4 +7,4 @@ public record UpdatePostRequest(
 	Guid id, string title,
 	string text, string thumb,
 	string[] categories
-):IRequest<BlogPost>;
+) : IRequest<BlogPost>;

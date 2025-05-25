@@ -9,20 +9,20 @@ public class StoreCourseHandler : IRequestHandler<StoreCourseRequest, Course> {
 	private readonly ICourseRepository _courseRepository;
 	private readonly IInstructorRepository _instructorRepository;
 
-	public StoreCourseHandler(ICourseRepository courseRepository, IInstructorRepository instructorRepository){ 
+	public StoreCourseHandler(ICourseRepository courseRepository, IInstructorRepository instructorRepository) {
 		_instructorRepository = instructorRepository;
 		_courseRepository = courseRepository;
 	}
 
-	public async Task<Course> Handle(StoreCourseRequest request, CancellationToken ct){
-	
+	public async Task<Course> Handle(StoreCourseRequest request, CancellationToken ct) {
+
 		var instructor_guid = Guid.Parse(request.instructor_id);
 
 		var instructor = await _instructorRepository.single(instructor_guid);
 
-		if (instructor is null){}
-		
-		var course = await _courseRepository.store(new Course{
+		if (instructor is null) { }
+
+		var course = await _courseRepository.store(new Course {
 			title = request.title,
 			description = request.description ?? "",
 			thumb = request.thumb ?? "",

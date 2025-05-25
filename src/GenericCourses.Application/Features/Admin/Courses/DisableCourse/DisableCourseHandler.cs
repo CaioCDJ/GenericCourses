@@ -15,7 +15,7 @@ public class DisableCourseHandler : IRequestHandler<DisableCourseRequest, Course
 
 		var course = await _courseRepository.single(request.id);
 
-		if( course is null){}
+		if (course is null) { }
 
 		course.active = false;
 

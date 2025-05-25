@@ -10,4 +10,4 @@ public record StoreCourseRequest(
 	bool is_free,
 	string instructor_id,
 	bool active
-): IRequest<Course>;
+) : IRequest<Course>;

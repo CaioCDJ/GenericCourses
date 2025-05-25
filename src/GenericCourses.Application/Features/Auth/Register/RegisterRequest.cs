@@ -1,9 +1,10 @@
 using MediatR;
 using GenericCourses.Domain.Entities;
+using GenericCourses.Application.Common;
 
 namespace GenericCourses.Application.Features.Auth;
 
-public class RegisterRequest : IRequest<User> {
+public class RegisterRequest : IRequest<Result<User,Error>> {
 	public string name { get; set; }
 	public string email { get; set; }
 	public string password { get; set; }

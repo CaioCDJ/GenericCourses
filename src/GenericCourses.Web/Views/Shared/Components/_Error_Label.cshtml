@@ -1,0 +1,12 @@
+
+@model string
+@{
+    var key = Model;
+    var errors = ViewData.ModelState[key]?.Errors;
+
+    if (errors != null && errors.Count > 0)
+    {
+        <span class="text-sm text-error label">@errors[0].ErrorMessage</span>
+    }
+}
+

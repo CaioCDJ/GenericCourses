@@ -19,27 +19,27 @@ public class GetPostAdminTests {
 	public GetPostAdminTests() {
 		_post_repository = Substitute.For<IPostRepository>();
 	}
-/*
-	[Fact]
-	public async Task should_run_correctly() {
+	/*
+		[Fact]
+		public async Task should_run_correctly() {
 
-		// arrange
-		var request = new GetPostsAdminRequest(Guid.NewGuid(), 0);
+			// arrange
+			var request = new GetPostsAdminRequest(Guid.NewGuid(), 0);
 
-		_post_repository.paginateAdmin(
-				Arg.Any<Guid>(), Arg.Any<int>())
-			.Returns(new List<GetPostAdminQuery>());
+			_post_repository.paginateAdmin(
+					Arg.Any<Guid>(), Arg.Any<int>())
+				.Returns(new List<GetPostAdminQuery>());
 
-		_post_repository.QtByUsers(Arg.Any<Guid>())
-			.Returns(1);
+			_post_repository.QtByUsers(Arg.Any<Guid>())
+				.Returns(1);
 
-		var handler = new GetPostsAdminHandler(_post_repository);
+			var handler = new GetPostsAdminHandler(_post_repository);
 
-		// act
-		var response = await handler.Handle(request, CancellationToken.None);
+			// act
+			var response = await handler.Handle(request, CancellationToken.None);
 
-		// assert
-		Assert.NotNull(response);
-	}
-	*/
+			// assert
+			Assert.NotNull(response);
+		}
+		*/
 }

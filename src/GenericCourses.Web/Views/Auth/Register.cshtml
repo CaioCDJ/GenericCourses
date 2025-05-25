@@ -3,7 +3,8 @@ Layout = "../Shared/_LoginLayout.cshtml";
 ViewData["Title"] = "Register";
 }
 
-<form method="post" class="lg:w-2/5 w-full flex flex-col py-12 h-full px-14 justify-center o">
+<form asp-method="RegisterPost" method="post" class="lg:w-2/5 w-full flex flex-col py-12 h-full px-14 justify-center o">
+	@Html.AntiForgeryToken()
 	<a href="index" class="font-semibold text-sky-500 text-2xl">Generic Courses</a>
 	<h1 class="text-white text-4xl font-black">Seja bem vindo</h1>
 	<p class="text-gray-300 mt-5">
@@ -17,6 +18,7 @@ ViewData["Title"] = "Register";
 			<input name="name" type="text"
 				class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
 				required>
+				@await Html.PartialAsync("../Shared/Components/_Error_Label", "name")
 		</div>
 
 		<div class="col-span-2">
@@ -24,12 +26,14 @@ ViewData["Title"] = "Register";
 			<input name='email' type="email"
 				class="border  text-sm rounded-lg block w-full p-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
 				required>
+				@await Html.PartialAsync("../Shared/Components/_Error_Label", "email")
 		</div>
 
 		<div>
 			<label class="block mb-2 text-sm font-medium text-white">Numero de celular:</label>
 			<input name="phone" type="number"
 				class="border  text-sm rounded-lg block w-full p-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
+			@await Html.PartialAsync("../Shared/Components/_Error_Label", "phone")
 		</div>
 
 		<div>
@@ -37,6 +41,7 @@ ViewData["Title"] = "Register";
 			<input name="cpf" type="number"
 				class="border  text-sm rounded-lg block w-full p-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
 				required>
+			@await Html.PartialAsync("../Shared/Components/_Error_Label", "cpf")
 		</div>
 
 		<div class="col-span-2">
@@ -44,6 +49,7 @@ ViewData["Title"] = "Register";
 			<input name="password" type="password"
 				class="border text-sm rounded-lg block w-full p-2 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
 				required>
+				@await Html.PartialAsync("../Shared/Components/_Error_Label", "password")
 		</div>
 
 		<div class="col-span-2">
@@ -51,6 +57,7 @@ ViewData["Title"] = "Register";
 			<input name="confirmPassword" type="password"
 				class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
 				required>
+				@await Html.PartialAsync("../Shared/Components/_Error_Label", "confirmPassword")
 		</div>
 
 	</div>

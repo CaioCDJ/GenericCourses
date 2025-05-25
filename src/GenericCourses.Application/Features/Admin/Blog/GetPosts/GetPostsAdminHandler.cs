@@ -18,9 +18,9 @@ public class GetPostsAdminHandler : IRequestHandler<GetPostsAdminRequest, Pagina
 
 		int offset = (request.pageIndex > 1)
 		  ? (request.pageSize * (request.pageIndex - 1)) : 0;
-		
-		var lst = await _postRepository.paginateAdmin(offset,request.pageSize);
-		
+
+		var lst = await _postRepository.paginateAdmin(offset, request.pageSize);
+
 		var qt = (request.userId.HasValue)
 			? await _postRepository.QtByUsers(request.userId.Value)
 			: await _postRepository.count();

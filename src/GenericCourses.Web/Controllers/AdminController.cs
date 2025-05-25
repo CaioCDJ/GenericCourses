@@ -50,15 +50,15 @@ public class AdminController : Controller {
 	}
 
 	[Route("/admin/post/{id}")]
-	public async Task<IActionResult> DeletePost([FromRoute]string id){
-		
+	public async Task<IActionResult> DeletePost([FromRoute] string id) {
+
 		var post_id = Guid.Parse(id);
 
 		var response = await _mediatr.Send(
 			new DeletePostRequest(post_id)
 		);
 
-		if(response){}
+		if (response) { }
 
 		return RedirectToAction("Posts");
 	}
@@ -91,11 +91,11 @@ public class AdminController : Controller {
 	}
 
 	[Route("/admin/courses/{id}/modules")]
-	public async Task<IActionResult> Modules([FromRoute] string id, int page=1) {
+	public async Task<IActionResult> Modules([FromRoute] string id, int page = 1) {
 		Guid course_id = Guid.Parse(id);
 
-		var modules = await _mediatr.Send(new GetModulesRequest(page , course_id));
-		
+		var modules = await _mediatr.Send(new GetModulesRequest(page, course_id));
+
 		ViewBag.id = id;
 
 		return View(modules);
@@ -104,15 +104,15 @@ public class AdminController : Controller {
 	[HttpPost]
 	[Route("/admin/courses/{id}/modules")]
 	public async Task<IActionResult> StoreModule(
-			[FromRoute] string id, StoreModuleFormPost formPost){
-	
+			[FromRoute] string id, StoreModuleFormPost formPost) {
+
 		Guid course_id = Guid.Parse(id);
-		
+
 		var response = await _mediatr.Send(new StoreModuleRequest(
-			course_id:course_id,order: formPost.order, description: formPost.description, title:formPost.title
+			course_id: course_id, order: formPost.order, description: formPost.description, title: formPost.title
 		));
-			
-		return RedirectToAction("Modules", new { id = id});
+
+		return RedirectToAction("Modules", new { id = id });
 	}
 
 	[Route("/admin/courses/{id}/modules/{moduleId}/videos")]
@@ -158,13 +158,13 @@ public class AdminController : Controller {
 
 		return View(lst);
 	}
-	
+
 	[HttpPost]
 	[Route("/admin/plans")]
-	public async Task<IActionResult> Store_Plans(StoreSubscriptionForm form_request ){
-		
-		var user_id = HttpContext.User.Claims.FirstOrDefault(x=>x.Type == ClaimTypes.Hash).Value;
-		
+	public async Task<IActionResult> Store_Plans(StoreSubscriptionForm form_request) {
+
+		var user_id = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Hash).Value;
+
 		var response = await _mediatr.Send(new StoreSubscriptionRequest(
 			price: form_request.price,
 			description: form_request.description,

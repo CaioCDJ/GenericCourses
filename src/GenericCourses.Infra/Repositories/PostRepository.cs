@@ -17,9 +17,9 @@ internal sealed class PostRepository : Repository<BlogPost>, IPostRepository {
 	}
 	public async Task<BlogPost> single(Guid id)
 	  => await _context.blog_posts
-		.Include(x=>x.postCategories)
+		.Include(x => x.postCategories)
 		.FirstOrDefaultAsync(x => x.id == id);
-		
+
 	public async Task<List<PostDTO>> paginate(
 		int offset,
 		int size = 8,

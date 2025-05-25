@@ -256,7 +256,8 @@ public class AppDbContext : DbContext {
 					_ => Guid.NewGuid()
 				};
 			}
-		};
+		}
+		;
 
 		modelBuilder.Entity<Video>()
 			.HasData(videos_modules);

@@ -23,9 +23,9 @@ public class UpdatePostHandler : IRequestHandler<UpdatePostRequest, BlogPost> {
 			? current_post.text : request.text;
 		current_post.thumb = string.IsNullOrEmpty(request.thumb)
 			? current_post.thumb : request.thumb;
-		
+
 		await _postRepository.update(current_post);
-		
+
 		return current_post;
 	}
 }

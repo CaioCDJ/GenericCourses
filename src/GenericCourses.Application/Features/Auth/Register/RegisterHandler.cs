@@ -2,10 +2,11 @@ using MediatR;
 using GenericCourses.Domain.Entities;
 using GenericCourses.Infra.Security;
 using GenericCourses.Infra.Repositories;
+using GenericCourses.Application.Common;
 
 namespace GenericCourses.Application.Features.Auth;
 
-public class RegisterHandler : IRequestHandler<RegisterRequest, User> {
+public class RegisterHandler : IRequestHandler<RegisterRequest, Result<User,Error>> {
 
 	private readonly IAuthRepository _authRepository;
 	private readonly ISubscriptionPlanRepository _subscriptionPlanRepository;
@@ -15,8 +16,7 @@ public class RegisterHandler : IRequestHandler<RegisterRequest, User> {
 		_subscriptionPlanRepository = subscriptionPlanRepository;
 	}
 
-	public async Task<User> Handle(RegisterRequest request, CancellationToken ct) {
-
+	public async Task<Result<User,Error>> Handle(RegisterRequest request, CancellationToken ct) {
 		var user = new User() {
 			name = request.name,
 			email = request.email,
@@ -26,7 +26,7 @@ public class RegisterHandler : IRequestHandler<RegisterRequest, User> {
 		};
 
 		if (!await _authRepository.canRegister(user)) {
-			throw new Exception();
+			return new Error("400", "Erro ao cadastrar o usuario");	
 		}
 
 		var client = await _authRepository.register(user);
@@ -35,6 +35,6 @@ public class RegisterHandler : IRequestHandler<RegisterRequest, User> {
 
 		await _subscriptionPlanRepository.sign(client, freePlan.id);
 
-		return user;
+		return  user;
 	}
 }

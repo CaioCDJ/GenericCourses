@@ -33,7 +33,7 @@ public class DisableCourseTests {
 
 		// arrange
 		var request = new DisableCourseRequest(fake_course.id);
-		
+
 		var updated_course_result = fake_course;
 		updated_course_result.active = false;
 

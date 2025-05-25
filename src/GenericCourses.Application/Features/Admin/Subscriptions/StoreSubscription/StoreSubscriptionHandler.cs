@@ -18,10 +18,10 @@ public class StoreSubscriptionHandler : IRequestHandler<StoreSubscriptionRequest
 	}
 
 	public async Task<Subscriptionplan> Handle(StoreSubscriptionRequest request, CancellationToken ct) {
-		
-		var admin = await _appDbContext.admins.SingleOrDefaultAsync(x=>x.userId == request.admin_id);
-		
-		if( admin is null){}
+
+		var admin = await _appDbContext.admins.SingleOrDefaultAsync(x => x.userId == request.admin_id);
+
+		if (admin is null) { }
 
 		var new_subs = await _subscriptionPlanRepository.store(new Subscriptionplan() {
 			price = request.price,
