@@ -8,74 +8,14 @@ ViewData["Title"] = "Videos";
 
 		@await Html.PartialAsync("_ConfirmModal")
 
-		<dialog id="create_modal" class="modal">
-			<div class="modal-box bg-base-100 p-5 flex flex-col gap-4">
-				<h3 class="text-lg font-bold" x-html="modal_title"></h3>
-				<div class="modal-action min-w-auto md:min-w-[400px]">
-					<form method="dialog" class="flex flex-col gap-2">
-						<div class="grid grid-cols-2 gap-2">
-
-							<div class="flex flex-col gap-2">
-								<label class="form-control w-full ">
-									<div class="label">
-										<span class="label-text">Titulo</span>
-									</div>
-									<input x-model="nome" type="text" class="input input-bordered w-full" />
-									<div class="label">
-										<!-- <span class="label-text-alt">Bottom Left label</span> -->
-									</div>
-								</label>
-
-								<label class="form-control w-full ">
-									<div class="label">
-										<span class="label-text">Order</span>
-									</div>
-									<input type="number" class="input input-bordered w-full" />
-									<div class="label">
-										<!-- <span class="label-text-alt">Bottom Left label</span> -->
-									</div>
-								</label>
-
-								<label class="form-control w-full ">
-									<div class="label">
-										<span class="label-text">Video Url:</span>
-									</div>
-									<input type="text" class="input input-bordered w-full" />
-									<div class="label">
-										<!-- <span class="label-text-alt">Bottom Left label</span> -->
-									</div>
-								</label>
-							</div>
-
-							<label class="form-control h-full">
-								<div class="label">
-									<span class="label-text">Descrição</span>
-								</div>
-								<textarea class="textarea textarea-bordered h-full resize-none"></textarea>
-								<div class="label">
-									<!-- <span class="label-text-alt">Alt label</span> -->
-								</div>
-							</label>
-
-						</div>
-						<div class="flex w-full items-center justify-between">
-							<button class="btn btn-success">Confirmar</button>
-							<a class="btn" @@click="create_modal.close()">Close</a>
-						</div>
-					</form>
-				</div>
-			</div>
-		</dialog>
-
-
 		<div class="flex flex-col center card w-full bg-base-100">
 			<div class="card-body w-full bg-base-200/50 rounded-md">
 				<div class="w-full flex justify-between items-center">
 					<h1 class="text-accent text-3xl font-bold mb-4 ">Videos</h1>
-					<button class="btn btn-primary" @@click="new_modal">
+					<a class="btn btn-primary" href="videos/new">
 						<i class="bi bi-plus-lg"></i>
 						Adicionar Video
-					</button>
+					</a>
 				</div>
 				<div class="overflow-x-auto w-full p-2 ">
 					<table class="table text-white ">
@@ -110,18 +50,9 @@ ViewData["Title"] = "Videos";
 					</table>
 				</div>
 
-				<div class="w-full flex justify-between items-center mt-8">
-					<div class="text-white">
-						Mostrando <span>1 de 100</span>
-					</div>
-					<div class="join">
-						<a class="join-item btn">«</a>
-						<a class="join-item btn" href="#">1</a>
-						<a class="join-item btn" href="#">2</a>
-						<a class="join-item btn" href="#">3</a>
-						<a class="join-item btn">»</a>
-					</div>
-				</div>
+				@if(Model.TotalPages>1){
+					@await Html.PartialAsync("../Shared/Partials/AdminPaginator.cshtml", Model.pagination());
+				}
 
 			</div>
 		</div>
@@ -131,19 +62,17 @@ ViewData["Title"] = "Videos";
 	<script defer>
 		document.addEventListener('alpine:init', () => {
 			Alpine.data('page', () => ({
-				nome: "",
-				modal_title: "",
 				confirm_txt: "",
-				new_modal() {
-					this.modal_title = "Nova Video"
-					create_modal.showModal()
+				frm_confirm: document.querySelector("#frm_confirm"),
+				init(){
+					const easymde = new EasyMDE({
+						element: document.getElementById('editor'),
+					});
 				},
-				edit_modal() {
-					this.modal_title = "Editar Video"
-					create_modal.showModal()
-				},
-				delete_modal(name, id) {
+
+				delete_modal(name,id) {
 					this.confirm_txt = "Voce realmente deseja deletar " + name + "?"
+					this.frm_confirm.setAttribute("action", location.href+"/" + id)
 					confirm_modal.showModal();
 				}
 			})

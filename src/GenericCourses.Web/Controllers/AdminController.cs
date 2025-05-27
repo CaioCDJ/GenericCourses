@@ -1,3 +1,4 @@
+using FluentValidation;
 using System.Diagnostics;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using GenericCourses.Infra.Repositories;
 using GenericCourses.Application.Features.Admin.Courses;
 using GenericCourses.Application.Features.Admin.Subscriptions;
 using GenericCourses.Application.Features.Admin.Blog;
+using GenericCourses.Web.Validations;
 using MediatR;
 
 namespace GenericCourses.Web.Controllers;
@@ -15,6 +17,7 @@ namespace GenericCourses.Web.Controllers;
 public class AdminController : Controller {
 	private readonly ILogger<HomeController> _logger;
 	private readonly IMediator _mediatr;
+
 
 	public AdminController(ILogger<HomeController> logger, IMediator mediator) {
 		_logger = logger;
@@ -115,6 +118,9 @@ public class AdminController : Controller {
 		return RedirectToAction("Modules", new { id = id });
 	}
 
+	// ===========================================================
+	//						  Videos
+	// ===========================================================
 	[Route("/admin/courses/{id}/modules/{moduleId}/videos")]
 	public async Task<IActionResult> Videos(
 		int page,
@@ -126,6 +132,49 @@ public class AdminController : Controller {
 
 		return View(videos);
 	}
+
+	[HttpPost]
+	[Route("/admin/courses/{id}/modules/{moduleId}/videos/{videoId}")]
+	public async Task<IActionResult> RemoveVideo(
+		[FromRoute] string id, [FromRoute] string moduleId, [FromRoute] string videoId
+	) {
+		var response = await _mediatr.Send(new DeleteVideoRequest(
+			Guid.Parse(moduleId), Guid.Parse(videoId)
+		) );
+
+		return RedirectToAction("Videos", new { id = id, moduleId = moduleId });
+	}
+
+	[Route("/admin/courses/{id}/modules/{moduleId}/videos/new")]
+	public async Task<IActionResult> NewVideo([FromRoute] string id, [FromRoute] string moduleId) {
+		return View();
+	}
+
+	[HttpPost]
+	[Route("/admin/courses/{id}/modules/{moduleId}/videos/new")]
+	public async Task<IActionResult> VideoPost(
+		[FromRoute] string moduleId, [FromRoute] string id, [FromForm] StoreVideoForm request,
+		[FromServices] IValidator<StoreVideoForm> validator
+	) {
+		var validation_result = await validator.ValidateAsync(request);
+
+		if (!validation_result.IsValid) {
+			validation_result.AddToModelState(this.ModelState);
+			return View("NewVideo", request);
+		}
+
+		var response = await _mediatr.Send(new StoreVideoRequest(
+			request.title, request.order, request.video_url, request.desc,
+			Guid.Parse(moduleId)
+		));
+
+		if (!response.isSuccess) {
+			return View("NewVideo", request);
+		}
+
+		return RedirectToAction("Videos", new { id = id, moduleId = moduleId });
+	}
+
 
 
 	// ===========================================================

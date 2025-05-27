@@ -1,0 +1,78 @@
+@{
+Layout = "../Shared/_AdminLayout.cshtml";
+ViewData["Title"] = "Novo Video";
+}
+
+@model GenericCourses.Web.Models.StoreVideoForm
+
+<form x-data="page" asp-action="VideoPost" method="post"
+	class="flex card  flex-col gap-4 w-full max-w-[800px] p-2 rounded-md bg-base-200/50">
+	@Html.AntiForgeryToken()
+	<div class="card-body w-full bg-base-200/50 rounded-md">
+		<h1 class="text-3xl font-bold text-white">Novo Curso</h1>
+		<div class="flex flex-col gap-2">
+			<div>
+				<label class="block mb-2 text-sm font-medium text-white">Titulo:</label>
+				<input asp-for="title" type="text"
+					class="border text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+					required>
+				@await Html.PartialAsync("../Shared/Components/_Error_Label", "title")
+			</div>
+			<div>
+				<label class="block mb-2 text-sm font-medium text-white">Ordem:</label>
+
+				<div class="join">
+					<button @@click="btn_order('-')"
+						class="btn join-item rounded-r-md btn-primary text-lg font-semibold" type="button">-</button>
+					<input asp-for="order" type="number" x-model.number="order"
+						class="border block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+						required>
+					<button @@click="btn_order('+')"
+						class="btn join-item rounded-r-md btn-primary text-lg font-semibold" type="button">+</button>
+				</div>
+				@await Html.PartialAsync("../Shared/Components/_Error_Label", "order")
+			</div>
+
+			<div>
+				<label class="block mb-2 text-sm font-medium text-white">Video Url:</label>
+
+				<input asp-for="video_url" type="text"
+					class="border text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+					required>
+
+				@await Html.PartialAsync("../Shared/Components/_Error_Label", "video_url")
+			</div>
+
+			<div>
+				<label class="block mb-2 text-sm font-medium text-white">Video Url:</label>
+				<textarea asp-for="desc" name="desc" id="editor"></textarea>
+			</div>
+
+			<button class="btn btn-success" type="submit">Confirmar</button>
+		</div>
+	</div>
+</form>
+
+@section Scripts{
+
+<script defer>
+	document.addEventListener('alpine:init', () => {
+		Alpine.data('page', () => ({
+			order: 1,
+			init() {
+				const easymde = new EasyMDE({
+					element: document.getElementById('editor'),
+				});
+			},
+			btn_order(operator) {
+				if (this.order > 0) {
+					if (operator == "-")
+						this.order--
+					else if (operator == "+")
+						this.order++
+				} else this.order = 1
+			}
+		}))
+	})
+</script>
+}

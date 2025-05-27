@@ -3769,6 +3769,18 @@ html:has(.drawer-toggle:checked){
   width: 100%;
 }
 
+.w-80{
+  width: 20rem;
+}
+
+.w-11\/12{
+  width: 91.666667%;
+}
+
+.w-auto{
+  width: auto;
+}
+
 .max-w-2xl{
   max-width: 42rem;
 }
@@ -3819,6 +3831,10 @@ html:has(.drawer-toggle:checked){
 
 .max-w-xs{
   max-width: 20rem;
+}
+
+.max-w-5xl{
+  max-width: 64rem;
 }
 
 .flex-1{
@@ -5361,6 +5377,10 @@ section {
 
   .md\:min-w-\[400px\]{
     min-width: 400px;
+  }
+
+  .md\:min-w-\[800px\]{
+    min-width: 800px;
   }
 
   .md\:grid-cols-2{
