@@ -32,7 +32,7 @@ class GetVideosHandler : IRequestHandler<GetVideosRequest, PaginatedList<GetVide
 				new GetVideosResponse(
 					id: item.id.ToString(),
 					title: item.title,
-					order: item.order + 1,
+					order: item.order,
 					created_at: item.created_at.ToString("dd/MM/yyyy")
 				)
 			);

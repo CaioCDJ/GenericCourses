@@ -7,5 +7,4 @@ public class StoreVideoForm{
 	public int order { get; set; }
 	public string video_url { get; set; }
 	public string desc { get; set; }
-	
 }

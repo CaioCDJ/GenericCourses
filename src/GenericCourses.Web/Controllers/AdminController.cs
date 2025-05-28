@@ -140,7 +140,7 @@ public class AdminController : Controller {
 	) {
 		var response = await _mediatr.Send(new DeleteVideoRequest(
 			Guid.Parse(moduleId), Guid.Parse(videoId)
-		) );
+		));
 
 		return RedirectToAction("Videos", new { id = id, moduleId = moduleId });
 	}
@@ -175,7 +175,49 @@ public class AdminController : Controller {
 		return RedirectToAction("Videos", new { id = id, moduleId = moduleId });
 	}
 
+	[Route("/admin/courses/{id}/modules/{moduleId}/videos/edit/{video_id}")]
+	public async Task<IActionResult> EditVideo(
+		[FromRoute] string moduleId, [FromRoute] string id, [FromRoute] string video_id
+	) {
+		var respose = await _mediatr.Send(new GetVideoRequest(Guid.Parse(video_id)));
 
+		if (!respose.isSuccess)
+			return RedirectToAction("Videos", new { id = id, moduleId = moduleId });
+
+		var video = respose.Value;
+
+		return View(new StoreVideoForm {
+			title = video.title,
+			order = video.order,
+			video_url = video.videoUrl,
+			desc = video.description
+		});
+	}
+
+	[HttpPost]
+	[Route("/admin/courses/{id}/modules/{moduleId}/videos/edit/{video_id}")]
+	public async Task<IActionResult> EditVideoPost(
+		[FromRoute] string moduleId, [FromRoute] string id, [FromRoute] string video_id,
+		[FromForm] StoreVideoForm request, [FromServices] IValidator<StoreVideoForm> validator
+	) {
+		var response = await _mediatr.Send(new UpdateVideoRequest(
+			id: Guid.Parse(video_id),
+			title: request.title,
+			description: request.desc,
+			videoUrl: request.video_url,
+			order: request.order
+		));
+
+		if (!response.isSuccess) {
+			ModelState.AddModelError("title", "Erro ao salvar o video!");
+			ModelState.AddModelError("order", "Erro ao salvar o video!");
+			ModelState.AddModelError("video_url", "Erro ao salvar o video!");
+			ModelState.AddModelError("desc", "Erro ao salvar o video!");
+			return View("EditVideo");
+		}
+
+		return RedirectToAction("Videos", new { id = id, moduleId = moduleId });
+	}
 
 	// ===========================================================
 	//						  Users
