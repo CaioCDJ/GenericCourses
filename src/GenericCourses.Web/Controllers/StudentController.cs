@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GenericCourses.Web.Controllers;
 
-[Authorize(Roles = "client")]
+[Authorize(Roles = "student")]
 public class StudentController : Controller {
 
 	private readonly ILogger<StudentController> _logger;

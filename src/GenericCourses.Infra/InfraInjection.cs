@@ -17,6 +17,7 @@ public static class InfraInjection {
 				)
 			.UseSnakeCaseNamingConvention();
 		});
+
 		services.AddScoped<IVideosRepository, VideosRepository>();
 		services.AddScoped<IPostRepository, PostRepository>();
 		services.AddScoped<IInstructorRepository, InstructorRepository>();
@@ -25,7 +26,12 @@ public static class InfraInjection {
 		services.AddScoped<ISubscriptionPlanRepository, SubscriptionPlanRepository>();
 		services.AddScoped<IModulesRepository, ModulesRepository>();
 		services.AddScoped<ICourseRepository, CourseRepository>();
-		return services;
 
+		services.AddScoped<ICourseProgressRepository, CourseProgressRepository>();
+		services.AddScoped<IVideoProgrssRepository, VideoProgrssRepository>();
+		services.AddScoped<IModuleProgressRepository, ModuleProgressRepository>();
+		services.AddScoped<IStudentRepository, StudentRepository>();	
+
+		return services;
 	}
 }

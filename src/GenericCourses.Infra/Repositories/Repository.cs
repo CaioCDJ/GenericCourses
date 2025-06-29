@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GenericCourses.Infra.Repositories;
 
+
 internal abstract class Repository<T> where T : class {
 
 	protected readonly AppDbContext _context;

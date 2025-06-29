@@ -52,7 +52,7 @@ public class AuthRepository : IAuthRepository {
 		conn.Close();
 
 		if (response.client_id is not null && response.instructor_id is null && response.admin_id is null)
-			res = UserRole.client;
+			res = UserRole.student;
 		else if (response.client_id is null && response.instructor_id is not null && response.admin_id is null)
 			res = UserRole.instructor;
 		else if (response.client_id is null && response.instructor_id is null && response.admin_id is not null)

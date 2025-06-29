@@ -75,7 +75,7 @@ public class AuthController : Controller {
 		return res.role switch {
 			UserRole.admin => RedirectToAction("Index", "Admin"),
 			UserRole.instructor => RedirectToAction("Index", "Admin"),
-			UserRole.client => RedirectToAction("Account", "Student"),
+			UserRole.student => RedirectToAction("Account", "Student"),
 			_ => throw new Exception($"Unexpected role: {res.role}")
 		};
 	}

@@ -2,6 +2,8 @@
 @model Course
 @{
   ViewData["Title"] = "Cursos de Como assistir um curso";
+  var route_to =  User.Identity.IsAuthenticated;
+  var route = route_to ? $"/course/{Model.id}/Start" :"" ;
 }
 
 <main class="flex flex-col gap-4 center py-4">
@@ -39,12 +41,12 @@
               </span>
             }
           </div>
-
+	
           <div class="flex-col flex mt-2">
             @if (Model.is_free)
-            {
-              <button type="button"
-                class="text-white bg-gradient-to-r from-emerald-400 via-emerald-500 w-full to-emerald-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Gratis</button>
+            { 
+            <a href="@route"
+                class="text-white bg-gradient-to-r from-emerald-400 via-emerald-500 w-full to-emerald-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Gratis</a>
             }
             else
             {

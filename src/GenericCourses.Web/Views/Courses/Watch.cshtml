@@ -2,6 +2,8 @@
 ViewData["Title"] = "Ver curso";
 }
 
+@model GenericCourses.Application.Features.Courses.WatchCourseResponse
+
 <main class="flex flex-col md:flex-row gap-2  center py-8 w-full">
 	<section class="grid grid-cols-1 md:grid-cols-3 max-w-[6000px] w-[90%] px-4 gap-3">
 
@@ -12,12 +14,17 @@ ViewData["Title"] = "Ver curso";
 			<div class="overflow-y-auto max-h-96">
 				<div id="accordion-flush" class="max-w-full" data-accordion="collapse"
 					data-active-classes="text-sky-300" data-inactive-classes="text-gray-400">
-					@for(int a=1 ;a<=3;a++){ <h2 id="accordion-flush-heading-@a">
+					@{
+						var current_id = Model.current_video.id;
+					}
+					@foreach(var module in Model.course_queries.GroupBy(x=>x.module_name))	{
+						var module_name = module.First().module_name.Replace(" ","_");
+						<h2 id="accordion-flush-heading-@module_name">
 						<button type="button"
 							class="flex items-center justify-between w-full py-5 font-medium rtl:text-right  border-b border-gray-700 text-gray-400 gap-3"
-							data-accordion-target="#accordion-flush-body-@a" aria-expanded="true"
-							aria-controls="accordion-flush-body-@a">
-							<span>Modulo @a</span>
+							data-accordion-target="#accordion-flush-body-@module_name" aria-expanded="true"
+							aria-controls="accordion-flush-body-@module_name">
+							<span>@module_name</span>
 							<svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
 								xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
 								<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -25,34 +32,50 @@ ViewData["Title"] = "Ver curso";
 							</svg>
 						</button>
 						</h2>
-						<div id="accordion-flush-body-@a" class="hidden" aria-labelledby="accordion-flush-heading-@a">
+						<div id="accordion-flush-body-@module_name" class="hidden" aria-labelledby="accordion-flush-heading-@module_name">
 							<div class="w-48 text-sm font-medium  rounded-lg w-full  text-gray-300 px-4 py-3">
-								@for(int i=1; i<= (3*a) ;i++){ <a href="#"
-									class="block w-full px-4 py-2 text-white  rounded-lg cursor-pointer hover:bg-sky-600 ">
-									@i - Aula
-									</a>
+								@foreach(var video in module){ 
+									if(video.video_id == current_id ){
+										<a href=""
+									   		class="block w-full px-4 py-2 text-white  rounded-lg cursor-pointer bg-sky-600 ">
+											@video.order - @video.video_title
+											</a>
 									}
+									else if (video.watched){
+										<a href=""
+									   		class="block w-full px-4 py-2 text-gray-400 rounded-lg cursor-pointer bg-sky-600/[.05] hover:bg-sky-600/[.09]">
+											@video.order - @video.video_title
+											</a>
+									}
+									else{
+										<a href=""
+									   		class="block w-full px-4 py-2 text-white  rounded-lg cursor-pointer hover:bg-sky-600/[.08]">
+											@video.order - @video.video_title
+											</a>
+									}
+								}
 							</div>
 						</div>
 						}
 				</div>
-
 			</div>
-
 		</div>
 
 		<div class="h-auto w-full col-span-2 flex flex-col center gap-4">
 			<!-- <div class="plyr__video-embed" id="player"> -->
 			<iframe class="w-full h-[70vh]"
-				    src="https://www.youtube.com/embed/bTqVqk7FSmY?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1"
+					src="@Model.current_video.videoUrl"
 				allowfullscreen allowtransparency allow="autoplay"></iframe>
 			<!-- </div> -->
-			<h3 class="w-full text-left text-gray-200 font-bold text-2xl">Descrição:</h3>
+			<div class="flex flex-row w-full justify-between">
+				<h3 class="w-full text-left text-gray-200 font-bold text-2xl">Descrição:</h3>
+				<button class="btn btn-primary" >Finalizou</button>
+			</div>
+
 			<div class="w-full flex">
 				<article class="markdown-body " style="margin: 0 !important;">
-					<!-- Html.Raw(WatchCourseModel.markdown) -->
+					@Html.Raw(Model.current_video.description)
 				</article>
-
 			</div>
 		</div>
 	</section>

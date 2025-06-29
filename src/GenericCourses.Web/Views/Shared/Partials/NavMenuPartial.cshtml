@@ -6,6 +6,7 @@
 		<div class="flex items-center lg:order-2">
 			@{
 			var role = User.FindFirst(ClaimTypes.Role)?.Value;
+			var name = User.FindFirst(ClaimTypes.Surname)?.Value;
 			}
 
 			@if( User.Identity.IsAuthenticated){
@@ -14,11 +15,21 @@
 			<a href="~/admin/"
 				class="text-gray-400 hover:text-white hover:bg-sky-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none ">Dashboard
 			</a>
-			}
-
 			<a href="~/logout"
 				class="text-gray-400 hover:text-white hover:bg-sky-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none ">Sair
 			</a>
+			}else{
+			<details class="dropdown">
+				<summary class="btn m-1">
+					@name
+				</summary>
+				<ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm absolute">
+					<li><a href="~/account">Recentes</a></li>
+					<li><a href="~/account/info">Conta</a></li>
+					<li><a href="~/logout">Sair</a></li>
+				</ul>
+			</details>
+			}
 			}else{
 			<a href="~/login"
 				class="text-gray-400 hover:text-white hover:bg-sky-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2  focus:outline-none ">Log

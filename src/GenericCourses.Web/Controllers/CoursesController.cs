@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 using GenericCourses.Web.Models;
 using GenericCourses.Application.Features.Courses.GetCourse;
 using GenericCourses.Application.Features.Courses;
@@ -40,9 +41,40 @@ public class CoursesController : Controller {
 		return View(course);
 	}
 
-	[Route("/course/{id}/Watch/{video_id}")]
-	[Authorize(Roles = "client")]
-	public IActionResult Watch(string id)
-	  => View();
+	[Authorize(Roles = "student")]
+	[Route("/course/{id}/start")]
+	public async Task<IActionResult> StartCourse([FromRoute] string id) {
+		var user_Id = User.FindFirst(ClaimTypes.Hash)?.Value;
 
+		if (user_Id is null) { }
+
+		var response = await _mediatr.Send(new StartCourseRequest(
+			course_id: Guid.Parse(id),
+			user_id: Guid.Parse(user_Id)
+		));
+
+		if (response.isSuccess) return RedirectToAction("Watch", new { id = id, video_id = "llx" });
+		else throw new Exception("Deu ruim");
+	}
+
+	[Route("/course/{id}/Watch/{video_id}")]
+	[Authorize(Roles = "student")]
+	public async Task<IActionResult> Watch([FromRoute] string id, [FromRoute] string video_id) {
+
+		var user_Id = User.FindFirst(ClaimTypes.Hash)?.Value;
+
+		if (user_Id is null) { }
+
+		var user_guid = Guid.Parse(user_Id);
+
+		var video_guid = Guid.Parse(video_id);
+
+		var response = await _mediatr.Send(new WatchCourseRequest(
+			user_id: user_guid,
+			course_id: Guid.Parse(id),
+			video_id: video_guid
+		));
+
+		return View(response.Value);
+	}
 }
