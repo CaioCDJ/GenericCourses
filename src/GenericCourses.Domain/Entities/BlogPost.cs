@@ -2,8 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GenericCourses.Domain.Entities;
 
-public class BlogPost {
-	public Guid id { get; set; } = Guid.NewGuid();
+public class BlogPost : Entity {
 	public string? title { get; set; }
 	public string? text { get; set; }
 	public string? thumb { get; set; }

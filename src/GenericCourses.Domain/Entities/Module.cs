@@ -1,7 +1,6 @@
 namespace GenericCourses.Domain.Entities;
 
-public class Module {
-	public Guid id { get; set; } = Guid.NewGuid();
+public class Module : Entity {
 	public string? title { get; set; }
 	public string? description { get; set; }
 	public int order { get; set; } = 0;

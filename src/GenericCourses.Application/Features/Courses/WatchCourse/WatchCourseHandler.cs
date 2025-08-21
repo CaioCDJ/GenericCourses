@@ -46,7 +46,7 @@ public class WatchCourseHandler : IRequestHandler<WatchCourseRequest, Result<Wat
 
 		var videos = await _courseProgressRepository.current_progress(
 				request.user_id, request.course_id);
-
+		Console.WriteLine($"\n\n\n\n{videos.Count()} \n\n\n\n");
 		return videos is not null
 			? new WatchCourseResponse(current_video, videos.ToList())
 			: new Error("", "");

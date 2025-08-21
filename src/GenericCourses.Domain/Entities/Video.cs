@@ -2,8 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GenericCourses.Domain.Entities;
 
-public class Video {
-	public Guid id { get; set; } = Guid.NewGuid();
+public class Video : Entity {
 	public string? title { get; set; }
 	public string? description { get; set; }
 	public string? videoUrl { get; set; }

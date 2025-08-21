@@ -35,23 +35,25 @@ ViewData["Title"] = "Ver curso";
 						<div id="accordion-flush-body-@module_name" class="hidden" aria-labelledby="accordion-flush-heading-@module_name">
 							<div class="w-48 text-sm font-medium  rounded-lg w-full  text-gray-300 px-4 py-3">
 								@foreach(var video in module){ 
-									if(video.video_id == current_id ){
-										<a href=""
-									   		class="block w-full px-4 py-2 text-white  rounded-lg cursor-pointer bg-sky-600 ">
-											@video.order - @video.video_title
-											</a>
-									}
-									else if (video.watched){
-										<a href=""
-									   		class="block w-full px-4 py-2 text-gray-400 rounded-lg cursor-pointer bg-sky-600/[.05] hover:bg-sky-600/[.09]">
-											@video.order - @video.video_title
-											</a>
-									}
-									else{
-										<a href=""
-									   		class="block w-full px-4 py-2 text-white  rounded-lg cursor-pointer hover:bg-sky-600/[.08]">
-											@video.order - @video.video_title
-											</a>
+									if(!String.IsNullOrEmpty(video.video_title)){
+										if(video.video_id == current_id ){
+											<a href=""
+									   			class="block w-full px-4 py-2 text-white  rounded-lg cursor-pointer bg-sky-600 ">
+												@video.order - @video.video_title
+												</a>
+										}
+										else if (video.watched){
+											<a href=""
+									   			class="block w-full px-4 py-2 text-gray-400 rounded-lg cursor-pointer bg-sky-600/[.05] hover:bg-sky-600/[.09]">
+												@video.order - @video.video_title
+												</a>
+										}
+										else{
+											<a href=""
+									   			class="block w-full px-4 py-2 text-white  rounded-lg cursor-pointer hover:bg-sky-600/[.08]">
+												@video.order - @video.video_title
+												</a>
+										}
 									}
 								}
 							</div>

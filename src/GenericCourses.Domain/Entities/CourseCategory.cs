@@ -1,7 +1,6 @@
 namespace GenericCourses.Domain.Entities;
 
-public class CourseCategory {
-	public Guid id { get; set; } = Guid.NewGuid();
+public class CourseCategory : Entity {
 	public Course course { get; set; }
 	public Guid courseId { get; set; }
 	public Category category { get; set; }

@@ -31,10 +31,11 @@ internal sealed class CourseProgressRepository : Repository<CourseProgress>, ICo
 		=> await _context.course_Progresses.SingleOrDefaultAsync(
 			x => x.userId == user_id && x.courseId == course_id
 		);
-	
-	public async Task<IEnumerable<Current_progress_query>> current_progress(Guid user_id, Guid course_id){
+
+
+	public async Task<IEnumerable<Current_progress_query>> current_progress(Guid user_id, Guid course_id) {
 		using var conn = new NpgsqlConnection(_context.Database.GetConnectionString());
-		var res = await conn.QueryAsync<Current_progress_query>(@"
+		/*var res = await conn.QueryAsync<Current_progress_query>(@"
 			SELECT m.title AS module_name,v.""order"", mp.done AS module_done, 
 			v.title AS video_title, v.id AS video_id, vp.done AS watched,v.video_url 
 				FROM courses AS co
@@ -45,8 +46,30 @@ internal sealed class CourseProgressRepository : Repository<CourseProgress>, ICo
  					RIGHT JOIN modules m ON m.course_id = co.id 
  					RIGHT JOIN videos v ON v.module_id = m.id
 						ORDER BY m.""order"", v.""order""
-		", new {course_id = course_id, user_id = user_id});
-		
+		", new {course_id = course_id, user_id = user_id});*/
+
+		var res = await conn.QueryAsync<Current_progress_query>(@"
+ 			SELECT
+    			m.title AS module_name,
+    			m.""order"" AS module_order,
+    			mp.done AS module_done,
+    			v.title AS video_title,
+    			v.id AS video_id,
+    			vp.done AS watched,
+    			v.video_url
+			FROM modules m
+    			LEFT JOIN videos v ON v.module_id = m.id
+    			LEFT JOIN modules_progress mp ON mp.module_id = m.id
+        			AND mp.course_progress_id = (
+            			SELECT id FROM course_progresses
+            			WHERE course_id = @course_id AND user_id = @user_id
+        			)
+    			LEFT JOIN video_progresses as vp ON vp.video_id = v.id
+        			AND vp.module_id = m.id
+			WHERE m.course_id = @course_id
+			ORDER BY m.""order"", v.""order"";
+		", new { course_id = course_id, user_id = user_id });
+
 		return res;
 	}
 }

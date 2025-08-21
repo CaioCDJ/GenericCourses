@@ -2,8 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GenericCourses.Domain.Entities;
 
-public class Review {
-	public Guid id { get; set; } = Guid.NewGuid();
+public class Review : Entity {
 	public string text { get; set; }
 	[Column(TypeName = "Date")]
 	public DateTime created_at { get; set; }

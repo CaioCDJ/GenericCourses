@@ -1,9 +1,8 @@
 using System.ComponentModel.DataAnnotations.Schema;
 namespace GenericCourses.Domain.Entities;
 
-public class Certificate {
+public class Certificate : Entity {
 
-	public Guid id { get; set; } = Guid.NewGuid();
 	public Course course { get; set; }
 	public Guid? courseId { get; set; }
 	[Column(TypeName = "Date")]

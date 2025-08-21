@@ -2,9 +2,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GenericCourses.Domain.Entities;
 
-public class User_Plan {
+public class User_Plan : Entity {
 
-	public Guid id { get; set; } = Guid.NewGuid();
 	public Client client { get; set; }
 	public Guid clientId { get; set; }
 	public Subscriptionplan subscriptionplan { get; set; }

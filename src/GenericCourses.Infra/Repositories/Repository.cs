@@ -1,15 +1,19 @@
 using GenericCourses.Infra.Persistence;
 using Microsoft.EntityFrameworkCore;
+using GenericCourses.Domain.Entities;
 
 namespace GenericCourses.Infra.Repositories;
 
 
-internal abstract class Repository<T> where T : class {
+internal abstract class Repository<T> where T : Entity {
 
 	protected readonly AppDbContext _context;
 
 	protected Repository(AppDbContext appDbContext)
 		=> _context = appDbContext;
+
+	public async Task<T?> single(Guid id)
+		=> await _context.Set<T>().SingleOrDefaultAsync(x => x.id == id);
 
 	public async Task<int?> count()
 		=> await _context.Set<T>().CountAsync();
@@ -31,5 +35,6 @@ internal abstract class Repository<T> where T : class {
 		await _context.SaveChangesAsync();
 		return entity;
 	}
+
 
 }
